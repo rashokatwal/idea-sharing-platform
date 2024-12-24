@@ -20,4 +20,17 @@
 
 body {
     background-color: var(--background-color);
+    position: relative;
+}
+
+.primary-button {
+  padding: 10px 15px;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+  font-size: 50;
+  font-weight: 600;
+  letter-spacing: 0.2px
 }
