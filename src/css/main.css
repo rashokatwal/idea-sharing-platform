@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+:root {
+    --background-color: #FFFFFF;
+    --primary-color: #3A3A3A;
+    --accent-color: #2D89FF;
+    --text-color: #000000;  
+    --secondary-accent: #6EE7B7;
+    --primary-font: "Work Sans", serif;
+    --accent-font: "Raleway", serif;   
+}
+
+body {
+    background-color: var(--background-color);
+}
