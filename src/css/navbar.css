@@ -62,16 +62,6 @@
     font-weight: 500
 }
 
-.primary-button {
-    padding: 10px 15px;
-    border-radius: 50px;
-    border: none;
-    background-color: var(--accent-color);
-    color: white;
-    cursor: pointer;
-    font-size: 50;
-}
-
 .primary-button:hover {
     opacity: 0.9;
 }
