@@ -1,5 +1,6 @@
 import Hero from "./Hero"
 import Navbar from "./Navbar"
+import Description from "./Description"
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Hero />
+      <Description />
     </div>
   )
 }

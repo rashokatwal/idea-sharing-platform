@@ -1,0 +1,22 @@
+.description-outer {
+    min-width: 100%;
+    position: relative;
+    font-family: var(--primary-font);
+}
+
+.description-inner {
+    min-height: 80vh;
+    margin: auto;
+    width: 1000px;
+    position: relative;
+    text-align: center;
+}
+
+.description-paragraph {
+    line-height: 24px;
+}
+
+.description-cards {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}

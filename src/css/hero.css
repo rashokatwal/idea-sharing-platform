@@ -10,7 +10,7 @@
 }
 
 .hero-inner {
-    border: solid 1px;
+    /* border: solid 1px; */
     min-height: 80vh;
     background-image: url('../assets/hero-image2.png');
     background-position: center;
