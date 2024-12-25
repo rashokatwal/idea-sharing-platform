@@ -14,7 +14,8 @@ const Navbar = () => {
                     </button>
                 </div>
                 <ul className="navLinks">
-                    <li className="initial-list"><a href="/">Home</a></li>
+                    <li className="initial-list"><a href="/" className="active">Home</a></li>
+                    <li><a href="/about">About</a></li>
                     <li><a href="/explore">Explore</a></li>
                     <li>
                         <button className="primary-button">

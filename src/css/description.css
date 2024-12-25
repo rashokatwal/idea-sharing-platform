@@ -42,13 +42,13 @@
 }
 
 .network {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../assets/network.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('../assets/network.jpeg');
 }
 
 .light-bulb {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../assets/light-bulb.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('../assets/light-bulb.jpeg');
 }
 
 .collaboration {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('../assets/collaboration.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('../assets/collaboration.jpeg');
 }
