@@ -54,7 +54,6 @@
 
 .navLinks li a {
     text-decoration: none;
-    color: var(--text-color);
 }
 
 .navLinks li a:hover {
