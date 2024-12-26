@@ -14,7 +14,7 @@ const Navbar = () => {
                     </button>
                 </div>
                 <ul className="navLinks">
-                    <li className="initial-list"><a href="/" className="active">Home</a></li>
+                    <li className="initial-list"><a href="/">Home</a></li>
                     <li><a onClick = {(e)=>{
                             e.preventDefault();
                             window.scrollTo({

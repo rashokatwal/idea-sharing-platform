@@ -58,10 +58,6 @@
     cursor: pointer;
 }
 
-.navLinks li .active {
-    color: var(--accent-color);
-}
-
 .navLinks li a:hover {
     color: var(--accent-color);
     /* font-weight: 500 */
