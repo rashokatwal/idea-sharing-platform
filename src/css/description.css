@@ -17,6 +17,10 @@
     line-height: 25px;
 }
 
+.mission-statement {
+    font-weight: 500;
+}
+
 .description-cards {
     display: grid;
     grid-template-columns: auto auto auto;

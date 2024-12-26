@@ -1,6 +1,6 @@
-import Hero from "./Hero"
-import Navbar from "./Navbar"
-import Description from "./Description"
+import Hero from "./Hero";
+import Navbar from "./Navbar";
+import Description from "./Description";
 
 function App() {
 

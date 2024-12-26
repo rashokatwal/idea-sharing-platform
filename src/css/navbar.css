@@ -55,6 +55,7 @@
 .navLinks li a {
     text-decoration: none;
     color: var(--text-color);
+    cursor: pointer;
 }
 
 .navLinks li .active {

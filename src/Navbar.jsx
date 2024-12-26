@@ -15,7 +15,14 @@ const Navbar = () => {
                 </div>
                 <ul className="navLinks">
                     <li className="initial-list"><a href="/" className="active">Home</a></li>
-                    <li><a href="/about">About</a></li>
+                    <li><a onClick = {(e)=>{
+                            e.preventDefault();
+                            window.scrollTo({
+                                top: document.querySelector("#description").offsetTop - 100,
+                                behavior: "smooth",
+                            });
+                        }}>About</a>
+                    </li>
                     <li><a href="/explore">Explore</a></li>
                     <li>
                         <button className="primary-button">
