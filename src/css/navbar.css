@@ -6,6 +6,7 @@
     top: 0;
     background-color: var(--background-color);
     z-index: 99;
+    /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); */
 }
 
 .navbar-inner {
