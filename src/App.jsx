@@ -1,6 +1,7 @@
 import Hero from "./Hero";
 import Navbar from "./Navbar";
 import Description from "./Description";
+import Steps from "./Steps";
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
       <Navbar />
       <Hero />
       <Description />
+      <Steps />
     </div>
   )
 }

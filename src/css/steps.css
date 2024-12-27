@@ -1,0 +1,14 @@
+.steps-outer {
+    min-width: 100%;
+    position: relative;
+    font-family: var(--primary-font);
+    margin-top: 50px;
+}
+
+.steps-inner {
+    min-height: 80vh;
+    margin: auto;
+    width: 1000px;
+    position: relative;
+    text-align: center;
+}
