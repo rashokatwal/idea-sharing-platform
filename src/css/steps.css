@@ -23,6 +23,11 @@
     gap: 20px;
 }
 
+.steps-grid-elements .arrow img {
+    height: 100px;
+    margin-top: 100px;
+}
+
 .odd-element {
     grid-template-columns: 1fr 2fr 3fr;
 }

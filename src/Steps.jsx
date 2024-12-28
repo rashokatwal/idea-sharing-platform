@@ -10,21 +10,25 @@ const Steps = () => {
                         <img src="/src/assets/sign-in.png"/>
                         <div className="steps-description">
                             <h3 className="steps-description-title">
-                                Sign Up
+                                1. Sign Up
                             </h3>
                             <p className="steps-description-paragraph">
                                 Create your account in seconds
                             </p>
                         </div>
-                        <div></div>
+                        <div className="arrow">
+                            <img src="/src/assets/arrow-right.png"/>
+                        </div>
                     </div>
                     
                     <div className="steps-grid-elements even-element">
-                        <div></div>
+                        <div className="arrow">
+                            <img src="/src/assets/arrow-left.png"/>
+                        </div>
                         <img src="/src/assets/lightbulb.png"/>
                         <div className="steps-description">
                             <h3 className="steps-description-title">
-                                Share Ideas
+                                2. Share Ideas
                             </h3>
                             <p className="steps-description-paragraph">
                                 Post your thoughts and concepts
@@ -35,13 +39,15 @@ const Steps = () => {
                         <img src="/src/assets/handshake.png"/>
                         <div className="steps-description">
                             <h3 className="steps-description-title">
-                                Collaborate
+                               3. Collaborate
                             </h3>
                             <p className="steps-description-paragraph">
                                 Connect with like minded thinkers
                             </p>
                         </div>
-                        <div></div>
+                        <div className="arrow">
+                            <img src="/src/assets/arrow-right.png"/>
+                        </div>
                     </div>
                     
                     <div className="steps-grid-elements even-element">
@@ -49,7 +55,7 @@ const Steps = () => {
                         <img src="/src/assets/rocket.png"/>
                         <div className="steps-description">
                             <h3 className="steps-description-title">
-                                Grow
+                                4. Grow
                             </h3>
                             <p className="steps-description-paragraph">
                                 Turn ideas into actionable plans
