@@ -12,3 +12,37 @@
     position: relative;
     text-align: center;
 }
+
+.steps-title {
+    margin-bottom: 20px;
+}
+
+.steps-grid-elements {
+    display: grid;
+    align-items: center;
+    gap: 20px;
+}
+
+.odd-element {
+    grid-template-columns: 1fr 2fr 3fr;
+}
+
+.even-element {
+    grid-template-columns: 3fr 1fr 2fr;
+}
+
+.steps-grid-elements img {
+    height: 150px;
+    margin: auto;
+}
+
+.steps-grid-elements .steps-description .steps-description-title{
+    text-align: left;
+    margin: 0;
+    font-family: var(--accent-font);
+}
+
+.steps-grid-elements .steps-description .steps-description-paragraph{
+    text-align: left;
+    /* margin: 0 */
+}

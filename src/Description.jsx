@@ -35,9 +35,9 @@ const Description = () => {
                     We aim to simplify the process of sharing ideas and collaborating with others. With intuitive tools, engaging discussions, and a supportive community, MindHop empowers you to explore innovative possibilities and make a real impact. Together, we can create, innovate, and inspire change.
                 </p>
                 <br />
-                <p className="mission-statement">
+                {/* <p className="mission-statement">
                     "Our mission is to provide a platform that bridges creativity and collaboration,<br /> empowering individuals to share and grow their ideas."
-                </p>
+                </p> */}
             </div>
         </div>
     )
