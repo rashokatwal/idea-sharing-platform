@@ -17,11 +17,11 @@
     font-family: var(--accent-font);
 }
 
-.footer-inner .footer-description, .other-links {
+.footer-inner .footer-description, .other-links, .copyright {
     font-size: 13px;
 }
 
-.social-links, .other-links {
+.social-links, .other-links, .copyright {
     margin-top: 30px;
 }
 

@@ -18,7 +18,7 @@ const Footer = () => {
                     <a href="/">Privacy & Policy</a>
                     <a href="/">FAQs</a>
                 </div>
-                
+                <p className="copyright">Copyright © 2022 MindHop. All rights reserved.</p>
             </div>
         </div>
     )
