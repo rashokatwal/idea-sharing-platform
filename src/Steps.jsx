@@ -1,4 +1,6 @@
 import './css/steps.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const Steps = () => {
     return (
@@ -62,6 +64,17 @@ const Steps = () => {
                             </p>
                         </div>
                     </div>
+                </div>
+                <div className="call-to-action-section">
+                    <h5>
+                        HEARD<br />ENOUGH? <FontAwesomeIcon icon={faArrowRight} />
+                    </h5>
+                    <h2>
+                        Get Started
+                    </h2>
+                    <button className="right-arrow">
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
                 </div>
             </div>
         </div>

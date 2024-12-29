@@ -17,6 +17,10 @@
     margin-bottom: 20px;
 }
 
+.steps-grid {
+    margin: 0px 50px;
+}
+
 .steps-grid-elements {
     display: grid;
     align-items: center;
@@ -50,4 +54,23 @@
 .steps-grid-elements .steps-description .steps-description-paragraph{
     text-align: left;
     /* margin: 0 */
+}
+
+.call-to-action-section {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin: 110px 50px 100px 50px;
+    font-family: var(--accent-font);
+    text-align: left;
+}
+
+.call-to-action-section .right-arrow{
+    border: none;
+    background-color: var(--accent-color);
+    color: white;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
 }

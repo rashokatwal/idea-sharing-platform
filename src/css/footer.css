@@ -1,0 +1,22 @@
+.footer-outer {
+    min-width: 100%;
+    position: relative;
+    font-family: var(--primary-font);
+    /* margin-top: 50px; */
+}
+
+.footer-inner {
+    padding: 50px;
+    margin: auto;
+    width: 1000px;
+    max-width: 1000px;
+    /* min-height: 50vh; */
+    position: relative;
+    background-color: var(--primary-color);
+    color: white;
+    font-family: var(--accent-font);
+}
+
+.footer-inner .footer-description {
+    font-size: 15px;
+}
