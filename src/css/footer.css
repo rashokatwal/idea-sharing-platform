@@ -17,6 +17,21 @@
     font-family: var(--accent-font);
 }
 
-.footer-inner .footer-description {
-    font-size: 15px;
+.footer-inner .footer-description, .other-links {
+    font-size: 13px;
 }
+
+.social-links, .other-links {
+    margin-top: 30px;
+}
+
+.social-links a, .other-links a {
+    color: white;
+    margin-right: 20px ;
+    text-decoration: none;
+}
+
+.social-links a:hover, .other-links a:hover {
+    color: var(--accent-color);
+}
+

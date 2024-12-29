@@ -41,7 +41,7 @@
     align-items: center;
     justify-content: end;
     color: white;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3); */
 }
 
 .network {
