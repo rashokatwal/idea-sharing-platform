@@ -25,8 +25,8 @@
     margin-top: 30px;
 }
 
-.social-links a, .other-links a {
-    color: white;
+.social-links a, .other-links a, .copyright {
+    color: rgb(154, 154, 154);
     margin-right: 20px ;
     text-decoration: none;
 }

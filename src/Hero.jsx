@@ -1,4 +1,4 @@
-import './css/hero.css';
+import './Styles/hero.css';
 const Hero = () => {
     return ( 
         <div className="hero-outer">
