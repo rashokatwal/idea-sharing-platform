@@ -1,6 +1,7 @@
 import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 const Navbar = () => {
     return ( 
         <div className="navbar-outer">
@@ -14,7 +15,7 @@ const Navbar = () => {
                     </button>
                 </div>
                 <ul className="navLinks">
-                    <li className="initial-list"><a href="/">Home</a></li>
+                    <li className="initial-list"><Link to="/">Home</Link></li>
                     <li><a onClick = {(e)=>{
                             e.preventDefault();
                             window.scrollTo({
@@ -23,7 +24,7 @@ const Navbar = () => {
                             });
                         }}>About</a>
                     </li>
-                    <li><a href="/explore">Explore</a></li>
+                    <li><Link to="/explore">Explore</Link></li>
                     <li>
                         <button className="primary-button">
                             Sign In
