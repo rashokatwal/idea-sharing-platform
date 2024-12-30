@@ -1,4 +1,4 @@
-import './Styles/navbar.css';
+import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
                     <li><a href="/explore">Explore</a></li>
                     <li>
                         <button className="primary-button">
-                            Post Ideas
+                            Sign In
                         </button>
                     </li>
                 </ul>
