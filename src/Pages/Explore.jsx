@@ -1,8 +1,13 @@
+import { height } from "@fortawesome/free-brands-svg-icons/fa42Group";
+import Filter from "../Components/Filter";
+
 const Explore = () => {
     return (
         <div className="Explore">
-            <h1>Explore</h1>
-            <p>This is the Explore page</p>
+            <Filter />
+            <div style={{height: '200vh'}}>
+                
+            </div>
         </div>
     )
 }

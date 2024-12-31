@@ -6,7 +6,7 @@
 import Home from "./Pages/Home";
 import Explore from "./Pages/Explore";
 import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
+// import Footer from "./Components/Footer";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -20,7 +20,6 @@ function App() {
           <Route exact path="/explore" element={<Explore />} />
         </Routes>
       </div>
-      <Footer />
     </Router>
   )
 }

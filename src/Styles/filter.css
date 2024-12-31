@@ -1,0 +1,16 @@
+.filter-outer {
+    min-width: 100%;
+    position: sticky;
+    top: 80px;
+    background-color: var(--background-color);
+    z-index: 99;
+}
+
+.filter-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    max-width: 1000px;
+    font-family: var(--primary-font);
+}
