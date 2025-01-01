@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/autocomplete.css';
 
-const Autocomplete = ({ suggestions }) => {
+const Autocomplete = ({ suggestions, placeholder }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -13,8 +13,10 @@ const Autocomplete = ({ suggestions }) => {
     const filteredSuggestions = suggestions.filter(suggestion =>
       suggestion.toLowerCase().includes(inputValue.toLowerCase())
     );
+    
     if (inputValue.length == 0) {
         setFilteredSuggestions([]);
+
     }
     else {
         setFilteredSuggestions(filteredSuggestions);
@@ -33,7 +35,7 @@ const Autocomplete = ({ suggestions }) => {
         type="text"
         value={inputValue}
         onChange={handleChange}
-        placeholder="Category"
+        placeholder={placeholder}
       />
       <ul className="autocomplete-suggestions">
         {filteredSuggestions.map((suggestion, index) => (

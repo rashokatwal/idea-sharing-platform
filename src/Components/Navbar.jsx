@@ -16,13 +16,13 @@ const Navbar = () => {
                 </div>
                 <ul className="navLinks">
                     <li className="initial-list"><Link to="/">Home</Link></li>
-                    <li><a onClick = {(e)=>{
+                    <li><Link to="/" onClick = {(e)=>{
                             e.preventDefault();
                             window.scrollTo({
                                 top: document.querySelector("#description").offsetTop - 100,
                                 behavior: "smooth",
                             });
-                        }}>About</a>
+                        }}>About</Link>
                     </li>
                     <li><Link to="/explore">Explore</Link></li>
                     <li>

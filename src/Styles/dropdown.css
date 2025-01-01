@@ -1,34 +1,31 @@
-/* style.css */
-* {
-    box-sizing: border-box;
-  }
-  
-  .autocomplete-container {
-    position: relative;
-  }
-  
-  .autocomplete-input {
-    width: 100%;
-    padding: 10px 15px;
+.dropdown-container {
     border: 2px solid rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
     font-size: 15px; 
     outline: none;
     border-radius: 50px;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.dropdown-input {
+    padding: 10px 0px 10px 15px;
+    border: none;
+    border-radius: 50px;
+    color: #000;
+    font-size: 15px;
+    outline: none;
     letter-spacing: 0.5px;
-  }
-  
-  .autocomplete-suggestions {
+    cursor: pointer;
+}
+
+.dropdown-list {
     position: absolute;
-    top: 100%;
     left: 50%;
     transform: translate(-50%, 0);
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-bottom: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -39,18 +36,18 @@
     scrollbar-width: none;
   }
 
-  .autocomplete-suggestion::-webkit-scrollbar {
+  .dropdown-list::-webkit-scrollbar {
     display: none;
   }
   
-  .autocomplete-suggestion {
+  .dropdown-item {
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 15px;
   }
   
-  .autocomplete-suggestion:hover {
+  .dropdown-item:hover {
     background-color: var(--accent-color);
     color: #fff
   }
