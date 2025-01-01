@@ -2,7 +2,7 @@
 // import Navbar from "./Navbar";
 // import Description from "./Description";
 // import Steps from "./Steps";
-// import Footer from "./Footer";
+import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import Explore from "./Pages/Explore";
 import Navbar from "./Components/Navbar";
@@ -20,6 +20,7 @@ function App() {
           <Route exact path="/explore" element={<Explore />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   )
 }

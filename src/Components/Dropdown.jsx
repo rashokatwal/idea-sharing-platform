@@ -27,7 +27,7 @@ const Dropdown = ({ suggestions, placeholder }) => {
                  placeholder={placeholder}
                  readOnly= { true }
                 />
-                <FontAwesomeIcon icon={faSortDown} />
+                <FontAwesomeIcon icon={faSortDown} style={{marginBottom: "3px"}}/>
             </div>
             <ul className="dropdown-list">
                 {filteredSuggestions.map((suggestion, index) => (

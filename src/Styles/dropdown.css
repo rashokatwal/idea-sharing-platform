@@ -2,13 +2,13 @@
     border: 2px solid rgba(0, 0, 0, 0.3);
     font-size: 15px; 
     outline: none;
-    border-radius: 50px;
+    border-radius: 10px;
     padding-right: 15px;
     cursor: pointer;
 }
 
 .dropdown-input {
-    padding: 10px 0px 10px 15px;
+    padding: 10px 0px 10px 20px;
     border: none;
     border-radius: 50px;
     color: #000;
