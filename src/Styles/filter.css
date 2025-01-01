@@ -1,6 +1,6 @@
 .filter-outer {
     min-width: 100%;
-    position: sticky;
+    position: fixed;
     top: 80px;
     background-color: var(--background-color);
     z-index: 99;
@@ -15,23 +15,7 @@
     font-family: var(--primary-font);
 }
 
-.filter-dropdown {
-    padding: 10px 15px;
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    font-size: 15px; 
-    outline: none;
-    border-radius: 50px;
-}
-
-.filter-dropdown option {
-    padding: 10px;
+.view-type > * {
+    margin-left: 15px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 15px;
-}
-
-.filter-dropdown option:hover {
-    background-color: var(--accent-color);
-    color: #fff
 }

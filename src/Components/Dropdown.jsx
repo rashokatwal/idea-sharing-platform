@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 const Dropdown = ({ suggestions, placeholder }) => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
@@ -10,17 +11,21 @@ const Dropdown = ({ suggestions, placeholder }) => {
         setInputValue(value);
         // setTimeout(() =>setFilteredSuggestions([]), 1000);
         setFilteredSuggestions([]);
+        setIsDropdownOpen(false);
     };
     
     return(
         <div style={{position: "relative"}}>
-            <div className="dropdown-container" onClick={() => setFilteredSuggestions(suggestions)}>
+            <div className="dropdown-container" onClick={() => {
+                isDropdownOpen ? setFilteredSuggestions([]) : setFilteredSuggestions(suggestions);
+                setIsDropdownOpen(!isDropdownOpen);
+            }}>
                 <input
                  className="dropdown-input"
                  type="text"
                  value={inputValue}
                  placeholder={placeholder}
-                 readOnly="true"
+                 readOnly= { true }
                 />
                 <FontAwesomeIcon icon={faSortDown} />
             </div>

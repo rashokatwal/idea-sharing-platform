@@ -1,5 +1,7 @@
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGrip, faListUl } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/filter.css';
 import '../Styles/dropdown.css';
 
@@ -88,6 +90,10 @@ const Filter = () => {
                 <Dropdown placeholder={ "Popularity" } suggestions={ popularity }/>
                 <Dropdown placeholder={ "Status" } suggestions={ status }/>
                 <Dropdown placeholder={ "Time" } suggestions={ time }/>
+                <div className="view-type">
+                    <FontAwesomeIcon icon={faGrip} size='lg'/>
+                    <FontAwesomeIcon icon={faListUl} size='lg'/>
+                </div>
             </div>
         </div>
     )
