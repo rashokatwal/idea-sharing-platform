@@ -3,7 +3,7 @@ import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 import { ideas } from '../data/ideas'
-import CardComponent from '../Components/Cardcomponent';
+import CardComponent from '../Components/CardComponent';
 
 const Explore = () => {
     const [ viewType, setViewType ] = useState("grid");
@@ -18,7 +18,7 @@ const Explore = () => {
                 <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-innner list-view"}>
                     {
                         ideas.map((idea) => (
-                            viewType === "grid" ? <CardComponent idea={idea} key={idea.id}/> : <ListComponent idea={idea} key={idea.id}/>
+                            viewType === "grid" ? <CardComponent prop={idea} key={idea.id}/> : <ListComponent idea={idea} key={idea.id}/>
                         ))
                     }
                 </div>
