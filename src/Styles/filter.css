@@ -13,6 +13,7 @@
     margin: auto;
     max-width: 1000px;
     font-family: var(--primary-font);
+    margin-bottom: 20px;
 }
 
 .view-type > * {

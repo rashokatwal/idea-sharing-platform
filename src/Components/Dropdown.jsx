@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,15 +7,28 @@ const Dropdown = ({ suggestions, placeholder }) => {
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
+    const dropdownRef = useRef(null);
+
     const handleSelect = (value) => {
         setInputValue(value);
-        // setTimeout(() =>setFilteredSuggestions([]), 1000);
         setFilteredSuggestions([]);
         setIsDropdownOpen(false);
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setFilteredSuggestions([]);
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
     
     return(
-        <div style={{position: "relative"}}>
+        <div ref={dropdownRef} style={{position: "relative"}}>
             <div className="dropdown-container" onClick={() => {
                 isDropdownOpen ? setFilteredSuggestions([]) : setFilteredSuggestions(suggestions);
                 setIsDropdownOpen(!isDropdownOpen);
