@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
+import '../Styles/dropdown.css';
 
 const Dropdown = ({ suggestions, placeholder }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

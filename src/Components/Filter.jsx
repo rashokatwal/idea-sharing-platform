@@ -1,11 +1,11 @@
+import { useState } from 'react';
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrip, faListUl } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/filter.css';
-import '../Styles/dropdown.css';
 
-const Filter = () => {
+const Filter = ({ parentCallback }) => {
     const categories = [
         // Technology and Innovation
         "Artificial Intelligence",
@@ -83,6 +83,10 @@ const Filter = () => {
     const status = ["Open for Collaboration", "In Progress", "Completed"];
     const time = ["Newest First", "Oldest First"];
 
+    const onTrigger = (type) => {
+        parentCallback(type);
+    }
+
     return (
         <div className="filter-outer">
             <div className="filter-inner">
@@ -91,8 +95,8 @@ const Filter = () => {
                 <Dropdown placeholder={ "Status" } suggestions={ status }/>
                 <Dropdown placeholder={ "Time" } suggestions={ time }/>
                 <div className="view-type">
-                    <FontAwesomeIcon icon={faGrip} size='lg'/>
-                    <FontAwesomeIcon icon={faListUl} size='lg'/>
+                    <FontAwesomeIcon icon={faGrip} size='lg' onClick={() => onTrigger("grid")}/>
+                    <FontAwesomeIcon icon={faListUl} size='lg' onClick={() => onTrigger("list")}/>
                 </div>
             </div>
         </div>

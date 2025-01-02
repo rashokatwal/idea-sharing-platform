@@ -10,7 +10,14 @@
     width: 1000px;
     position: relative;
     text-align: center;
+}
+
+.card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
+}
+
+.list-view {
+    display: inline;
 }
