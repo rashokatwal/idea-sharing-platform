@@ -34,5 +34,10 @@ body {
   cursor: pointer;
   font-size: 50;
   font-weight: 600;
-  letter-spacing: 0.2px
+  letter-spacing: 0.2px;
+  transition: 0.2s;
+}
+
+.primary-button:hover {
+  opacity: 0.8;
 }

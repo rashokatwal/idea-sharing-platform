@@ -15,10 +15,10 @@ const Explore = () => {
         <div className="Explore">
             <Filter parentCallback={ handleCallback }/>
             <div className="ideas-section-outer">
-                <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-innner list-view"}>
+                <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
                     {
                         ideas.map((idea) => (
-                            viewType === "grid" ? <CardComponent prop={idea} key={idea.id}/> : <ListComponent idea={idea} key={idea.id}/>
+                            viewType === "grid" ? <CardComponent prop={idea} key={idea.id}/> : <ListComponent prop={idea} key={idea.id}/>
                         ))
                     }
                 </div>

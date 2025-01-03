@@ -60,7 +60,3 @@
     color: var(--accent-color);
     /* font-weight: 500 */
 }
-
-.primary-button:hover {
-    opacity: 0.9;
-}

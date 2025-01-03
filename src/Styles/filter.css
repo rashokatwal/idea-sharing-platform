@@ -1,6 +1,6 @@
 .filter-outer {
     min-width: 100%;
-    position: fixed;
+    position: sticky;
     top: 80px;
     background-color: var(--background-color);
     z-index: 99;

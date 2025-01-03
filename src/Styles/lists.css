@@ -1,0 +1,33 @@
+.list-container {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    text-align: left;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.title-posted-date {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.posted-date {
+    margin: 0;
+}
+
+.list-title {
+    font-family: var(--accent-font);
+    margin: 0;
+}
+
+.list-description {
+    font-size: 15px;
+    margin: 10px 0;
+}
+
+.category-tags {
+    display: flex;
+    align-items: end;
+}
