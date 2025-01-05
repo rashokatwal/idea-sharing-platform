@@ -23,6 +23,7 @@ body {
     position: relative;
     color: var(--text-color);
     margin: 0;
+    font-family: var(--primary-font);
 }
 
 .primary-button {

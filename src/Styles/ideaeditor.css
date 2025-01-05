@@ -1,0 +1,42 @@
+.idea-editor-outer {
+    min-width: 100%;
+    position: relative;
+    /* margin-top: 80px; */
+}
+
+.idea-editor-inner {
+    margin: 30px auto;
+    width: 1000px;
+    position: relative;
+    text-align: left;
+    padding: 20px;
+}
+
+.idea-form {
+    padding: 20px;
+}
+
+.idea-form > p {
+    margin: 15px 0px 5px 0px
+}
+
+.idea-form input, textarea {
+    width: 100%;
+    padding: 10px 20px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-size: 15px; 
+    outline: none;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    font-family: var(--primary-font);
+    resize: none;
+}
+
+.idea-form .idea-description {
+    min-height: 200px;
+}
+
+.idea-form .idea-summary {
+    min-height: 600px;
+}
