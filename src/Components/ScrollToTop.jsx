@@ -5,10 +5,10 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Reset scroll position to the top
+    window.scrollTo(0, 0);
   }, [pathname]);
 
-  return null; // This component doesn't render anything
+  return null;
 }
 
 export default ScrollToTop;
