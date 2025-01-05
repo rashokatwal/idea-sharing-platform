@@ -3,7 +3,7 @@ import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 import { ideas } from '../data/ideas'
-import CardComponent from '../Components/CardComponent';
+import CardComponent from '../Components/Cardcomponent';
 
 const Explore = () => {
     const [ viewType, setViewType ] = useState("grid");
