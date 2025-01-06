@@ -17,7 +17,8 @@
 }
 
 .idea-form > p {
-    margin: 15px 0px 5px 0px
+    margin: 30px 0px 10px 0px;
+    font-weight: 500;
 }
 
 .idea-form input, textarea {
@@ -29,14 +30,33 @@
     outline: none;
     border-radius: 10px;
     letter-spacing: 0.5px;
-    font-family: var(--primary-font);
+    font-family: 'arial';
     resize: none;
+    font-weight: 500;
+}
+
+.idea-form input:focus, textarea:focus {
+    outline: solid 2px var(--accent-color);
 }
 
 .idea-form .idea-description {
     min-height: 200px;
 }
 
-/* .idea-form .idea-summary {
-    min-height: 600px;
-} */
+.idea-form .idea-summary {
+    height: 600px;
+    margin-bottom: 80px
+}
+
+.idea-form .idea-summary .ql-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.idea-form .idea-buttons {
+    margin-top: 50px;
+}
+
+.idea-form .idea-buttons .post-button{
+    margin-right: 10px;
+}

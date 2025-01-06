@@ -4,6 +4,9 @@ import { categories } from '../Constants/FilterElements'
 import '../Styles/ideaeditor.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 const IdeaEditor = () => {
 
@@ -53,8 +56,8 @@ const IdeaEditor = () => {
 
                     </div>
                     <div className="idea-buttons">
-                        <button type="submit" className="post-button primary-button">Post Idea</button>
-                        <button type="submit" className="save-as-draft-button primary-button">Save as Draft</button>
+                        <button type="submit" className="post-button primary-button"><FontAwesomeIcon icon={faPaperPlane} style={{marginRight: "10px"}}/>  Post Idea</button>
+                        <button type="submit" className="save-as-draft-button primary-button"><FontAwesomeIcon icon={faFloppyDisk} style={{marginRight: "10px"}}/>  Save Draft</button>
                     </div>
                 </form>
             </div>
