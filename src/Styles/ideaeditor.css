@@ -5,15 +5,22 @@
 }
 
 .idea-editor-inner {
-    margin: 30px auto;
+    margin: auto;
     width: 1000px;
     position: relative;
     text-align: left;
     padding: 20px;
 }
 
+.idea-editor-inner, .header-section {
+    margin-bottom: 50px;
+}
+
 .idea-form {
-    padding: 20px;
+    padding: 50px 30px;
+    border: solid 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .idea-form > p {

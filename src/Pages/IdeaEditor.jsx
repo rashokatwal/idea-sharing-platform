@@ -32,9 +32,9 @@ const IdeaEditor = () => {
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
                 <div className="header-section">
-                    <h2 className="header-title">
+                    <h1 className="header-title">
                         Share Your Idea
-                    </h2>
+                    </h1>
                     <p className="header-subtitle">
                         Summarize your idea and expand it with details to inspire others!
                     </p>
@@ -44,7 +44,7 @@ const IdeaEditor = () => {
                     <p>Title</p>
                     <input type="text" className="idea-title" placeholder="Give your idea a captivating title"/>
                     <p>Category</p>
-                    <Autocomplete suggestions={ categories } placeholder={"Select a category"}/>
+                    <Autocomplete suggestions={ categories } placeholder={"Select a category"} className="idea-category"/>
                     <p>Description</p>
                     <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..."/>
                     <span>(Max 150 words)</span>
