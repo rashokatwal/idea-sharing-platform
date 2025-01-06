@@ -2,12 +2,13 @@ import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+// import '../Assets/logo.png';
 const Navbar = () => {
     return ( 
         <div className="navbar-outer">
             <div className="navbar-inner">
-                {/* <img src="" alt="logo" className="logo" /> */}
-                <h1 className="title">MindHop</h1>
+                <img src="/src/Assets/logo.png" alt="logo" className="logo" />
+                {/* <h1 className="title">MindHop</h1> */}
                 <div className="searchBar-outer">
                     <input type="text" className="searchBar" placeholder="Search for Ideas"/>
                     <button className="searchButton">
