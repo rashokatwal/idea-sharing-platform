@@ -1,8 +1,30 @@
+import React, { useState } from "react";
 import Autocomplete from '../Components/Autocomplete';
 import { categories } from '../Constants/FilterElements'
 import '../Styles/ideaeditor.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const IdeaEditor = () => {
+
+    const [ summary, setSummary ] = useState("");
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'font': [] }],
+            ['bold', 'italic', 'underline', 'strike'],    
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],
+            [{ 'align': [] }],
+            ['link', 'image', 'video', 'formula'],
+          ]
+    };
+
+    const handleChange = (value) => {
+        setSummary(value);
+    };
+
     return(
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
@@ -24,7 +46,7 @@ const IdeaEditor = () => {
                     <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..."/>
                     <span>(Max 150 words)</span>
                     <p>Summary</p>
-                    <textarea className="idea-summary" placeholder="Expand your idea, provide details, and explain why it matters..."/>
+                    <ReactQuill theme="snow" modules={modules} value={summary} onChange={setSummary} className="idea-summary" />
                     <p>Tags</p>
                     <input type="text" className="idea-tags"/>
                     <div className="tags">
@@ -39,5 +61,6 @@ const IdeaEditor = () => {
         </div>
     )
 }
+        
 
 export default IdeaEditor;
