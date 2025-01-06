@@ -32,11 +32,11 @@ const IdeaEditor = () => {
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
                 <div className="header-section">
-                    <h1 className="header-title">
+                    <h1 className="header-title" style={{marginTop: "0", color: "var(--accent-color)"}}>
                         Share Your Idea
                     </h1>
-                    <p className="header-subtitle">
-                        Summarize your idea and expand it with details to inspire others!
+                    <p className="header-subtitle" style={{lineHeight: "25px"}}>
+                        Every great idea starts small.<br /> Share your vision, its purpose, and how it can make an impact to inspire others.
                     </p>
                 </div>
 

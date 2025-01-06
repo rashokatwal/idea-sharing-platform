@@ -9,7 +9,10 @@
     width: 1000px;
     position: relative;
     text-align: left;
-    padding: 20px;
+    padding: 50px 00px;
+    /* border: solid 2px rgba(0, 0, 0, 0.3); */
+    border-radius: 10px;
+    /* margin-top: 50px; */
 }
 
 .idea-editor-inner, .header-section {
@@ -17,9 +20,8 @@
 }
 
 .idea-form {
-    padding: 50px 30px;
-    border: solid 2px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    /* padding: 50px 30px; */
+    
     /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
 }
 
@@ -31,7 +33,7 @@
 .idea-form input, textarea {
     width: 100%;
     padding: 10px 20px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--accent-color);
     border-radius: 5px;
     font-size: 15px; 
     outline: none;
@@ -40,10 +42,11 @@
     font-family: 'arial';
     resize: none;
     font-weight: 500;
+    /* outline: solid 2px var(--accent-color); */
 }
 
 .idea-form input:focus, textarea:focus {
-    outline: solid 2px var(--accent-color);
+    /* outline: solid 2px var(--accent-color); */
 }
 
 .idea-form .idea-description {
@@ -52,7 +55,10 @@
 
 .idea-form .idea-summary {
     height: 600px;
-    margin-bottom: 80px
+    margin-bottom: 80px;
+    border: solid 3px var(--accent-color);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .idea-form .idea-summary .ql-toolbar {
