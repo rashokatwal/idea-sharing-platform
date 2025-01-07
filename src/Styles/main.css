@@ -33,7 +33,7 @@ body {
   background-color: var(--accent-color);
   color: white;
   cursor: pointer;
-  font-size: 50;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.2px;
   transition: 0.2s;

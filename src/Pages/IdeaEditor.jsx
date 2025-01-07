@@ -7,10 +7,13 @@ import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const IdeaEditor = () => {
 
     const [ summary, setSummary ] = useState("");
+    const [ tags, setTags ] = useState([]);
+    const [ newTag, setNewTag ] = useState("");
 
     const modules = {
         toolbar: [
@@ -24,13 +27,31 @@ const IdeaEditor = () => {
           ]
     };
 
-    const handleChange = (value) => {
+    const handlesummary = (value) => {
         setSummary(value);
     };
+
+    const addTag = () => {
+        let tmpTags = new Set(tags);
+        if (!tmpTags.has(newTag)) {
+            setTags(oldTags => [...oldTags, newTag] );
+            setNewTag("");
+        }
+    }
+
+    const removeTag = (index) => {
+        setTags([
+            ...tags.slice(0, index),
+            ...tags.slice(index + 1)
+          ]);
+    }
 
     return(
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
+                {/* <div className="go-back-button">
+                    <button>Go Back</button>
+                </div> */}
                 <div className="header-section">
                     <h1 className="header-title" style={{marginTop: "0", color: "var(--accent-color)"}}>
                         Share Your Idea
@@ -47,13 +68,18 @@ const IdeaEditor = () => {
                     <Autocomplete suggestions={ categories } placeholder={"Select a category"} className="idea-category"/>
                     <p>Description</p>
                     <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..."/>
-                    <span>(Max 150 words)</span>
+                    <span>(Max 50 words)</span>
                     <p>Summary</p>
                     <ReactQuill theme="snow" modules={modules} value={summary} onChange={setSummary} className="idea-summary" />
                     <p>Tags</p>
-                    <input type="text" className="idea-tags"/>
-                    <div className="tags">
-
+                    <div className="tags-input">
+                        <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}}/>
+                        <div className="tags" style={{flexGrow: 3}}>
+                        {tags.map((tag, index) => (
+                            <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon={faXmark} /></span></span>
+                        ))}
+                        </div>
+                        <div className="primary-button" style={{flexGrow: 1}} onClick={addTag}>Add</div>
                     </div>
                     <div className="idea-buttons">
                         <button type="submit" className="post-button primary-button"><FontAwesomeIcon icon={faPaperPlane} style={{marginRight: "10px"}}/>  Post Idea</button>

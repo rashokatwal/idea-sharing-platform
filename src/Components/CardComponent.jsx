@@ -9,7 +9,7 @@ const CardComponent = (prop) => {
     return (
         <div className="card-container" style={{border: "solid 1px " + categoryColors[idea.category]}}>
             <h4 className="card-title" style={{flexGrow: "1"}}>{idea.title}</h4>
-            <p className="card-description" style={{flexGrow: "1"}}>{idea.description}</p>
+            <p className="card-description" style={{flexGrow: "2"}}>{idea.description}</p>
             <h5 className="author" style={{flexGrow: "1"}}>By <span className="author-name">{idea.author}</span></h5>
             <p className="category" style={{flexGrow: "1", backgroundColor: categoryColors[idea.category]}}>{idea.category}</p>
             <div className="tags" style={{flexGrow: "1"}}>
