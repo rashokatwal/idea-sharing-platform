@@ -49,15 +49,13 @@ const IdeaEditor = () => {
     return(
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
-                {/* <div className="go-back-button">
-                    <button>Go Back</button>
-                </div> */}
+
                 <div className="header-section">
                     <h1 className="header-title" style={{marginTop: "0", color: "var(--accent-color)"}}>
-                        Share Your Idea
+                        Define Your Idea
                     </h1>
                     <p className="header-subtitle" style={{lineHeight: "25px"}}>
-                        Every great idea starts small.<br /> Share your vision, its purpose, and how it can make an impact to inspire others.
+                        Give your idea a name, choose a category, and craft a concise description to set the stage.
                     </p>
                 </div>
 
