@@ -1,7 +1,6 @@
 .idea-editor-outer {
     min-width: 100%;
     position: relative;
-    /* margin-top: 80px; */
 }
 
 .idea-editor-inner {
@@ -10,19 +9,11 @@
     position: relative;
     text-align: left;
     padding: 50px 00px;
-    /* border: solid 2px rgba(0, 0, 0, 0.3); */
     border-radius: 10px;
-    /* margin-top: 50px; */
 }
 
 .idea-editor-inner, .header-section {
     margin-bottom: 50px;
-}
-
-.idea-form {
-    /* padding: 50px 30px; */
-    
-    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .idea-form > p {
@@ -42,17 +33,11 @@
     font-family: 'arial';
     resize: none;
     font-weight: 500;
-    /* outline: solid 2px var(--accent-color); */
 }
 
 .idea-form .tags-input {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
-}
-
-.idea-form .tags-input > * {
-    /* flex:; */
 }
 
 .idea-form .idea-tags {
@@ -62,10 +47,6 @@
     outline: none;
     font-family: 'arial';
 }
-
-/* .idea-form .idea-tags:focus {
-    ou
-} */
 
 .idea-form input:not(.idea-tags):focus, textarea:focus {
     outline: solid 3px var(--accent-color);
@@ -81,7 +62,6 @@
 
 .idea-form .idea-summary {
     height: 90vh;
-    /* margin-bottom: 80px; */
     border: solid 3px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     overflow: hidden;
