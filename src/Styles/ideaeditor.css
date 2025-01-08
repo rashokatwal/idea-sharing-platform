@@ -94,3 +94,11 @@
     display: flex;
     justify-content: space-between;
 }
+
+.idea-form .add-tags-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 40px !important;
+    height: 40px;
+}

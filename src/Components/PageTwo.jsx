@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 
 const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
@@ -64,7 +65,7 @@ const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
                     <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon={faXmark} /></span></span>
                 ))}
                 </div>
-                <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}>Add</div>
+                <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon={faPlus} /></div>
             </div>
             <div className="next-prev-buttons">
                 <button className="primary-button" onClick={() => prevPage(1)}><FontAwesomeIcon icon={faArrowLeft} /> Go Back</button>
