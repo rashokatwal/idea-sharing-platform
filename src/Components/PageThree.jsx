@@ -1,12 +1,14 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import ScrollToTop from "./ScrollToTop";
 
-const PageThree = (props) => {
-    
+const PageThree = ({ ideaDetails, setIdeasDetails, prevPage }) => {
 
     return (
         <div className="page-three">
+            <ScrollToTop />
             <div className="header-section">
                 <h1 className="header-title" style={{marginTop: "0", color: "var(--accent-color)"}}>
                     Review and Share

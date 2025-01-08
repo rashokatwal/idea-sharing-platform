@@ -1,9 +1,14 @@
+import React, { useState } from "react";
 import Autocomplete from '../Components/Autocomplete';
-import { categories } from '../Constants/FilterElements'
+import { categories } from '../Constants/FilterElements';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import ScrollToTop from "./ScrollToTop";
 
-const PageOne = () => {
+const PageOne = ({ ideaDetails, setIdeasDetails, nextPage }) => {
     return (
         <div className="page-one">
+            <ScrollToTop />
             <div className="header-section">
                 <h1 className="header-title" style={{marginTop: "0", color: "var(--accent-color)"}}>
                     Define Your Idea
@@ -19,7 +24,10 @@ const PageOne = () => {
             <Autocomplete suggestions={ categories } placeholder={"Select a category"} className="idea-category"/>
             <p>Description</p>
             <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..."/>
-            <span>(Max 50 words)</span>
+            {/* <span>(Max 50 words)</span> */}
+            <div className="next-prev-buttons">
+                <button className="primary-button" onClick={() => nextPage(2)}>Continue <FontAwesomeIcon icon={faArrowRight} /></button>
+            </div>
         </div>
     )
 }

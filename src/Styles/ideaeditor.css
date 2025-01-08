@@ -25,14 +25,14 @@
     width: 100%;
     padding: 15px 20px;
     border: 3px solid rgba(0, 0, 0, 0.5);
-    border-radius: 20px !important;
+    border-radius: 10px !important;
     font-size: 15px; 
     outline: none;
-    border-radius: 10px;
     letter-spacing: 0.5px;
     font-family: 'arial';
     resize: none;
     font-weight: 500;
+    margin-bottom: 20px;
 }
 
 .idea-form .tags-input {
@@ -87,4 +87,10 @@
 
 .idea-form .idea-buttons .save-as-draft-button{
     background-color: rgb(30, 192, 247);
+}
+
+.idea-form .next-prev-buttons {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
 }
