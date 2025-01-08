@@ -69,7 +69,7 @@ const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
             </div>
             <div className="next-prev-buttons">
                 <button className="primary-button" onClick={() => prevPage(1)}><FontAwesomeIcon icon={faArrowLeft} /> Go Back</button>
-                <button className="primary-button" onClick={() => nextPage(2)}>Continue <FontAwesomeIcon icon={faArrowRight} /></button>            
+                <button className="primary-button" onClick={() => {nextPage(2)}}>Continue <FontAwesomeIcon icon={faArrowRight} /></button>            
             </div>
         </div>
     )

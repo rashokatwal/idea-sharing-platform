@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import '../Styles/autocomplete.css';
 
-const Autocomplete = ({ suggestions, placeholder }) => {
+const Autocomplete = ({ suggestions, placeholder, value, onChange }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
     setInputValue(inputValue);
+    onChange(inputValue);
 
     // Filter suggestions based on input value
     const filteredSuggestions = suggestions.filter(suggestion =>
@@ -25,6 +26,7 @@ const Autocomplete = ({ suggestions, placeholder }) => {
 
   const handleSelect = (value) => {
     setInputValue(value);
+    onChange(value);
     setFilteredSuggestions([]);
   };
 
