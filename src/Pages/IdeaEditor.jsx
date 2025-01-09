@@ -28,16 +28,16 @@ const IdeaEditor = () => {
         tags: [],
     })
 
-    const nextPage = () => setPage((prev) => prev + 1);
-    const prevPage = () => setPage((prev) => prev - 1);   
+    // const nextPage = () => setPage((prev) => prev + 1);
+    // const prevPage = () => setPage((prev) => prev - 1);   
 
     return(
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
                 <div className="idea-form">
-                    {page === 1 && <PageOne ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails} nextPage={nextPage}/>}
-                    {page === 2 && <PageTwo ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails} nextPage={nextPage} prevPage={prevPage}/>}
-                    {page === 3 && <PageThree ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails} prevPage={prevPage}/>}
+                    {page === 1 && <PageOne ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
+                    {page === 2 && <PageTwo ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
+                    {page === 3 && <PageThree ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
                 </div>
             </div>
         </div>

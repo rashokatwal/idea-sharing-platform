@@ -6,7 +6,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
-const PageOne = ({ ideaDetails, setIdeasDetails, nextPage }) => {
+const PageOne = ({ ideaDetails, setIdeasDetails }) => {
     const handletitle = (value) => {
         setIdeasDetails({...ideaDetails, title: value });
     };

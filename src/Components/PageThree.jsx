@@ -4,7 +4,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 
-const PageThree = ({ ideaDetails, setIdeasDetails, prevPage }) => {
+const PageThree = ({ ideaDetails, setIdeasDetails }) => {
 
     return (
         <div className="page-three">

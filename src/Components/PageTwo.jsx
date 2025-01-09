@@ -9,7 +9,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
-const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
+const PageTwo = ({ ideaDetails, setIdeasDetails }) => {
 
     const [ newTag, setNewTag ] = useState("");
 

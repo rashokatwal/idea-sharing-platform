@@ -39,6 +39,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    padding: 10px 20px !important;
 }
 
 .idea-form .idea-tags {
@@ -62,10 +63,11 @@
 }
 
 .idea-form .idea-summary {
-    height: 90vh;
+    height: 80vh;
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 40px;
 }
 
 .idea-form .ql-editor:active .idea-summary{
@@ -100,8 +102,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 40px !important;
-    height: 40px;
+    max-width: 30px !important;
+    height: 30px;
 }
 
 .page-one, .page-two, .page-three {
