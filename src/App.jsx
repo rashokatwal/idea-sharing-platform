@@ -19,10 +19,11 @@ const AppContent = () => {
   const location = useLocation();
 
   // Routes where Navbar should not be shown
-  const noNavAndFooterRoutes = ["/login", "/register", "/ideaeditor"];
+  const noNavAndFooterRoutes = ["/login", "/register"];
 
   // Check if current route matches the exclusion list
-  const shouldShowNavAndFooter = !noNavAndFooterRoutes.includes(location.pathname);
+  const shouldShowNavAndFooter = !noNavAndFooterRoutes.includes(location.pathname) && !location.pathname.includes("ideaeditor");
+  console.log(shouldShowNavAndFooter);
 
   return (
     <div className="App">
@@ -30,7 +31,8 @@ const AppContent = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/explore" element={<Explore />} />
-        <Route exact path="/ideaeditor" element={<IdeaEditor />} />
+        {location.pathname.includes("ideaeditor") && <Route path="*" element={<IdeaEditor />} />}
+        {/* <Route exact path="/ideaeditor" element={<IdeaEditor />} /> */}
       </Routes>
       {shouldShowNavAndFooter && <Footer />}
     </div>

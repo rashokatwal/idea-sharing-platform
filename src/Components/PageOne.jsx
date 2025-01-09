@@ -4,6 +4,7 @@ import { categories } from '../Constants/FilterElements';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
+import { Link } from "react-router-dom";
 
 const PageOne = ({ ideaDetails, setIdeasDetails, nextPage }) => {
     const handletitle = (value) => {
@@ -38,7 +39,7 @@ const PageOne = ({ ideaDetails, setIdeasDetails, nextPage }) => {
             <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..." value={ideaDetails.description} onChange={(e) => handleDescription(e.target.value)}/>
             {/* <span>(Max 50 words)</span> */}
             <div className="next-prev-buttons">
-                <button className="primary-button" onClick={() => nextPage(2)}>Continue <FontAwesomeIcon icon={faArrowRight} /></button>
+                <Link to="/ideaeditor/p/2" className="primary-button">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>
             </div>
         </div>
     )

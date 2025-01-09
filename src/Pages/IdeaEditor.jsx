@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Autocomplete from '../Components/Autocomplete';
 // import { categories } from '../Constants/FilterElements'
 import '../Styles/ideaeditor.css';
@@ -13,8 +13,12 @@ import PageTwo from "../Components/PageTwo";
 import PageThree from "../Components/PageThree";
 
 const IdeaEditor = () => {
+    let page = Number(location.pathname.split('/').pop()) || 1;
+    useEffect(() => {
+        page = Number(location.pathname.split('/').pop());
+    })
 
-    const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(pageNumber);
 
     const [ ideaDetails, setIdeasDetails ] = useState({
         title: "",

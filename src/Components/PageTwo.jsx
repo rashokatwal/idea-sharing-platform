@@ -7,6 +7,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
+import { Link } from "react-router-dom";
 
 const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
 
@@ -68,8 +69,8 @@ const PageTwo = ({ ideaDetails, setIdeasDetails, nextPage, prevPage }) => {
                 <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon={faPlus} /></div>
             </div>
             <div className="next-prev-buttons">
-                <button className="primary-button" onClick={() => prevPage(1)}><FontAwesomeIcon icon={faArrowLeft} /> Go Back</button>
-                <button className="primary-button" onClick={() => {nextPage(2)}}>Continue <FontAwesomeIcon icon={faArrowRight} /></button>            
+                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
+                <Link to="/ideaeditor/p/3" className="primary-button">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
             </div>
         </div>
     )
