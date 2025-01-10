@@ -31,11 +31,11 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
                 </p>
             </div>
 
-            <p>Title</p>
+            <p className="labels">Title</p>
             <input type="text" className="idea-title" value={ideaDetails.title} placeholder="Give your idea a captivating title" onChange={(e) => handletitle(e.target.value)}/>
-            <p>Category</p>
+            <p className="labels">Category</p>
             <Autocomplete suggestions={ categories } placeholder={"Select a category"} className="idea-category" value={ideaDetails.category} onChange={handlecategory}/>
-            <p>Description</p>
+            <p className="labels">Description</p>
             <textarea className="idea-description" placeholder="Summarize your idea in a few sentences..." value={ideaDetails.description} onChange={(e) => handleDescription(e.target.value)}/>
             {/* <span>(Max 50 words)</span> */}
             <div className="next-prev-buttons">

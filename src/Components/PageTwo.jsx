@@ -24,6 +24,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
 
     const handlesummary = (value) => {
         setIdeaDetails({...ideaDetails, summary: value });
+        // setDateTime();
     };
 
     const addTag = () => {
@@ -32,6 +33,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             setIdeaDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
             setNewTag("");
         }
+        // setDateTime();
     }
 
     const removeTag = (index) => {
@@ -39,14 +41,6 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             ...ideaDetails.tags.slice(0, index),
             ...ideaDetails.tags.slice(index + 1)
           ]}); 
-    }
-
-    const setDateTime = async () => {
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const date = new Date();
-        const hour = date.getHours();
-        await setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${hour > 12 ? hour - 12 : hour}:${date.getMinutes()} ${hour > 12 ? "PM" : "AM"}` });
-        console.log(ideaDetails)
     }
     
     return (
@@ -61,9 +55,9 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 </p>
             </div>
 
-            <p>Summary</p>
+            <p className="labels">Summary</p>
             <ReactQuill theme="snow" modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" />
-            <p>Tags</p>
+            <p className="labels">Tags</p>
             <div className="tags-input">
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}}/>
                 <div className="tags" style={{flexGrow: 3}}>
@@ -74,12 +68,8 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon={faPlus} /></div>
             </div>
             <div className="next-prev-buttons">
-                <div className="primary-button">
-                    <Link to="/ideaeditor/p/1"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
-                </div>
-                <div className="primary-button" onClick={setDateTime}>
-                    <Link to="/ideaeditor/p/3">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
-                </div>
+                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
+                <Link to="/ideaeditor/p/3" className="primary-button">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
             </div>
         </div>
     )

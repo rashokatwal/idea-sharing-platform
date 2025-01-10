@@ -16,8 +16,7 @@
     margin-bottom: 50px;
 }
 
-.idea-form > p {
-    margin: 30px 0px 10px 0px;
+.idea-form .labels {
     font-weight: 500;
 }
 
