@@ -1,7 +1,6 @@
 import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
 import { categoryColors } from '../Constants/FilterElements';
 
 const CardComponent = (prop) => {

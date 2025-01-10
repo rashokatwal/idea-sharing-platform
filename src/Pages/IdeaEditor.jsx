@@ -20,12 +20,15 @@ const IdeaEditor = () => {
 
     // const [page, setPage] = useState(pageNumber);
 
-    const [ ideaDetails, setIdeasDetails ] = useState({
+    const [ ideaDetails, setIdeaDetails ] = useState({
         title: "",
         category: "",
         description: "",
         summary: "",
         tags: [],
+        updatedDate: "",
+        updatedTime: "",
+        author: "Jon Doe"
     })
 
     // const nextPage = () => setPage((prev) => prev + 1);
@@ -35,9 +38,9 @@ const IdeaEditor = () => {
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
                 <div className="idea-form">
-                    {page === 1 && <PageOne ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
-                    {page === 2 && <PageTwo ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
-                    {page === 3 && <PageThree ideaDetails={ideaDetails} setIdeasDetails={setIdeasDetails}/>}
+                    {page === 1 && <PageOne ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
+                    {page === 2 && <PageTwo ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
+                    {page === 3 && <PageThree ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
                 </div>
             </div>
         </div>

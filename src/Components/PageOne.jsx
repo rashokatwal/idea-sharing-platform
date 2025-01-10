@@ -6,17 +6,17 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
-const PageOne = ({ ideaDetails, setIdeasDetails }) => {
+const PageOne = ({ ideaDetails, setIdeaDetails }) => {
     const handletitle = (value) => {
-        setIdeasDetails({...ideaDetails, title: value });
+        setIdeaDetails({...ideaDetails, title: value });
     };
 
     const handlecategory = (value) => {
-        setIdeasDetails({...ideaDetails, category: value });
+        setIdeaDetails({...ideaDetails, category: value });
     };
 
     const handleDescription = (value) => {
-        setIdeasDetails({...ideaDetails, description: value });
+        setIdeaDetails({...ideaDetails, description: value });
     };
 
     return (

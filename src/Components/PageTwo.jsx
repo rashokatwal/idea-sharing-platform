@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faArrowRight, faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
-const PageTwo = ({ ideaDetails, setIdeasDetails }) => {
+const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
 
     const [ newTag, setNewTag ] = useState("");
 
@@ -26,22 +23,30 @@ const PageTwo = ({ ideaDetails, setIdeasDetails }) => {
     };
 
     const handlesummary = (value) => {
-        setIdeasDetails({...ideaDetails, summary: value });
+        setIdeaDetails({...ideaDetails, summary: value });
     };
 
     const addTag = () => {
         let tmpTags = new Set(ideaDetails.tags);
         if (!tmpTags.has(newTag)) {
-            setIdeasDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
+            setIdeaDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
             setNewTag("");
         }
     }
 
     const removeTag = (index) => {
-        setIdeasDetails({...ideaDetails, tags: [
+        setIdeaDetails({...ideaDetails, tags: [
             ...ideaDetails.tags.slice(0, index),
             ...ideaDetails.tags.slice(index + 1)
           ]}); 
+    }
+
+    const setDateTime = async () => {
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const date = new Date();
+        const hour = date.getHours();
+        await setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${hour > 12 ? hour - 12 : hour}:${date.getMinutes()} ${hour > 12 ? "PM" : "AM"}` });
+        console.log(ideaDetails)
     }
     
     return (
@@ -69,8 +74,12 @@ const PageTwo = ({ ideaDetails, setIdeasDetails }) => {
                 <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon={faPlus} /></div>
             </div>
             <div className="next-prev-buttons">
-                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
-                <Link to="/ideaeditor/p/3" className="primary-button">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
+                <div className="primary-button">
+                    <Link to="/ideaeditor/p/1"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
+                </div>
+                <div className="primary-button" onClick={setDateTime}>
+                    <Link to="/ideaeditor/p/3">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
+                </div>
             </div>
         </div>
     )

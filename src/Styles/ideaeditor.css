@@ -84,12 +84,20 @@
     margin-top: 50px;
 }
 
-.idea-form .idea-buttons .post-button{
+.idea-form .idea-buttons .post-button, .save-as-draft-button, .edit-button{
     margin-right: 10px;
 }
 
 .idea-form .idea-buttons .save-as-draft-button{
-    background-color: rgb(30, 192, 247);
+    background-color: var(--secondary-accent);
+}
+
+.idea-form .idea-buttons .edit-button{
+    background-color: #17A2B8;
+}
+
+.idea-form .idea-buttons .delete-button{
+    background-color: #ff4c2c;
 }
 
 .idea-form .next-prev-buttons {

@@ -23,7 +23,6 @@ const AppContent = () => {
 
   // Check if current route matches the exclusion list
   const shouldShowNavAndFooter = !noNavAndFooterRoutes.includes(location.pathname) && !location.pathname.includes("ideaeditor");
-  console.log(shouldShowNavAndFooter);
 
   return (
     <div className="App">
