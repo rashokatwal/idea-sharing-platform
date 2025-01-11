@@ -25,6 +25,7 @@
 .logo {
     height: 40px;
     /* width: fit-content; */
+    /* mix-blend-mode: multiply; */
 }
 
 .searchBar {

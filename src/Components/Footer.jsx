@@ -6,7 +6,7 @@ const Footer = () => {
     return(
         <div className="footer-outer">
             <div className="footer-inner">
-                <h2 className="logo">MindHop</h2>
+                <img src="/src/Assets/logo.png" alt="logo" className="logo" style={{filter: 'invert(1)'}}/>
                 <p className="footer-description">A platform for thinkers, creators, and innovators to share ideas, collaborate, and inspire change. Join us and make your vision a reality.</p>
                 <div className="social-links">
                     <a href="/"><FontAwesomeIcon icon={faInstagram} /></a>

@@ -53,9 +53,9 @@
     outline: solid 3px var(--accent-color);
 }
 
-.idea-form .idea-title:not(:placeholder-shown) {
+/* .idea-form .idea-title:not(:placeholder-shown) {
     font-weight: 600;
-}
+} */
 
 .idea-form .idea-description {
     min-height: 200px;

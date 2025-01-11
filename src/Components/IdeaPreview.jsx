@@ -1,5 +1,6 @@
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
+import { categoryColors } from "../Constants/FilterElements";
 
 const IdeaPreview = ({ ideaDetails }) => {
     return (
@@ -9,7 +10,7 @@ const IdeaPreview = ({ ideaDetails }) => {
             <div className="idea-preview-summary">
                 {parse(ideaDetails.summary)}
             </div>
-            <p className="category" style={{backgroundColor: "lightcoral", cursor: "pointer"}}>{ideaDetails.category}</p>
+            <p className="category" style={{backgroundColor: categoryColors[ideaDetails.category], cursor: "pointer"}}>{ideaDetails.category}</p>
             <div className="tags">
                 {ideaDetails.tags.map((tag, index) => (
                     <span key={index} className="tag">{tag}</span>

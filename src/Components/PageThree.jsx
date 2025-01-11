@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faFloppyDisk, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
+// import 'react-quill-new/dist/quill.snow.css';
 import { Link, useLocation } from "react-router-dom";
 
 const PageThree = ({ ideaDetails, setIdeaDetails }) => {

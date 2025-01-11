@@ -33,6 +33,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             setIdeaDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
             setNewTag("");
         }
+        console.log("enter")
         // setDateTime();
     }
 
@@ -59,7 +60,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             <ReactQuill theme="snow" modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" />
             <p className="labels">Tags</p>
             <div className="tags-input">
-                <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}}/>
+                <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
                 <div className="tags" style={{flexGrow: 3}}>
                 {ideaDetails.tags.map((tag, index) => (
                     <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon={faXmark} /></span></span>
