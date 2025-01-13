@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/autocomplete.css';
 
-const Autocomplete = ({ suggestions, placeholder, value, onChange }) => {
+const Autocomplete = ({ suggestions, placeholder, value, onChange, outline }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState(value);
 
@@ -38,6 +38,7 @@ const Autocomplete = ({ suggestions, placeholder, value, onChange }) => {
         value={inputValue}
         onChange={handleChange}
         placeholder={placeholder}
+        style={{outline: outline}}
       />
       <ul className="autocomplete-suggestions">
         {filteredSuggestions.map((suggestion, index) => (

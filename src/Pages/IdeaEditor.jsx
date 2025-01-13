@@ -38,7 +38,7 @@ const IdeaEditor = () => {
         let date = new Date();
         let hour = date.getHours();
         setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}` });
-        console.log(ideaDetails)
+        // console.log(ideaDetails)
     }
 
     useEffect(() => {

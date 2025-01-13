@@ -50,7 +50,7 @@
 }
 
 .idea-form input:not(.idea-tags):focus, textarea:focus {
-    outline: solid 3px var(--accent-color);
+    outline: solid 3px var(--accent-color) ;
 }
 
 /* .idea-form .idea-title:not(:placeholder-shown) {

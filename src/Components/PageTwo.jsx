@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+// import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faArrowRight, faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
@@ -57,7 +57,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             </div>
 
             <p className="labels">Summary</p>
-            <ReactQuill theme="snow" modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" />
+            <ReactQuill modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" />
             <p className="labels">Tags</p>
             <div className="tags-input">
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
