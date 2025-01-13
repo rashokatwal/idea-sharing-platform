@@ -13,26 +13,53 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
     const [ valid, setValid ] = useState(false);
 
     const handletitle = (value) => {
-        setIdeaDetails({...ideaDetails, title: value });
-        ideaDetails.title.length > 0 ? setTitleChars({valid: true, outline: "none"}) : setTitleChars({valid: false, outline: "red solid 2px"});
-        setValid(titleChars.valid && categoryChars.valid && descriptionChars.valid);
+        const updatedDetails = { ...ideaDetails, title: value };
+        setIdeaDetails(updatedDetails);
+        const isTitleValid = value.trim().length > 0;
+        setTitleChars({
+            valid: isTitleValid,
+            outline: isTitleValid ? "none" : "red solid 2px",
+        });
+
+        const isValid = isTitleValid && categoryChars.valid && descriptionChars.valid;
+        setValid(isValid);
     };
 
     const handlecategory = (value) => {
-        setIdeaDetails({...ideaDetails, category: value });
-        ideaDetails.category.length > 0 ? setCategoryChars({valid: true, outline: "none"}) : setCategoryChars({valid: false, outline: "red solid 2px"});
+        const updatedDetails = { ...ideaDetails, category: value };
+        setIdeaDetails(updatedDetails);
+        const isCategoryValid = value.trim().length > 0;
+        setCategoryChars({
+            valid: isCategoryValid,
+            outline: isCategoryValid ? "none" : "red solid 2px",
+        });
+
+        const isValid = titleChars.valid && isCategoryValid && descriptionChars.valid;
+        setValid(isValid);
     };
 
     const handleDescription = (value) => {
-        setIdeaDetails({...ideaDetails, description: value });
-        ideaDetails.description.length > 0 ? setDescriptionChars({valid: true, outline: "none"}) : setDescriptionChars({valid: false, outline: "red solid 2px"});
+        const updatedDetails = { ...ideaDetails, description: value };
+        setIdeaDetails(updatedDetails);
+        const isDescriptionValid = value.trim().length > 0;
+        setDescriptionChars({
+            valid: isDescriptionValid,
+            outline: isDescriptionValid ? "none" : "red solid 2px",
+        });
+
+        const isValid = titleChars.valid && categoryChars.valid && isDescriptionValid;
+        setValid(isValid);
     };
 
     const validate = () => {
-        ideaDetails.title.length > 0 ? setTitleChars({valid: true, outline: "none"}) : setTitleChars({valid: false, outline: "red solid 2px"});
-        ideaDetails.category.length > 0 ? setCategoryChars({valid: true, outline: "none"}) : setCategoryChars({valid: false, outline: "red solid 2px"});
-        ideaDetails.description.length > 0 ? setDescriptionChars({valid: true, outline: "none"}) : setDescriptionChars({valid: false, outline: "red solid 2px"});
-        setValid(titleChars.valid && categoryChars.valid && descriptionChars.valid);
+        const isTitleValid = ideaDetails.title.trim().length > 0;
+        const isCategoryValid = ideaDetails.category.trim().length > 0;
+        const isDescriptionValid = ideaDetails.description.trim().length > 0;
+
+        setTitleChars({ valid: isTitleValid, outline: isTitleValid ? "none" : "red solid 2px" });
+        setCategoryChars({ valid: isCategoryValid, outline: isCategoryValid ? "none" : "red solid 2px" });
+        setDescriptionChars({ valid: isDescriptionValid, outline: isDescriptionValid ? "none" : "red solid 2px" });
+        setValid(isTitleValid && isCategoryValid && isDescriptionValid);
     }
 
     return (
@@ -48,11 +75,11 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
             </div>
 
             <p className="labels">Title</p>
-            <input type="text" className="idea-title" style={{outline: titleChars.outline}} placeholder="Give your idea a captivating title" onChange={(e) => handletitle(e.target.value)}/>
+            <input type="text" className="idea-title" value={ideaDetails.title} style={{outline: titleChars.outline}} placeholder="Give your idea a captivating title" onChange={(e) => handletitle(e.target.value)}/>
             <p className="labels">Category</p>
             <Autocomplete suggestions={ categories } placeholder={"Select a category"} outline={ categoryChars.outline } value={ideaDetails.category} className="idea-category" onChange={handlecategory}/>
             <p className="labels">Description</p>
-            <textarea style={{outline: descriptionChars.outline}} className="idea-description" placeholder="Summarize your idea in a few sentences..." onChange={(e) => handleDescription(e.target.value)}/>
+            <textarea style={{outline: descriptionChars.outline}} className="idea-description" value={ideaDetails.description} placeholder="Summarize your idea in a few sentences..." onChange={(e) => handleDescription(e.target.value)}/>
             {/* <span>(Max 50 words)</span> */}
             <div className="next-prev-buttons">
                 <Link to={valid ? "/ideaeditor/p/2" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon={faArrowRight}/></Link>
