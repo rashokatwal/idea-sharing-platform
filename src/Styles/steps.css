@@ -17,8 +17,12 @@
     margin-bottom: 20px;
 }
 
+.steps-paragraph {
+    line-height: 25px;
+}
+
 .steps-grid {
-    margin: 0px 50px;
+    margin: 0px 100px;
 }
 
 .steps-grid-elements {
@@ -28,7 +32,7 @@
 }
 
 .steps-grid-elements .arrow img {
-    height: 100px;
+    height: 80px;
     margin-top: 100px;
 }
 
@@ -41,7 +45,7 @@
 }
 
 .steps-grid-elements img {
-    height: 150px;
+    height: 100px;
     margin: auto;
 }
 
@@ -69,8 +73,8 @@
     border: none;
     background-color: var(--accent-color);
     color: white;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     cursor: pointer;
 }

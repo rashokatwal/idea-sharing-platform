@@ -7,6 +7,9 @@ const Steps = () => {
         <div className="steps-outer">
             <div className="steps-inner">
                 <h2 className="steps-title">How It Works</h2>
+                <p className="steps-paragraph">
+                    Turning ideas into reality has never been easier! Our platform simplifies the process into four actionable steps designed to empower your creativity and foster collaboration. Whether you're an innovator, dreamer, or collaborator, this is the space where your ideas grow and thrive. Here's how:
+                </p>
                 <div className="steps-grid">
                     <div className="steps-grid-elements odd-element">
                         <img src="/src/Assets/sign-in.png"/>
@@ -65,6 +68,9 @@ const Steps = () => {
                         </div>
                     </div>
                 </div>
+                {/* <div className="steps-cycle">
+                    <img src="/src/Assets/steps-cycle.png" style={{height: "500px"}}/>
+                </div> */}
                 <div className="call-to-action-section">
                     <h5>
                         HEARD<br />ENOUGH? <FontAwesomeIcon icon={faArrowRight} />
