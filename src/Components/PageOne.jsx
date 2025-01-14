@@ -7,10 +7,10 @@ import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
 const PageOne = ({ ideaDetails, setIdeaDetails }) => {
-    const [ titleChars, setTitleChars ] = useState({valid: false, outline: "none"});
-    const [ categoryChars, setCategoryChars ] = useState({valid: false, outline: "none"});
-    const [ descriptionChars, setDescriptionChars ] = useState({valid: false, outline: "none"});
-    const [ valid, setValid ] = useState(false);
+    const [ titleChars, setTitleChars ] = useState({valid: ideaDetails.title.trim().length > 0, outline: "none"});
+    const [ categoryChars, setCategoryChars ] = useState({valid: ideaDetails.category.trim().length > 0 && categories.includes(ideaDetails.category), outline: "none"});
+    const [ descriptionChars, setDescriptionChars ] = useState({valid: ideaDetails.description.trim().length > 0, outline: "none"});
+    const [ valid, setValid ] = useState(titleChars.valid && categoryChars.valid && descriptionChars.valid);
 
     const handletitle = (value) => {
         const updatedDetails = { ...ideaDetails, title: value };
@@ -28,7 +28,7 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
     const handlecategory = (value) => {
         const updatedDetails = { ...ideaDetails, category: value };
         setIdeaDetails(updatedDetails);
-        const isCategoryValid = value.trim().length > 0;
+        const isCategoryValid = (value.trim().length > 0) && categories.includes(value);
         setCategoryChars({
             valid: isCategoryValid,
             outline: isCategoryValid ? "none" : "red solid 2px",
@@ -53,7 +53,7 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
 
     const validate = () => {
         const isTitleValid = ideaDetails.title.trim().length > 0;
-        const isCategoryValid = ideaDetails.category.trim().length > 0;
+        const isCategoryValid = (ideaDetails.category.trim().length > 0) && categories.includes(ideaDetails.category);
         const isDescriptionValid = ideaDetails.description.trim().length > 0;
 
         setTitleChars({ valid: isTitleValid, outline: isTitleValid ? "none" : "red solid 2px" });

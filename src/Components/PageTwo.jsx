@@ -7,7 +7,8 @@ import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
-
+    const [ summaryChars, setSummaryChars ] = useState({valid: ideaDetails.summary.trim().length > 0, outline: "none"});
+    const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
 
     const modules = {
@@ -23,8 +24,14 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     };
 
     const handlesummary = (value) => {
-        setIdeaDetails({...ideaDetails, summary: value });
-        // setDateTime();
+        const updatedDetails = { ...ideaDetails, summary: value };
+        setIdeaDetails(updatedDetails);
+        const isSummaryValid = value.replace(/<[^>]*>/g, '').trim().length > 0;
+        setSummaryChars({
+            valid: isSummaryValid,
+            outline: isSummaryValid ? "none" : "red solid 2px",
+        });
+        setValid(isSummaryValid);
     };
 
     const addTag = () => {
@@ -43,6 +50,13 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             ...ideaDetails.tags.slice(index + 1)
           ]}); 
     }
+
+    const validate = () => {
+        const isSummaryValid = ideaDetails.title.trim().length > 0;
+
+        setSummaryChars({ valid: isSummaryValid, outline: isSummaryValid ? "none" : "red solid 2px" });
+        setValid(isSummaryValid);
+    }
     
     return (
         <div className="page-two">
@@ -57,7 +71,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             </div>
 
             <p className="labels">Summary</p>
-            <ReactQuill modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" />
+            <ReactQuill modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" style={{outline: summaryChars.outline}}/>
             <p className="labels">Tags</p>
             <div className="tags-input">
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
@@ -70,7 +84,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             </div>
             <div className="next-prev-buttons">
                 <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
-                <Link to="/ideaeditor/p/3" className="primary-button">Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
+                <Link to={valid ? "/ideaeditor/p/3" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
             </div>
         </div>
     )
