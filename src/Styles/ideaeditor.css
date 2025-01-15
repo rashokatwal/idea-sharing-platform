@@ -62,11 +62,11 @@
 }
 
 .idea-form .idea-summary {
-    height: 80vh;
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow-x: hidden; */
     margin-bottom: 40px;
+    position: relative;
 }
 
 .idea-form .ql-editor:active .idea-summary{
@@ -77,6 +77,10 @@
 .idea-form .idea-summary .ql-toolbar {
     display: flex;
     justify-content: space-between;
+}
+
+.idea-form .idea-summary .ql-container {
+    height: 80vh;
 }
 
 .idea-form .idea-buttons {

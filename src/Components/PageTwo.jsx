@@ -16,9 +16,10 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'font': [] }],
             ['bold', 'italic', 'underline', 'strike'],    
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
             [{ 'script': 'sub'}, { 'script': 'super' }],
             [{ 'align': [] }],
+            [{ 'color': [] }, { 'background': [] }], 
             ['link', 'image', 'video', 'formula'],
           ]
     };
