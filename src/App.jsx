@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar";
 import ScrollToTop from "./Components/ScrollToTop";
 import IdeaEditor from "./Pages/IdeaEditor";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import IdeaPreview from "./Components/IdeaPreview";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const AppContent = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/explore" element={<Explore />} />
+        <Route exact path="/idea" element={<Idea />} />
         {location.pathname.includes("ideaeditor") && <Route path="*" element={<IdeaEditor />} />}
         {/* <Route exact path="/ideaeditor" element={<IdeaEditor />} /> */}
       </Routes>

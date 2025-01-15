@@ -4,6 +4,7 @@ import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 import { ideas } from '../data/ideas'
 import CardComponent from '../Components/Cardcomponent';
+import { Link } from 'react-router-dom';
 
 const Explore = () => {
     const [ viewType, setViewType ] = useState("grid");
@@ -18,7 +19,7 @@ const Explore = () => {
                 <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
                     {
                         ideas.map((idea) => (
-                            viewType === "grid" ? <CardComponent prop={idea} key={idea.id}/> : <ListComponent prop={idea} key={idea.id}/>
+                            viewType === "grid" ? <Link to={"/idea/" + idea.id} key={idea.id}><CardComponent prop={idea}/></Link> : <Link to={"/idea" + idea.id} key={idea.id}><ListComponent prop={idea}/></Link>
                         ))
                     }
                 </div>
