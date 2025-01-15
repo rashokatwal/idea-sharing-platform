@@ -30,7 +30,10 @@ const IdeaEditor = () => {
         tags: [],
         updatedDate: "",
         updatedTime: "",
-        author: "Jon Doe"
+        author: "Jon Doe",
+        status: "",
+        likes: 0,
+        comments: 0
     })
 
     const setDateTime = () => {
