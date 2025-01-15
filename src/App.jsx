@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import ScrollToTop from "./Components/ScrollToTop";
 import IdeaEditor from "./Pages/IdeaEditor";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import IdeaPreview from "./Components/IdeaPreview";
+import Idea from "./Pages/Idea";
 
 const App = () => {
   return (
