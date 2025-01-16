@@ -77,7 +77,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
                 <div className="tags" style={{flexGrow: 3}}>
                 {ideaDetails.tags.map((tag, index) => (
-                    <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon="fa-solid fa-xmark" /></span></span>
+                    <span key={index} className="tag" style={{fontWeight: "600"}}>"{tag.toUpperCase()}"<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon="fa-solid fa-xmark" /></span></span>
                 ))}
                 </div>
                 <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon="fa-solid fa-plus" /></div>

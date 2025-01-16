@@ -1,9 +1,23 @@
+import { useState } from 'react';
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryColors } from "../Constants/FilterElements";
 
 const IdeaPreview = ({ ideaDetails }) => {
-    console.log(ideaDetails)
+    const [ likeIcon, setLikeIcon ] = useState("fa-regular fa-heart");
+
+    const handleLike = () => {
+        setLikeIcon(likeIcon === "fa-regular fa-heart"? "fa-solid fa-heart" : "fa-regular fa-heart");
+        if(likeIcon === "fa-regular fa-heart") {
+            setLikeIcon("fa-solid fa-heart");
+            ideaDetails.likes++;
+        }
+        else {
+            setLikeIcon("fa-regular fa-heart");
+            ideaDetails.likes--;
+        }
+    }
     return (
         <div className="idea-preview" style={{border: "solid 1px " + categoryColors[ideaDetails.category]}}>
             <h2 className="idea-preview-title">{ideaDetails.title}</h2>
@@ -14,13 +28,18 @@ const IdeaPreview = ({ ideaDetails }) => {
             <p className="category" style={{backgroundColor: categoryColors[ideaDetails.category], cursor: "pointer"}}>{ideaDetails.category}</p>
             <div className="tags">
                 {ideaDetails.tags.map((tag, index) => (
-                    <span key={index} className="tag">{tag}</span>
+                    <span key={index} className="tag">"{tag.toUpperCase()}"</span>
                 ))}
             </div>
+            <h5 className="author">By <span className="author-name" style={{cursor: "pointer"}}>{ideaDetails.author}</span></h5>
             <p className="idea-preview-date-time">
                 {ideaDetails.updatedDate != "" && ideaDetails.updatedTime != "" ? ideaDetails.updatedDate + ", " + ideaDetails.updatedTime : ""}
             </p>
-            <h5 className="author">By <span className="author-name" style={{cursor: "pointer"}}>{ideaDetails.author}</span></h5>
+            <div style={{marginTop: "30px"}}>
+                <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={likeIcon} onClick={handleLike}/> {ideaDetails.likes}</span>
+                <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails.comments}</span>
+                <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
+            </div>
         </div>
     )
 }

@@ -18,7 +18,7 @@ const ListComponent = (prop) => {
                 <p className="category" style={{backgroundColor: categoryColors[idea.category], marginBottom: "0"}}>{idea.category}</p>
                 <div className="tags" style={{flexGrow: "1"}}>
                     {idea.tags.map((tag, index) => (
-                        <span key={index} className="tag">{tag}</span>
+                        <span key={index} className="tag">"{tag}"</span>
                     ))}
                 </div>
             </div>

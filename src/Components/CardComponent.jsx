@@ -12,15 +12,15 @@ const CardComponent = (prop) => {
             <p className="category" style={{flexGrow: "1", backgroundColor: categoryColors[idea.category]}}>{idea.category}</p>
             <div className="tags" style={{flexGrow: "1"}}>
                 {idea.tags.map((tag, index) => (
-                    <span key={index} className="tag">{tag}</span>
+                    <span key={index} className="tag">"{tag}"</span>
                 ))}
             </div>
             <div className="extra-details" style={{flexGrow: "1"}}>
                 <div className="likes-comments">
-                    <span className="likes"><FontAwesomeIcon icon="fa-solid fa-heart" /> {idea.likes}</span>
-                    <span className="comments"><FontAwesomeIcon icon="fa-solid fa-comment" /> {idea.comments}</span>
+                    <span className="likes"><FontAwesomeIcon icon="fa-regular fa-heart"/> {idea.likes}</span>
+                    <span className="comments"><FontAwesomeIcon icon="fa-regular fa-comment" /> {idea.comments}</span>
                 </div>
-                <span className="posted-date">{idea.datePosted}</span>
+                <span className="posted-date">{idea.updatedDate}</span>
             </div>
         </div>
     )
