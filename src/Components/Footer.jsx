@@ -1,6 +1,5 @@
 import '../Styles/footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter, faSquareFacebook, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
     return(
@@ -9,10 +8,10 @@ const Footer = () => {
                 <img src="/src/Assets/logo.png" alt="logo" className="logo" style={{filter: 'invert(1)'}}/>
                 <p className="footer-description">A platform for thinkers, creators, and innovators to share ideas, collaborate, and inspire change. Join us and make your vision a reality.</p>
                 <div className="social-links">
-                    <a href="/"><FontAwesomeIcon icon={faInstagram} /></a>
-                    <a href="/"><FontAwesomeIcon icon={faSquareFacebook} /></a>
-                    <a href="/"><FontAwesomeIcon icon={faLinkedin} /></a>
-                    <a href="/"><FontAwesomeIcon icon={faXTwitter} /></a>
+                    <a href="/"><FontAwesomeIcon icon="fa-brands fa-instagram" /></a>
+                    <a href="/"><FontAwesomeIcon icon="fa-brands fa-square-facebook" /></a>
+                    <a href="/"><FontAwesomeIcon icon="fa-brands fa-linkedin" /></a>
+                    <a href="/"><FontAwesomeIcon icon="fa-brands fa-twitter" /></a>
                 </div>
                 <div className="other-links">
                     <a href="/">Privacy & Policy</a>
