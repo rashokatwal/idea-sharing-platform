@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ReactQuill from 'react-quill-new';
 // import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faArrowRight, faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
@@ -78,14 +77,14 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
                 <div className="tags" style={{flexGrow: 3}}>
                 {ideaDetails.tags.map((tag, index) => (
-                    <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon={faXmark} /></span></span>
+                    <span key={index} className="tag">{tag}<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon="fa-solid fa-xmark" /></span></span>
                 ))}
                 </div>
-                <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon={faPlus} /></div>
+                <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon="fa-solid fa-plus" /></div>
             </div>
             <div className="next-prev-buttons">
-                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon={faArrowLeft} /> Go Back</Link>
-                <Link to={valid ? "/ideaeditor/p/3" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon={faArrowRight} /></Link>            
+                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /> Go Back</Link>
+                <Link to={valid ? "/ideaeditor/p/3" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right" /></Link>            
             </div>
         </div>
     )

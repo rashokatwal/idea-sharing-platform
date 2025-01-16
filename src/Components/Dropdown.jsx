@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/dropdown.css';
 
 const Dropdown = ({ suggestions, placeholder }) => {
@@ -41,7 +40,7 @@ const Dropdown = ({ suggestions, placeholder }) => {
                  placeholder={placeholder}
                  readOnly= { true }
                 />
-                <FontAwesomeIcon icon={faSortDown} style={{marginBottom: "3px"}}/>
+                <FontAwesomeIcon icon="fa-solid fa-sort-down" style={{marginBottom: "3px"}}/>
             </div>
             <ul className="dropdown-list">
                 {filteredSuggestions.map((suggestion, index) => (

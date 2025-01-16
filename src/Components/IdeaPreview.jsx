@@ -3,8 +3,9 @@ import parse from 'html-react-parser';
 import { categoryColors } from "../Constants/FilterElements";
 
 const IdeaPreview = ({ ideaDetails }) => {
+    console.log(ideaDetails)
     return (
-        <div className="idea-preview">
+        <div className="idea-preview" style={{border: "solid 1px " + categoryColors[ideaDetails.category]}}>
             <h2 className="idea-preview-title">{ideaDetails.title}</h2>
             <p className="idea-preview-description">{ideaDetails.description}</p>
             <div className="idea-preview-summary">

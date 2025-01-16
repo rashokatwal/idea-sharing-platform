@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Autocomplete from '../Components/Autocomplete';
 import { categories } from '../Constants/FilterElements';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import ScrollToTop from "./ScrollToTop";
 import { Link } from "react-router-dom";
 
@@ -82,7 +81,7 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
             <textarea style={{outline: descriptionChars.outline}} className="idea-description" value={ideaDetails.description} placeholder="Summarize your idea in a few sentences..." onChange={(e) => handleDescription(e.target.value)}/>
             {/* <span>(Max 50 words)</span> */}
             <div className="next-prev-buttons">
-                <Link to={valid ? "/ideaeditor/p/2" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon={faArrowRight}/></Link>
+                <Link to={valid ? "/ideaeditor/p/2" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right"/></Link>
             </div>
         </div>
     )

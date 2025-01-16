@@ -1,0 +1,11 @@
+.idea-outer {
+    min-width: 100%;
+    position: relative;
+    /* margin-top: 80px; */
+}
+
+.idea-inner {
+    margin: 30px auto;
+    width: 1000px;
+    position: relative;
+}

@@ -1,6 +1,5 @@
 import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
 import { categoryColors } from '../Constants/FilterElements';
 
 const CardComponent = (prop) => {
@@ -18,8 +17,8 @@ const CardComponent = (prop) => {
             </div>
             <div className="extra-details" style={{flexGrow: "1"}}>
                 <div className="likes-comments">
-                    <span className="likes"><FontAwesomeIcon icon={faThumbsUp} /> {idea.likes}</span>
-                    <span className="comments"><FontAwesomeIcon icon={faComment} /> {idea.comments}</span>
+                    <span className="likes"><FontAwesomeIcon icon="fa-solid fa-heart" /> {idea.likes}</span>
+                    <span className="comments"><FontAwesomeIcon icon="fa-solid fa-comment" /> {idea.comments}</span>
                 </div>
                 <span className="posted-date">{idea.datePosted}</span>
             </div>

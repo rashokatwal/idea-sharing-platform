@@ -1,6 +1,5 @@
 import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 // import '../Assets/logo.png';
 const Navbar = () => {
@@ -12,7 +11,7 @@ const Navbar = () => {
                 <div className="searchBar-outer">
                     <input type="text" className="searchBar" placeholder="Search for Ideas"/>
                     <button className="searchButton">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg"/>
+                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" size="lg"/>
                     </button>
                 </div>
                 <ul className="navLinks">

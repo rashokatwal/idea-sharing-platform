@@ -2,7 +2,6 @@
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGrip, faListUl } from '@fortawesome/free-solid-svg-icons';
 import { categories, popularity, status, time } from '../Constants/FilterElements';
 import '../Styles/filter.css';
 
@@ -20,8 +19,8 @@ const Filter = ({ parentCallback }) => {
                 <Dropdown placeholder={ "Status" } suggestions={ status }/>
                 <Dropdown placeholder={ "Time" } suggestions={ time }/>
                 <div className="view-type">
-                    <FontAwesomeIcon icon={faGrip} size='lg' onClick={() => onTrigger("grid")}/>
-                    <FontAwesomeIcon icon={faListUl} size='lg' onClick={() => onTrigger("list")}/>
+                    <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger("grid")}/>
+                    <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' onClick={() => onTrigger("list")}/>
                 </div>
             </div>
         </div>
