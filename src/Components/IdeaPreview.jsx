@@ -35,10 +35,16 @@ const IdeaPreview = ({ ideaDetails }) => {
             <p className="idea-preview-date-time">
                 {ideaDetails.updatedDate != "" && ideaDetails.updatedTime != "" ? ideaDetails.updatedDate + ", " + ideaDetails.updatedTime : ""}
             </p>
-            <div style={{marginTop: "30px"}}>
-                <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={likeIcon} onClick={handleLike}/> {ideaDetails.likes}</span>
-                <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails.comments}</span>
-                <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
+            <div className="extra-features">
+                <div className="like-comment-share">
+                    <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={likeIcon} onClick={handleLike}/> {ideaDetails.likes}</span>
+                    <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails.comments}</span>
+                    <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
+                </div>
+                <div className="collab-save">
+                    <span className="collaborate" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-handshake" /> Collab</span>
+                    <span className="save" style={{cursor: "pointer", marginLeft: "15px"}}><FontAwesomeIcon icon="fa-regular fa-bookmark" /> Save</span>
+                </div>
             </div>
         </div>
     )

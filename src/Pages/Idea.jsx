@@ -1,6 +1,6 @@
 import IdeaPreview from "../Components/IdeaPreview";
 import {ideas} from "../data/ideas";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {useLocation} from "react-router-dom";
 import "../Styles/idea.css";
 

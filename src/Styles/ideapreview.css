@@ -1,6 +1,7 @@
 .idea-preview {
     padding: 15px 30px;
     border-radius: 15px;
+    position: relative;
 }
 
 .idea-preview::-webkit-scrollbar {
@@ -37,6 +38,14 @@
     opacity: 0.6;
     font-weight: 500;
 }
+
+.idea-preview .extra-features {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .ql-align-center {
     text-align: center !important;
 }

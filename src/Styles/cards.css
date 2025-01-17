@@ -30,6 +30,7 @@
 
 .likes, .comments {
     margin-right: 15px;
+    font-weight: 500;
 }
 
 .posted-date {
