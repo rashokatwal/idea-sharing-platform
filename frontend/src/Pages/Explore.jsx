@@ -19,7 +19,7 @@ const Explore = () => {
                 <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
                     {
                         ideas.map((idea) => (
-                            viewType === "grid" ? <Link to={"/idea/" + idea.id} key={idea.id}><CardComponent prop={idea}/></Link> : <Link to={"/idea" + idea.id} key={idea.id}><ListComponent prop={idea}/></Link>
+                            viewType === "grid" ? <Link to={"/idea/" + idea.id} key={idea.id}><CardComponent prop={idea}/></Link> : <Link to={"/idea/" + idea.id} key={idea.id}><ListComponent prop={idea}/></Link>
                         ))
                     }
                 </div>
