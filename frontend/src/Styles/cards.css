@@ -29,8 +29,10 @@
 }
 
 .likes, .comments {
-    margin-right: 15px;
+    display: inline-block;
+    margin-right: 5px;
     font-weight: 500;
+    min-width: 60px;
 }
 
 .posted-date {

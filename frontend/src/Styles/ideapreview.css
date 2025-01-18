@@ -46,6 +46,39 @@
     justify-content: space-between;
 }
 
+.idea-preview .extra-features .collab-save > * {
+    display: inline-block;
+    font-weight: 500;
+    min-width: 75px;
+}
+
+/* .collaborate::after {
+    content: "Collaborate with people";
+}
+
+.save::after {
+    content: "Save";
+}
+
+.collaborate::after, .save::after {
+    border: solid 1px;
+    padding: 5px 10px;
+    font-size: 10px;
+    position: absolute;
+    bottom: 30px;
+    background-color: #3c3c3c;
+    color: white;
+    right: -5px;
+    transition: 0.2s;
+    opacity: 0;
+    bottom: 15px;
+}
+
+.collaborate:hover::after, .save:hover::after {
+    opacity: 1;
+    bottom: 20px;
+} */
+
 .ql-align-center {
     text-align: center !important;
 }
