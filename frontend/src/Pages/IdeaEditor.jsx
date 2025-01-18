@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import Autocomplete from '../Components/Autocomplete';
-// import { categories } from '../Constants/FilterElements'
 import '../Styles/ideaeditor.css';
-// import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-// import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
-// import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PageOne from "../Components/PageOne";
 import PageTwo from "../Components/PageTwo";
 import PageThree from "../Components/PageThree";

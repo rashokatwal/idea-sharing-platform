@@ -2,8 +2,7 @@ import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { categoryColors } from '../Constants/FilterElements';
 
-const CardComponent = (prop) => {
-    const idea = prop.prop;
+const CardComponent = ({ idea }) => {
     return (
         <div className="card-container" style={{border: "solid 1px " + categoryColors[idea.category]}}>
             <h4 className="card-title" style={{flexGrow: "1"}}>{idea.title}</h4>
