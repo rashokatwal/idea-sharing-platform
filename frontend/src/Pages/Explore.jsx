@@ -4,9 +4,9 @@ import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 // import { ideas } from '../data/ideas';
 import CardComponent from '../Components/CardComponent';
-import CardSkeleton from '../Components/CardSkeleton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import IdeasSkeleton from '../Components/IdeasSkeleton';
 
 const Explore = () => {
     const [ loading, setLoading ] = useState(true);
@@ -38,8 +38,8 @@ const Explore = () => {
             <div className="ideas-section-outer">
                 <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
                     {
-                        loading ? Array.from({ length: 8 }).map((_, index) => (
-                            <CardSkeleton key={index} />
+                        loading ? Array.from({ length: 9 }).map((_, index) => (
+                            <IdeasSkeleton key={index} viewType={viewType}/>
                           )) 
                           : ideas.map((idea) => (
                             viewType === "grid" ? <Link to={"/idea/" + idea._id} key={idea._id}><CardComponent idea={idea}/></Link> : <Link to={"/idea/" + idea._id} key={idea._id}><ListComponent idea={idea}/></Link>

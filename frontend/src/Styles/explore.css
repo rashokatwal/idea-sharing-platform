@@ -17,6 +17,12 @@
     grid-gap: 20px;
 }
 
+.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .card-grid a, .list-view a {
     text-decoration: none;
     color: var(--text-color);
