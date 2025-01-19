@@ -1,6 +1,5 @@
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { categories, categoryColors } from '../Constants/FilterElements'
 
 const IdeasSkeleton = ({ viewType }) => {
     let properties = viewType === "grid" ? {
