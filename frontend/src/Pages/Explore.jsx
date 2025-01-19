@@ -3,11 +3,13 @@ import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 // import { ideas } from '../data/ideas';
-import CardComponent from '../Components/Cardcomponent';
+import CardComponent from '../Components/CardComponent';
+import CardSkeleton from '../Components/CardSkeleton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Explore = () => {
+    const [ loading, setLoading ] = useState(true);
     const [ viewType, setViewType ] = useState("grid");
     const handleCallback = (childData) => {
         setViewType(childData);
@@ -16,15 +18,18 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-         .get("http://localhost:3000/ideas")
-         .then((response) => {
-            setIdeas(response.data);
-         })
-         .catch((error) => console.log(error));
+            .get("http://localhost:3000/ideas")
+            .then((response) => {
+                setIdeas(response.data);
+                setLoading(false);
+            })
+            .catch((error) => console.log(error));
     }
     
     useEffect(() => {
-        fetchIdeas();
+        setTimeout(() => {
+            fetchIdeas();
+        }, 2000)
     }, [])
 
     return (
@@ -33,10 +38,14 @@ const Explore = () => {
             <div className="ideas-section-outer">
                 <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
                     {
-                        ideas.map((idea) => (
+                        loading ? Array.from({ length: 8 }).map((_, index) => (
+                            <CardSkeleton key={index} />
+                          )) 
+                          : ideas.map((idea) => (
                             viewType === "grid" ? <Link to={"/idea/" + idea._id} key={idea._id}><CardComponent idea={idea}/></Link> : <Link to={"/idea/" + idea._id} key={idea._id}><ListComponent idea={idea}/></Link>
                         ))
                     }
+
                 </div>
             </div>
         </div>
