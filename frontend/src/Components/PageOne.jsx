@@ -79,7 +79,6 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
             <Autocomplete suggestions={ categories } placeholder={"Select a category"} outline={ categoryChars.outline } value={ideaDetails.category} className="idea-category" onChange={handlecategory}/>
             <p className="labels">Description</p>
             <textarea style={{outline: descriptionChars.outline}} className="idea-description" value={ideaDetails.description} placeholder="Summarize your idea in a few sentences..." onChange={(e) => handleDescription(e.target.value)}/>
-            {/* <span>(Max 50 words)</span> */}
             <div className="next-prev-buttons">
                 <Link to={valid ? "/ideaeditor/p/2" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right"/></Link>
             </div>

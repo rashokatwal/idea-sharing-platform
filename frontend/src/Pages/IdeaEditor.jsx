@@ -13,8 +13,6 @@ const IdeaEditor = () => {
         page = Number(location.pathname.split('/').pop());
     })
 
-    // const [page, setPage] = useState(pageNumber);
-
     const [ ideaDetails, setIdeaDetails ] = useState({
         title: "",
         category: "",
@@ -34,15 +32,11 @@ const IdeaEditor = () => {
         let date = new Date();
         let hour = date.getHours();
         setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}` });
-        // console.log(ideaDetails)
     }
 
     useEffect(() => {
         setDateTime();
-    }, [location.pathname])
-
-    // const nextPage = () => setPage((prev) => prev + 1);
-    // const prevPage = () => setPage((prev) => prev - 1);   
+    }, [location.pathname])  
 
     return(
         <div className="idea-editor-outer">

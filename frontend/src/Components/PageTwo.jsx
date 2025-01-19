@@ -40,8 +40,6 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             setIdeaDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
             setNewTag("");
         }
-        console.log("enter")
-        // setDateTime();
     }
 
     const removeTag = (index) => {

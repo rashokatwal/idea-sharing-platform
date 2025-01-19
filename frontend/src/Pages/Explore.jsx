@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
-// import { ideas } from '../data/ideas';
 import CardComponent from '../Components/CardComponent';
 import { Link } from 'react-router-dom';
 import axios from 'axios';

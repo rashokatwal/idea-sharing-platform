@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
