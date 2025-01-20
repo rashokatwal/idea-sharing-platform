@@ -10,10 +10,14 @@ const Filter = ({ parentCallback }) => {
         parentCallback(type);
     }
 
+    const handlecategory = (value) => {
+        
+    }
+
     return (
         <div className="filter-outer">
             <div className="filter-inner">
-                <Autocomplete suggestions={ categories } placeholder={ "Categories" }/>
+                <Autocomplete suggestions={ categories } placeholder={ "Categories" } onChange={handlecategory} value={""}/>
                 <Dropdown placeholder={ "Popularity" } suggestions={ popularity }/>
                 <Dropdown placeholder={ "Status" } suggestions={ status }/>
                 <Dropdown placeholder={ "Time" } suggestions={ time }/>
