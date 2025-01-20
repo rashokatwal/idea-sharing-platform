@@ -3,29 +3,34 @@ import IdeaPreview from "../Components/IdeaPreview";
 import {useLocation} from "react-router-dom";
 import "../Styles/idea.css";
 import axios from 'axios'; 
+import IdeaPreviewSkeleton from '../Components/IdeaPreviewSkeleton';
 
 const Idea = () => {
     const location = useLocation();
     let ideaId = location.pathname.split('/').pop();
     const [ ideaDetails, setIdeaDetails ] = useState({});
+    const [ loading, setLoading ] = useState(true);
 
     const fetchIdea = async () => {
         await axios
          .get(`http://localhost:3000/idea/${ideaId}`)
          .then((response) => {
             setIdeaDetails(response.data);
+            setLoading(false);
          })
          .catch((error) => console.log(error));
     }
 
     useEffect(() => {
-        fetchIdea();
+        setTimeout(() => {
+            fetchIdea();
+        }, 2000)
     }, [])
 
     return (
         <div className="idea-outer">
             <div className="idea-inner">
-                {ideaDetails._id && <IdeaPreview ideaDetails={ideaDetails}/>}
+                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails}/>}
             </div>
         </div>
     )
