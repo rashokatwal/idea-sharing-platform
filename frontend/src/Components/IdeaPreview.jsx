@@ -15,8 +15,7 @@ const IdeaPreview = ({ ideaDetails }) => {
                 { "likes" : ideaDetails.likes },
             )
             .then((response) => {
-                setIdeas(response.data);
-                setLoading(false);
+                // console.log(response.data)
             })
             .catch((error) => console.log(error));
     }
