@@ -3,14 +3,28 @@ import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryColors } from "../Constants/FilterElements";
+import axios from 'axios';
 
 const IdeaPreview = ({ ideaDetails }) => {
     const [ isLiked, setIsLiked ] = useState(false);
     const [ isSaved, setIsSaved ] = useState(false);
 
+    const updateLike = async () => {
+        await axios
+            .patch(`http://localhost:3000/idea/${ideaDetails._id}`,
+                { "likes" : ideaDetails.likes },
+            )
+            .then((response) => {
+                setIdeas(response.data);
+                setLoading(false);
+            })
+            .catch((error) => console.log(error));
+    }
+
     const handleLike = () => {
         setIsLiked(!isLiked);
         isLiked ? ideaDetails.likes-- : ideaDetails.likes++;
+        updateLike();
     }
 
     const handleSave = () => {
