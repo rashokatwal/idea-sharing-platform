@@ -22,7 +22,7 @@ connectToDb((err) => {
 app.get('/ideas', (req, res) => {
     let ideas = [];
     db.collection('ideas')
-     .find()
+     .find({status: {$ne: 'Draft'}})
      .batchSize(9)
      .forEach(idea => ideas.push(idea))
      .then(() => {

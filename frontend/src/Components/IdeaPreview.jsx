@@ -19,21 +19,30 @@ const IdeaPreview = ({ ideaDetails }) => {
 
     return (
         <div className="idea-preview" style={{border: "solid 1px " + categoryColors[ideaDetails.category]}}>
-            <h2 className="idea-preview-title">{ideaDetails.title}</h2>
-            <p className="idea-preview-description">{ideaDetails.description}</p>
-            <div className="idea-preview-summary">
-                {parse(ideaDetails.summary)}
+            <div className="author-details">
+                <span className="author-avatar"></span>
+                <div className="author-header">
+                    <span className="author-name">
+                        {ideaDetails.author}
+                    </span>
+                    <p className="idea-preview-date-time">
+                        {ideaDetails.updatedDate != "" && ideaDetails.updatedTime != "" ? ideaDetails.updatedDate + ", " + ideaDetails.updatedTime : ""}
+                    </p>
+                </div>
             </div>
-            <p className="category" style={{backgroundColor: categoryColors[ideaDetails.category], cursor: "pointer"}}>{ideaDetails.category}</p>
-            <div className="tags">
-                {ideaDetails.tags.map((tag, index) => (
-                    <span key={index} className="tag">"{tag.toUpperCase()}"</span>
-                ))}
+            <div className="idea-preview-details">
+                <h2 className="idea-preview-title">{ideaDetails.title}</h2>
+                <p className="idea-preview-description">{ideaDetails.description}</p>
+                <div className="idea-preview-summary">
+                    {parse(ideaDetails.summary)}
+                </div>
+                <p className="category" style={{backgroundColor: categoryColors[ideaDetails.category], cursor: "pointer"}}>{ideaDetails.category}</p>
+                <div className="tags">
+                    {ideaDetails.tags.map((tag, index) => (
+                        <span key={index} className="tag">"{tag.toUpperCase()}"</span>
+                    ))}
+                </div>
             </div>
-            <h5 className="author">By <span className="author-name" style={{cursor: "pointer"}}>{ideaDetails.author}</span></h5>
-            <p className="idea-preview-date-time">
-                {ideaDetails.updatedDate != "" && ideaDetails.updatedTime != "" ? ideaDetails.updatedDate + ", " + ideaDetails.updatedTime : ""}
-            </p>
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} onClick={handleLike}/> {ideaDetails.likes}</span>

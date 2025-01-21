@@ -5,7 +5,7 @@ const Navbar = () => {
     return ( 
         <div className="navbar-outer">
             <div className="navbar-inner">
-                <img src="/src/Assets/logo.png" alt="logo" className="logo" />
+                <Link to="/"><img src="/src/Assets/logo.png" alt="logo" className="logo" /></Link>
                 <div className="searchBar-outer">
                     <input type="text" className="searchBar" placeholder="Search for Ideas"/>
                     <button className="searchButton">
