@@ -18,9 +18,9 @@ const IdeaPreview = ({ ideaDetails }) => {
     }
 
     return (
-        <div className="idea-preview" style={{border: "solid 1px " + categoryColors[ideaDetails.category]}}>
+        <div className="idea-preview">
             <div className="author-details">
-                <span className="author-avatar"></span>
+                <img className="author-avatar" src='/src/Assets/default_user.png' />
                 <div className="author-header">
                     <span className="author-name">
                         {ideaDetails.author}

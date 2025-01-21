@@ -4,7 +4,7 @@ import { categoryColors } from '../Constants/FilterElements';
 
 const CardComponent = ({ idea }) => {
     return (
-        <div className="card-container" style={{border: "solid 1px " + categoryColors[idea.category]}}>
+        <div className="card-container" style={{border: "solid 2px " + categoryColors[idea.category]}}>
             <h4 className="card-title" style={{flexGrow: "1"}}>{idea.title}</h4>
             <p className="card-description" style={{flexGrow: "2"}}>{idea.description}</p>
             <h5 className="author" style={{flexGrow: "1"}}>By <span className="author-name">{idea.author}</span></h5>

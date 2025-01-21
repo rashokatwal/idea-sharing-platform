@@ -1,7 +1,8 @@
 .idea-preview {
-    padding: 15px 30px;
+    padding: 20px 30px;
     border-radius: 15px;
     position: relative;
+    border: solid 2px rgba(0, 0, 0, 0.3);
 }
 
 .idea-preview::-webkit-scrollbar {
@@ -21,7 +22,8 @@
     display: inline-block;
     height: 40px;
     width: 40px;
-    border: solid 1px;
+    border: solid 2px rgba(0, 0, 0, 1);
+    outline: solid 3px var(--accent-color);
     border-radius: 50%;
 }
 

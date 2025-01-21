@@ -3,7 +3,7 @@ import { categoryColors } from '../Constants/FilterElements';
 
 const ListComponent = ({ idea }) => {
     return (
-        <div className="list-container" style={{border: "solid 1px " + categoryColors[idea.category]}}>
+        <div className="list-container" style={{border: "solid 2px " + categoryColors[idea.category]}}>
             <div className="title-posted-date">
                 <h4 className="list-title">{idea.title}</h4>
                 <p className="posted-date">{idea.datePosted}</p>
