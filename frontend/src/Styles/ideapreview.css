@@ -52,7 +52,7 @@
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    height: 30vh;
+    min-height: 30vh;
 }
 
 .idea-preview-summary::-webkit-scrollbar {

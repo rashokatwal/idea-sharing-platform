@@ -15,16 +15,16 @@ const IdeaEditor = () => {
 
     const [ ideaDetails, setIdeaDetails ] = useState({
         title: "",
-        category: "",
         description: "",
+        category: "",
         summary: "",
         tags: [],
-        updatedDate: "",
-        updatedTime: "",
         author: "Jon Doe",
-        status: "",
+        status: "Draft",
         likes: 0,
-        comments: 0
+        comments: 0,
+        updatedDate: "",
+        updatedTime: ""
     })
 
     const setDateTime = () => {

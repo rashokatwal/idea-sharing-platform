@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from 'react-quill-new';
 // import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useLoadingBar } from '../Contexts/LoadingBarContext';
+import axios from "axios";
 
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
+    const navigate = useNavigate();
+    const loadingBarRef = useLoadingBar();
+    const ideaId = localStorage.getItem("ideaId");
+    const { summary, tags, updatedDate, updatedTime } = ideaDetails;
     const [ summaryChars, setSummaryChars ] = useState({valid: ideaDetails.summary.trim().length > 0, outline: "none"});
     const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
+
+    useEffect(() => {
+        // const id = localStorage.getItem("ideaId");
+        if (!ideaId) {
+            navigate(-1);
+        }
+    }, [ideaId, navigate]);
 
     const modules = {
         toolbar: [
@@ -49,11 +62,28 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
           ]}); 
     }
 
-    const validate = () => {
+    const validate = async () => {
         const isSummaryValid = ideaDetails.title.trim().length > 0;
 
         setSummaryChars({ valid: isSummaryValid, outline: isSummaryValid ? "none" : "red solid 2px" });
         setValid(isSummaryValid);
+        valid ? await updateData() : null;
+    }
+
+    const updateData = async () => {
+        loadingBarRef.current.continuousStart();
+        await axios.patch(`http://localhost:3000/idea/${ideaId}`,
+            {"summary": summary, "tags": tags, "updatedDate": updatedDate, "updatedTime": updatedTime}
+        )
+        .then((response) => {
+            navigate('/ideaeditor/p/3');
+            loadingBarRef.current.complete();
+        })
+        .catch((error) => console.log(error));
+    }
+
+    const prevPage = () => {
+        navigate(-1);
     }
     
     return (
@@ -81,8 +111,8 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 <div className="primary-button add-tags-button" style={{flexGrow: 1}} onClick={addTag}><FontAwesomeIcon icon="fa-solid fa-plus" /></div>
             </div>
             <div className="next-prev-buttons">
-                <Link to="/ideaeditor/p/1" className="primary-button"><FontAwesomeIcon icon="fa-solid fa-arrow-left" /> Go Back</Link>
-                <Link to={valid ? "/ideaeditor/p/3" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right" /></Link>            
+                <button className="primary-button" onClick={prevPage}><FontAwesomeIcon icon="fa-solid fa-arrow-left" /> Go Back</button>
+                <button className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right" /></button>            
             </div>
         </div>
     )

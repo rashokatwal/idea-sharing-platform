@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Contexts/LoadingBarContext';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
-const PageOne = ({ ideaDetails, setIdeaDetails }) => {
+const PageOne = ({ ideaDetails, setIdeaDetails}) => {
     const loadingBarRef = useLoadingBar();
     const navigate = useNavigate();
     const [ titleChars, setTitleChars ] = useState({valid: ideaDetails.title.trim().length > 0, outline: "none"});
@@ -62,20 +63,21 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
         setCategoryChars({ valid: isCategoryValid, outline: isCategoryValid ? "none" : "red solid 2px" });
         setDescriptionChars({ valid: isDescriptionValid, outline: isDescriptionValid ? "none" : "red solid 2px" });
         setValid(isTitleValid && isCategoryValid && isDescriptionValid);
-        if (valid) {
-            await saveData();
-        }
+        valid ? await saveData() : null;
     }
 
     const saveData = async() => {
-
         loadingBarRef.current.continuousStart();
-        setTimeout(() => {
+        await axios.post('http://localhost:3000/idea/',
+            ideaDetails
+        )
+        .then((response) => {
+            // response = response.data;
+            localStorage.setItem("ideaId", response.data.insertedId);
+            navigate('/ideaeditor/p/2');
             loadingBarRef.current.complete();
-            // setIdeaDetails({ title: "", category: "", description: "" });
-            console.log("Idea saved successfully!");
-            navigate("/ideaeditor/p/2");
-        }, 5000);
+        })
+        .catch((error) => console.log(error));
     }
 
     return (
