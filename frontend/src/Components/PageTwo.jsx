@@ -17,7 +17,6 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const [ newTag, setNewTag ] = useState("");
 
     useEffect(() => {
-        // const id = localStorage.getItem("ideaId");
         if (!ideaId) {
             navigate(-1);
         }

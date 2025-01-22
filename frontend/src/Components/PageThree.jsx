@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
-// import 'react-quill-new/dist/quill.snow.css';
 import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Contexts/LoadingBarContext';
 import axios from "axios";
@@ -25,7 +24,6 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
             {"status": "Completed", "updatedDate": updatedDate, "updatedTime": updatedTime}
         )
         .then((response) => {
-            // navigate('/ideaeditor/p/3');
             loadingBarRef.current.complete();
         })
         .catch((error) => console.log(error));

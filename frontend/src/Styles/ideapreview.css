@@ -15,7 +15,6 @@
     align-items: center;
     gap: 10px;
     font-weight: 600;
-    /* cursor: pointer; */
 }
 
 .idea-preview .author-details .author-avatar {
@@ -46,9 +45,7 @@
 }
 
 .idea-preview-summary {
-    /* font-size: 17px; */
     line-height: 25px;
-    /* margin: 30px 0px; */
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;

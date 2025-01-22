@@ -72,7 +72,6 @@ const PageOne = ({ ideaDetails, setIdeaDetails}) => {
             ideaDetails
         )
         .then((response) => {
-            // response = response.data;
             localStorage.setItem("ideaId", response.data.insertedId);
             navigate('/ideaeditor/p/2');
             loadingBarRef.current.complete();
