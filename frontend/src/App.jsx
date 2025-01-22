@@ -31,15 +31,19 @@ const AppContent = () => {
   const noNavAndFooterRoutes = ["/login", "/register"];
   const shouldShowNavAndFooter = !noNavAndFooterRoutes.includes(location.pathname) && !location.pathname.includes("ideaeditor");
 
+  const noLoadingBar = ["/ideaeditor/p/2", "/ideaeditor/p/2"];
+
   const loadingBarRef = useLoadingBar();
 
   useEffect(() => {
-      loadingBarRef.current.continuousStart();
-      const timeout = setTimeout(() => {
-          loadingBarRef.current.complete();
-      }, 500);
+      if(!noLoadingBar.includes(location.pathname)) {
+        loadingBarRef.current.continuousStart();
+        setTimeout(() => {
+            loadingBarRef.current.complete();
+        }, 500);
+      }
 
-      return () => clearTimeout(timeout);
+      // return () => clearTimeout(timeout);
   }, [location.pathname]);
 
   return (

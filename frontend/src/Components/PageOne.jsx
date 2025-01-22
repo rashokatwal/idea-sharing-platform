@@ -3,9 +3,12 @@ import Autocomplete from '../Components/Autocomplete';
 import { categories } from '../Constants/FilterElements';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
-import { Link } from "react-router-dom";
+import { useLoadingBar } from '../Contexts/LoadingBarContext';
+import { useNavigate } from 'react-router-dom';
 
 const PageOne = ({ ideaDetails, setIdeaDetails }) => {
+    const loadingBarRef = useLoadingBar();
+    const navigate = useNavigate();
     const [ titleChars, setTitleChars ] = useState({valid: ideaDetails.title.trim().length > 0, outline: "none"});
     const [ categoryChars, setCategoryChars ] = useState({valid: ideaDetails.category.trim().length > 0 && categories.includes(ideaDetails.category), outline: "none"});
     const [ descriptionChars, setDescriptionChars ] = useState({valid: ideaDetails.description.trim().length > 0, outline: "none"});
@@ -50,7 +53,7 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
         setValid(isValid);
     };
 
-    const validate = () => {
+    const validate = async() => {
         const isTitleValid = ideaDetails.title.trim().length > 0;
         const isCategoryValid = (ideaDetails.category.trim().length > 0) && categories.includes(ideaDetails.category);
         const isDescriptionValid = ideaDetails.description.trim().length > 0;
@@ -59,6 +62,20 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
         setCategoryChars({ valid: isCategoryValid, outline: isCategoryValid ? "none" : "red solid 2px" });
         setDescriptionChars({ valid: isDescriptionValid, outline: isDescriptionValid ? "none" : "red solid 2px" });
         setValid(isTitleValid && isCategoryValid && isDescriptionValid);
+        if (valid) {
+            await saveData();
+        }
+    }
+
+    const saveData = async() => {
+
+        loadingBarRef.current.continuousStart();
+        setTimeout(() => {
+            loadingBarRef.current.complete();
+            // setIdeaDetails({ title: "", category: "", description: "" });
+            console.log("Idea saved successfully!");
+            navigate("/ideaeditor/p/2");
+        }, 5000);
     }
 
     return (
@@ -80,7 +97,7 @@ const PageOne = ({ ideaDetails, setIdeaDetails }) => {
             <p className="labels">Description</p>
             <textarea style={{outline: descriptionChars.outline}} className="idea-description" value={ideaDetails.description} placeholder="Summarize your idea in a few sentences..." onChange={(e) => handleDescription(e.target.value)}/>
             <div className="next-prev-buttons">
-                <Link to={valid ? "/ideaeditor/p/2" : ""} className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right"/></Link>
+                <button className="primary-button" onClick={validate}>Continue <FontAwesomeIcon icon="fa-solid fa-arrow-right"/></button>
             </div>
         </div>
     )
