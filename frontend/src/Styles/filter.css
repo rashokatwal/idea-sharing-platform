@@ -4,6 +4,7 @@
     top: 80px;
     background-color: var(--background-color);
     z-index: 99;
+    padding-bottom: 20px;
 }
 
 .filter-inner {
@@ -13,7 +14,6 @@
     margin: auto;
     max-width: 1000px;
     font-family: var(--primary-font);
-    margin-bottom: 20px;
 }
 
 .view-type > * {

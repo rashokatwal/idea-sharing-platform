@@ -6,24 +6,36 @@ import '../Styles/filter.css';
 
 const Filter = ({ parentCallback }) => {
 
-    const onTrigger = (type) => {
-        parentCallback(type);
+    const onTrigger = (changedData) => {
+        parentCallback(changedData);
     }
 
-    const handlecategory = (value) => {
-        
+    const handleCategory = (value) => {
+        parentCallback({changedProperty: "category", value: value});
+    }
+
+    const handlePopularity = (value) => {
+        parentCallback({changedProperty: "popularity", value: value});
+    }
+
+    const handleStatus = (value) => {
+        parentCallback({changedProperty: "status", value: value});
+    }
+
+    const handleTime = (value) => {
+        parentCallback({changedProperty: "time", value: value});
     }
 
     return (
         <div className="filter-outer">
             <div className="filter-inner">
-                <Autocomplete suggestions={ categories } placeholder={ "Categories" } onChange={handlecategory} value={""}/>
-                <Dropdown placeholder={ "Popularity" } suggestions={ popularity }/>
-                <Dropdown placeholder={ "Status" } suggestions={ status }/>
-                <Dropdown placeholder={ "Time" } suggestions={ time }/>
+                <Autocomplete suggestions={ categories } placeholder={ "Categories" } onChange={handleCategory} value={""}/>
+                <Dropdown placeholder={ "Popularity" } suggestions={ popularity } onChange={handlePopularity}/>
+                <Dropdown placeholder={ "Status" } suggestions={ status } onChange={handleStatus}/>
+                <Dropdown placeholder={ "Time" } suggestions={ time } onChange={handleTime}/>
                 <div className="view-type">
-                    <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger("grid")}/>
-                    <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' onClick={() => onTrigger("list")}/>
+                    <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "grid"})}/>
+                    <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "list"})}/>
                 </div>
             </div>
         </div>

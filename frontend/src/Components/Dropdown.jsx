@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../Styles/dropdown.css';
 
-const Dropdown = ({ suggestions, placeholder }) => {
+const Dropdown = ({ suggestions, placeholder, onChange }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -11,6 +11,7 @@ const Dropdown = ({ suggestions, placeholder }) => {
 
     const handleSelect = (value) => {
         setInputValue(value);
+        onChange(value);
         setFilteredSuggestions([]);
         setIsDropdownOpen(false);
     };

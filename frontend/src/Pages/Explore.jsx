@@ -10,8 +10,30 @@ import IdeasSkeleton from '../Components/IdeasSkeleton';
 const Explore = () => {
     const [ loading, setLoading ] = useState(true);
     const [ viewType, setViewType ] = useState("grid");
+    const [ filterCategory, setFilterCategory ] = useState("");
+    const [ filterPopularity, setFilterPopularity ] = useState("");
+    const [ filterStatus, setFilterStatus ] = useState("");
+    const [ filterTime, setFilterTime ] = useState("");
+
     const handleCallback = (childData) => {
-        setViewType(childData);
+        console.log(childData);
+        switch(childData.changedProperty) {
+            case "view":
+                setViewType(childData.value);
+                break;
+            case "category":
+                setFilterCategory(childData.value);
+                break;
+            case "popularity":
+                setFilterPopularity(childData.value);
+                break;
+            case "status":
+                setFilterStatus(childData.value);
+                break;
+            case "time":
+                setFilterTime(childData.value);
+                break;
+        }
     };
     const [ ideas, setIdeas ] = useState([]);
 

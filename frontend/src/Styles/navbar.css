@@ -30,9 +30,14 @@
 
 .searchBar {
     padding: 10px 15px;
-    border: solid 2px #747474;
+    border: solid 3px #747474;
     border-radius: 50px;
     min-width: 300px;
+    font-size: 15px;
+}
+
+.searchBar:focus {
+    outline: solid 3px var(--accent-color);
 }
 
 .searchButton {
