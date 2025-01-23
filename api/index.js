@@ -27,7 +27,15 @@ app.get('/ideas', (req, res) => {
     let filter = {
        status: status || {$ne: 'Draft'},
     };
-    let sort = popularity ? (popularity == "Most Liked" ? {"likes": -1} : {"comments": -1}) : {};
+    let sort = popularity ? (popularity == "Most Liked" ? {likes: -1} : {comments: -1}) : {likes: -1};
+    if(time == "Newest First") {
+      sort.updatedDate = -1;
+      sort.updatedTime = -1;
+    }
+    else if(time == "Newest First") {
+      sort.updatedDate = 1;
+      sort.updatedTime = 1;
+    }
     console.log(sort);
     db.collection('ideas')
      .find(filter)
