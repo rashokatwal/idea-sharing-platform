@@ -21,8 +21,18 @@ connectToDb((err) => {
 
 app.get('/ideas', (req, res) => {
     let ideas = [];
+    const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
+    const status = req.query.status.trim() == 0 ? null : req.query.status;
+    const time = req.query.time.trim() == 0 ? null : req.query.time;
+    let filters = {
+       status: status || {$ne: 'Draft'},
+       popularity: popularity,
+       time: time
+    };
+
+    console.log(filters);
     db.collection('ideas')
-     .find({status: {$ne: 'Draft'}})
+     .find(filters)
      .batchSize(9)
      .forEach(idea => ideas.push(idea))
      .then(() => {

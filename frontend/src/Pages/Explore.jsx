@@ -16,7 +16,6 @@ const Explore = () => {
     const [ filterTime, setFilterTime ] = useState("");
 
     const handleCallback = (childData) => {
-        console.log(childData);
         switch(childData.changedProperty) {
             case "view":
                 setViewType(childData.value);
@@ -39,19 +38,21 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-            .get("http://localhost:3000/ideas")
+            .get(`http://localhost:3000/ideas?popularity=${filterPopularity}&status=${filterStatus}&time=${filterTime}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);
+                console.log("fetched")
             })
             .catch((error) => console.log(error));
     }
     
     useEffect(() => {
+        setLoading(true);
         setTimeout(() => {
             fetchIdeas();
         }, 2000)
-    }, [])
+    }, [filterPopularity, filterStatus, filterTime])
 
     return (
         <div className="Explore">

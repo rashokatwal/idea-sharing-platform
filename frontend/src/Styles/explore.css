@@ -4,10 +4,11 @@
 }
 
 .ideas-section-inner {
-    margin: 10px auto;
+    margin: 10px auto 30px auto;
     width: 1000px;
     position: relative;
     text-align: center;
+    min-height: 80vh;
 }
 
 .card-grid {
