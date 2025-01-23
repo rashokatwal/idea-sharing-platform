@@ -24,22 +24,21 @@ app.get('/ideas', (req, res) => {
     const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
     const status = req.query.status.trim() == 0 ? null : req.query.status;
     const time = req.query.time.trim() == 0 ? null : req.query.time;
-    let filters = {
+    let filter = {
        status: status || {$ne: 'Draft'},
-       popularity: popularity,
-       time: time
     };
-
-    console.log(filters);
+    let sort = popularity ? (popularity == "Most Liked" ? {"likes": -1} : {"comments": -1}) : {};
+    console.log(sort);
     db.collection('ideas')
-     .find(filters)
+     .find(filter)
+     .sort(sort)
      .batchSize(9)
      .forEach(idea => ideas.push(idea))
      .then(() => {
-        res.status(200).json(ideas);
+         res.status(200).json(ideas);
      })
      .catch(() => {
-        res.status(500).json({error: 'Error fetching ideas'});
+         res.status(500).json({error: 'Error fetching ideas'});
      })
 });
 
