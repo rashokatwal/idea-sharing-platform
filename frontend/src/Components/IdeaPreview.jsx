@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,15 +20,30 @@ const IdeaPreview = ({ ideaDetails }) => {
             .catch((error) => console.log(error));
     }
 
-    const handleLike = () => {
+    const updateReads = async () => {
+        await axios
+           .patch(`http://localhost:3000/idea/${ideaDetails._id}`,
+                { "views" : ideaDetails.reads + 1 },
+            )
+           .then((response) => {
+                // console.log(response.data)
+            })
+           .catch((error) => console.log(error));
+    }
+
+    const handleLike = async () => {
         setIsLiked(!isLiked);
         isLiked ? ideaDetails.likes-- : ideaDetails.likes++;
-        updateLike();
+        await updateLike();
     }
 
     const handleSave = () => {
         setIsSaved(!isSaved);
     }
+
+    useEffect(() => {
+        updateReads();
+    }, [])
 
     return (
         <div className="idea-preview">

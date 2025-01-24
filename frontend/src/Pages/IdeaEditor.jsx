@@ -23,6 +23,7 @@ const IdeaEditor = () => {
         status: "Draft",
         likes: 0,
         comments: 0,
+        reads: 0,
         updatedDate: "",
         updatedTime: ""
     })
