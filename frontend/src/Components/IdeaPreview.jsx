@@ -23,7 +23,7 @@ const IdeaPreview = ({ ideaDetails }) => {
     const updateReads = async () => {
         await axios
            .patch(`http://localhost:3000/idea/${ideaDetails._id}`,
-                { "views" : ideaDetails.reads + 1 },
+                { "reads" : ideaDetails.reads + 1 },
             )
            .then((response) => {
                 // console.log(response.data)
