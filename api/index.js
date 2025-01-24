@@ -21,26 +21,30 @@ connectToDb((err) => {
 
 app.get('/ideas', (req, res) => {
     let ideas = [];
-    const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
-    const status = req.query.status.trim() == 0 ? null : req.query.status;
-    const time = req.query.time.trim() == 0 ? null : req.query.time;
+    const filterRequest = {
+      "popularity": req.query.popularity.trim() == 0 ? null : req.query.popularity,
+      "status": req.query.status.trim() == 0 ? null : req.query.status,
+      "sortBy": req.query.time.trim() == 0 ? null : req.query.time
+    }
+
+    const sortOptions = {
+      "Most Liked": {"likes": -1},
+      "Most Commented": {"comments": -1},
+      "Newest First": {"updatedDate": -1, "updatedTime": -1},
+      "Oldest First": {"updatedDate": 1, "updatedTime": 1}
+    }
+   //  const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
+   //  const status = req.query.status.trim() == 0 ? null : req.query.status;
+   //  const sortBy = req.query.time.trim() == 0 ? null : req.query.time;
     let filter = {
-       status: status || {$ne: 'Draft'},
+       status: filterRequest.status || {$ne: 'Draft'},
     };
-    let sort = popularity ? (popularity == "Most Liked" ? {likes: -1} : {comments: -1}) : {likes: -1};
-    if(time == "Newest First") {
-      sort.updatedDate = -1;
-      sort.updatedTime = -1;
-    }
-    else if(time == "Newest First") {
-      sort.updatedDate = 1;
-      sort.updatedTime = 1;
-    }
-    console.log(sort);
+    console.log(sortOptions[filterRequest.sortBy]);
+    
     db.collection('ideas')
      .find(filter)
-     .sort(sort)
-     .batchSize(9)
+     .sort(sortOptions[filterRequest.sortBy])
+     .limit (9)
      .forEach(idea => ideas.push(idea))
      .then(() => {
          res.status(200).json(ideas);

@@ -135,10 +135,12 @@ const categoryColors = {
     "Cultural Exploration": "#E09F3E", // Tawny
 };
 
-const popularity = ["Most Liked", "Most Commented", "Trending"];
+// const popularity = ["Most Liked", "Most Commented", "Trending"];
 
 const status = ["Open for Collaboration", "In Progress", "Completed"];
 
-const time = ["Newest First", "Oldest First"];
+// const time = ["Newest First", "Oldest First"];
+
+const sortBy = ["Most Liked", "Most Commented", "Trending", "Newest First", "Oldest First"]
   
-export { categories, categoryColors, popularity, status, time }
+export { categories, categoryColors, status, sortBy }

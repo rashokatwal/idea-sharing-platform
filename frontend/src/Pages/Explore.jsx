@@ -13,7 +13,7 @@ const Explore = () => {
     const [ filterCategory, setFilterCategory ] = useState("");
     const [ filterPopularity, setFilterPopularity ] = useState("");
     const [ filterStatus, setFilterStatus ] = useState("");
-    const [ filterTime, setFilterTime ] = useState("");
+    const [ filterSortBy, setFilterSortBy ] = useState("");
 
     const handleCallback = (childData) => {
         switch(childData.changedProperty) {
@@ -29,8 +29,8 @@ const Explore = () => {
             case "status":
                 setFilterStatus(childData.value);
                 break;
-            case "time":
-                setFilterTime(childData.value);
+            case "sortBy":
+                setFilterSortBy(childData.value);
                 break;
         }
     };
@@ -38,7 +38,7 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-            .get(`http://localhost:3000/ideas?popularity=${filterPopularity}&status=${filterStatus}&time=${filterTime}`)
+            .get(`http://localhost:3000/ideas?popularity=${filterPopularity}&status=${filterStatus}&time=${filterSortBy}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);
@@ -52,7 +52,7 @@ const Explore = () => {
         setTimeout(() => {
             fetchIdeas();
         }, 2000)
-    }, [filterPopularity, filterStatus, filterTime])
+    }, [filterPopularity, filterStatus, filterSortBy])
 
     return (
         <div className="Explore">
