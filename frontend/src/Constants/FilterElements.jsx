@@ -139,8 +139,8 @@ const categoryColors = {
 
 const status = ["Open for Collaboration", "In Progress", "Completed"];
 
-// const time = ["Newest First", "Oldest First"];
+const timePeriod = ["Today", "Last 7 Days", "Last 30 Days"];
 
 const sortBy = ["Most Liked", "Most Commented", "Trending", "Newest First", "Oldest First"]
   
-export { categories, categoryColors, status, sortBy }
+export { categories, categoryColors, status, timePeriod, sortBy }

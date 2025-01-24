@@ -1,7 +1,7 @@
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { categories, status, sortBy } from '../Constants/FilterElements';
+import { categories, status, timePeriod, sortBy } from '../Constants/FilterElements';
 import '../Styles/filter.css';
 
 const Filter = ({ parentCallback }) => {
@@ -14,8 +14,8 @@ const Filter = ({ parentCallback }) => {
         parentCallback({changedProperty: "category", value: value});
     }
 
-    const handlePopularity = (value) => {
-        parentCallback({changedProperty: "popularity", value: value});
+    const handleTimePeriod = (value) => {
+        parentCallback({changedProperty: "timePeriod", value: value});
     }
 
     const handleStatus = (value) => {
@@ -30,8 +30,8 @@ const Filter = ({ parentCallback }) => {
         <div className="filter-outer">
             <div className="filter-inner">
                 <Autocomplete suggestions={ categories } placeholder={ "Categories" } onChange={handleCategory} value={""}/>
-                <Dropdown placeholder={ "Popularity" } suggestions={ [""] } onChange={handlePopularity}/>
                 <Dropdown placeholder={ "Status" } suggestions={ status } onChange={handleStatus}/>
+                <Dropdown placeholder={ "Time Period" } suggestions={ timePeriod } onChange={handleTimePeriod}/>
                 <Dropdown placeholder={ "Sort By" } suggestions={ sortBy } onChange={handleSort}/>
                 <div className="view-type">
                     <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "grid"})}/>

@@ -11,7 +11,7 @@ const Explore = () => {
     const [ loading, setLoading ] = useState(true);
     const [ viewType, setViewType ] = useState("grid");
     const [ filterCategory, setFilterCategory ] = useState("");
-    const [ filterPopularity, setFilterPopularity ] = useState("");
+    const [ filterTimePeriod, setTimePeriod ] = useState("");
     const [ filterStatus, setFilterStatus ] = useState("");
     const [ filterSortBy, setFilterSortBy ] = useState("");
 
@@ -23,8 +23,8 @@ const Explore = () => {
             case "category":
                 setFilterCategory(childData.value);
                 break;
-            case "popularity":
-                setFilterPopularity(childData.value);
+            case "timePeriod":
+                setTimePeriod(childData.value);
                 break;
             case "status":
                 setFilterStatus(childData.value);
@@ -38,7 +38,7 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-            .get(`http://localhost:3000/ideas?popularity=${filterPopularity}&status=${filterStatus}&time=${filterSortBy}`)
+            .get(`http://localhost:3000/ideas?popularity=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);
@@ -52,7 +52,7 @@ const Explore = () => {
         setTimeout(() => {
             fetchIdeas();
         }, 2000)
-    }, [filterPopularity, filterStatus, filterSortBy])
+    }, [filterTimePeriod, filterStatus, filterSortBy])
 
     return (
         <div className="Explore">
