@@ -31,7 +31,8 @@ app.get('/ideas', (req, res) => {
       "Most Liked": {"likes": -1},
       "Most Commented": {"comments": -1},
       "Newest First": {"updatedDate": -1, "updatedTime": -1},
-      "Oldest First": {"updatedDate": 1, "updatedTime": 1}
+      "Oldest First": {"updatedDate": 1, "updatedTime": 1},
+      "Trending": {"reads": -1, "likes": -1, "comments": -1}
     }
    //  const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
    //  const status = req.query.status.trim() == 0 ? null : req.query.status;
@@ -40,7 +41,7 @@ app.get('/ideas', (req, res) => {
        status: filterRequest.status || {$ne: 'Draft'},
     };
     console.log(sortOptions[filterRequest.sortBy]);
-    
+
     db.collection('ideas')
      .find(filter)
      .sort(sortOptions[filterRequest.sortBy])
