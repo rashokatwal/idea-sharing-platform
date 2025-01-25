@@ -4,6 +4,7 @@ import '../Styles/autocomplete.css';
 const Autocomplete = ({ suggestions, placeholder, value, onChange, outline }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState(value);
+  // const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleChange = (event) => {
     const inputValue = event.target.value;

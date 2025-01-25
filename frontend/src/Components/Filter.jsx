@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,13 +6,36 @@ import { categories, status, timePeriod, sortBy } from '../Helpers/FilterElement
 import '../Styles/filter.css';
 
 const Filter = ({ parentCallback }) => {
+    const [typingTimeout, setTypingTimeout] = useState(null);
 
     const onTrigger = (changedData) => {
         parentCallback(changedData);
     }
 
     const handleCategory = (value) => {
-        parentCallback({changedProperty: "category", value: value});
+        const handleStartTyping = () => {
+            parentCallback({changedProperty: "category", value: value, typingStatus: "started"});
+        };
+    
+        const handleStopTyping = () => {
+            parentCallback({changedProperty: "category", value: value, typingStatus: "stopped"});
+        };
+        if (!typingTimeout) {
+            handleStartTyping();
+        }
+    
+        // Clear the previous timeout
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+        }
+    
+        // Set a new timeout to detect when the user stops typing
+        const timeout = setTimeout(() => {
+            handleStopTyping();
+            setTypingTimeout(null); // Reset the timeout after stop typing fires
+        }, 1000); // Adjust delay as needed (e.g., 1000ms = 1 second)
+    
+        setTypingTimeout(timeout);
     }
 
     const handleTimePeriod = (value) => {

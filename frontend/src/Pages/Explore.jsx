@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
@@ -6,6 +6,7 @@ import CardComponent from '../Components/CardComponent';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import IdeasSkeleton from '../Components/IdeasSkeleton';
+// import { throttleFunction } from '../Helpers/throttleUtil';
 
 const Explore = () => {
     const [ loading, setLoading ] = useState(true);
@@ -14,6 +15,7 @@ const Explore = () => {
     const [ filterTimePeriod, setTimePeriod ] = useState("");
     const [ filterStatus, setFilterStatus ] = useState("");
     const [ filterSortBy, setFilterSortBy ] = useState("");
+    const [ typingStatus, setTypingStatus ] = useState("");
 
     const handleCallback = (childData) => {
         switch(childData.changedProperty) {
@@ -21,6 +23,7 @@ const Explore = () => {
                 setViewType(childData.value);
                 break;
             case "category":
+                setTypingStatus(childData.typingStatus);
                 setFilterCategory(childData.value);
                 break;
             case "timePeriod":
@@ -38,7 +41,7 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-            .get(`http://localhost:3000/ideas?timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
+            .get(`http://localhost:3000/ideas?category=${filterCategory}&timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);
@@ -46,6 +49,16 @@ const Explore = () => {
             })
             .catch((error) => console.log(error));
     }
+
+    // const throttledFetchIdeas = useCallback(
+    //     throttleFunction(() => {
+    //         setLoading(true);
+    //         setTimeout(() => {
+    //             fetchIdeas();
+    //         }, 2000)
+    //     }, 2000),
+    //     [] // Ensures the throttle function doesn't get recreated on re-renders
+    // );
     
     useEffect(() => {
         setLoading(true);
@@ -53,6 +66,15 @@ const Explore = () => {
             fetchIdeas();
         }, 2000)
     }, [filterTimePeriod, filterStatus, filterSortBy])
+
+    useEffect(() => {
+        if(typingStatus == "started") {
+            setLoading(true);
+        }
+        if(typingStatus == "stopped") {
+            fetchIdeas();
+        }
+    }, [typingStatus])
 
     return (
         <div className="Explore">

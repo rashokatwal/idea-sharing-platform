@@ -23,6 +23,7 @@ app.get('/ideas', (req, res) => {
    let ideas = [];
 
    const filterRequest = {
+      "category": req.query.category.trim() == 0 ? null : req.query.category,
       "timePeriod": req.query.timePeriod.trim() == 0 ? null : req.query.timePeriod,
       "status": req.query.status.trim() == 0 ? null : req.query.status,
       "sortBy": req.query.time.trim() == 0 ? null : req.query.time
@@ -44,6 +45,7 @@ app.get('/ideas', (req, res) => {
 
    let filter = {
        status: filterRequest.status || {$ne: 'Draft'},
+       category: filterRequest.category || {$exists: true},
    };
 
    if (timePeriodOptions[filterRequest.timePeriod]) {

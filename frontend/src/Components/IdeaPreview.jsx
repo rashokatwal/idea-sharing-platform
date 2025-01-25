@@ -3,7 +3,7 @@ import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryColors } from "../Helpers/FilterElements";
-import { dateTimeConverter } from '../Helpers/dateUtils';
+import { dateTimeConverter } from '../Helpers/dateUtil';
 import axios from 'axios';
 
 const IdeaPreview = ({ ideaDetails }) => {

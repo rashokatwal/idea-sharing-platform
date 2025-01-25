@@ -1,7 +1,7 @@
 import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { categoryColors } from '../Helpers/FilterElements';
-import { dateTimeConverter } from '../Helpers/dateUtils';
+import { dateTimeConverter } from '../Helpers/dateUtil';
 
 const CardComponent = ({ idea }) => {
     return (
