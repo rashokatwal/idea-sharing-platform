@@ -67,7 +67,6 @@ const Explore = () => {
                             viewType === "grid" ? <Link to={"/idea/" + idea._id} key={idea._id}><CardComponent idea={idea}/></Link> : <Link to={"/idea/" + idea._id} key={idea._id}><ListComponent idea={idea}/></Link>
                         ))
                     }
-
                 </div>
             </div>
         </div>

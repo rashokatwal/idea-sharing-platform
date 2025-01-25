@@ -1,6 +1,7 @@
 import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { categoryColors } from '../Constants/FilterElements';
+import { categoryColors } from '../Helpers/FilterElements';
+import { dateTimeConverter } from '../Helpers/dateUtils';
 
 const CardComponent = ({ idea }) => {
     return (
@@ -19,7 +20,7 @@ const CardComponent = ({ idea }) => {
                     <span className="likes"><FontAwesomeIcon icon="fa-regular fa-heart"/> {idea.likes}</span>
                     <span className="comments"><FontAwesomeIcon icon="fa-regular fa-comment" /> {idea.comments}</span>
                 </div>
-                <span className="posted-date">{idea.updatedDate}</span>
+                <span className="posted-date">{dateTimeConverter(idea.postedOn).date}</span>
             </div>
         </div>
     )

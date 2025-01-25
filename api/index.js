@@ -19,32 +19,20 @@ connectToDb((err) => {
     }
 })
 
-const dateTimeConverter = (date) => {
-   const dateTime = {
-      date: "",
-      time: ""
-   }
-   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-   let hour = date.getHours();
-   dateTime.date = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-   dateTime.time = `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}`;
-   return dateTime;
-}
-
 app.get('/ideas', (req, res) => {
     let ideas = [];
-    console.log(dateTimeConverter(new Date()));
+   //  console.log(dateTimeConverter(new Date()));
     const filterRequest = {
       "popularity": req.query.popularity.trim() == 0 ? null : req.query.popularity,
       "status": req.query.status.trim() == 0 ? null : req.query.status,
       "sortBy": req.query.time.trim() == 0 ? null : req.query.time
     }
-
+   //  console.log(new Date());
     const sortOptions = {
       "Most Liked": {"likes": -1},
       "Most Commented": {"comments": -1},
-      "Newest First": {"updatedDate": -1, "updatedTime": -1},
-      "Oldest First": {"updatedDate": 1, "updatedTime": 1},
+      "Newest First": {"lastUpdatedOn": -1, "postedOn": -1},
+      "Oldest First": {"lastUpdatedOn": 1, "postedOn": 1},
       "Trending": {"reads": -1, "likes": -1, "comments": -1}
     }
    //  const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
@@ -57,12 +45,8 @@ app.get('/ideas', (req, res) => {
     db.collection('ideas')
      .find(filter)
      .sort(sortOptions[filterRequest.sortBy])
-     .limit (9)
+     .limit(9)
      .forEach((idea) => {
-         // let updatedDateTime = dateTimeConverter(idea.lastUpdatedOn);
-         // let postedDateTime = dateTimeConverter(idea.postedOn)
-         // idea.lastUpdatedOn = updatedDateTime;
-         // idea.postedOn = postedDateTime;
          ideas.push(idea);
       })
      .then(() => {

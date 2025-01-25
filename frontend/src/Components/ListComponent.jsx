@@ -1,5 +1,5 @@
 import '../Styles/lists.css';
-import { categoryColors } from '../Constants/FilterElements';
+import { categoryColors } from '../Helpers/FilterElements';
 
 const ListComponent = ({ idea }) => {
     return (

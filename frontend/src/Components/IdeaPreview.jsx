@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { categoryColors } from "../Constants/FilterElements";
+import { categoryColors } from "../Helpers/FilterElements";
+import { dateTimeConverter } from '../Helpers/dateUtils';
 import axios from 'axios';
 
 const IdeaPreview = ({ ideaDetails }) => {
     const [ isLiked, setIsLiked ] = useState(false);
     const [ isSaved, setIsSaved ] = useState(false);
+    const lastUpdatedDateTime = dateTimeConverter(ideaDetails.lastUpdatedOn);
+    const postedDateTime = dateTimeConverter(ideaDetails.postedOn);
 
     const updateLike = async () => {
         await axios
@@ -54,7 +57,7 @@ const IdeaPreview = ({ ideaDetails }) => {
                         {ideaDetails.author}
                     </span>
                     <p className="idea-preview-date-time">
-                        {ideaDetails.updatedDate != "" && ideaDetails.updatedTime != "" ? ideaDetails.updatedDate + ", " + ideaDetails.updatedTime : ""}
+                        {ideaDetails.postedOn != "" ? postedDateTime.date + ", " + postedDateTime.time : ""}
                     </p>
                 </div>
             </div>
