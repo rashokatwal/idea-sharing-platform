@@ -19,8 +19,21 @@ connectToDb((err) => {
     }
 })
 
+const dateTimeConverter = (date) => {
+   const dateTime = {
+      date: "",
+      time: ""
+   }
+   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+   let hour = date.getHours();
+   dateTime.date = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+   dateTime.time = `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}`;
+   return dateTime;
+}
+
 app.get('/ideas', (req, res) => {
     let ideas = [];
+    console.log(dateTimeConverter(new Date()));
     const filterRequest = {
       "popularity": req.query.popularity.trim() == 0 ? null : req.query.popularity,
       "status": req.query.status.trim() == 0 ? null : req.query.status,
@@ -40,13 +53,18 @@ app.get('/ideas', (req, res) => {
     let filter = {
        status: filterRequest.status || {$ne: 'Draft'},
     };
-    console.log(sortOptions[filterRequest.sortBy]);
 
     db.collection('ideas')
      .find(filter)
      .sort(sortOptions[filterRequest.sortBy])
      .limit (9)
-     .forEach(idea => ideas.push(idea))
+     .forEach((idea) => {
+         // let updatedDateTime = dateTimeConverter(idea.lastUpdatedOn);
+         // let postedDateTime = dateTimeConverter(idea.postedOn)
+         // idea.lastUpdatedOn = updatedDateTime;
+         // idea.postedOn = postedDateTime;
+         ideas.push(idea);
+      })
      .then(() => {
          res.status(200).json(ideas);
      })
@@ -75,7 +93,7 @@ app.get('/idea/:id', (req, res) => {
 
 app.post('/idea', (req, res) => {
    const idea = req.body;
-
+   idea.lastUpdatedOn = new Date();
    db.collection('ideas')
     .insertOne(idea)
     .then((result) => {
@@ -106,7 +124,11 @@ app.delete('/idea/:id', (req, res) => {
 
 app.patch('/idea/:id', (req, res) => {
    const updates = req.body;
-
+   const date = new Date();
+   updates.lastUpdatedOn = date;
+   if(updates.status !== "Draft") {
+      updates.postedOn = date;
+   }
    if (ObjectId.isValid(req.params.id)) {
       db.collection('ideas')
          .updateOne({_id: new ObjectId(req.params.id)}, {$set: updates})

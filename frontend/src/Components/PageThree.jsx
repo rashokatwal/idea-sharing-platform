@@ -10,7 +10,7 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const ideaId = localStorage.getItem("ideaId");
-    const { updatedDate, updatedTime } = ideaDetails;
+    // const { updatedDate, updatedTime } = ideaDetails;
 
     useEffect(() => {
         if (!ideaId) {
@@ -21,7 +21,7 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
         await axios.patch(`http://localhost:3000/idea/${ideaId}`,
-            {"status": "Completed", "updatedDate": updatedDate, "updatedTime": updatedTime}
+            {"status": "Completed"}
         )
         .then((response) => {
             loadingBarRef.current.complete();

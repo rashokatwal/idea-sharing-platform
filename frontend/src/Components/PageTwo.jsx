@@ -11,7 +11,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const ideaId = localStorage.getItem("ideaId");
-    const { summary, tags, updatedDate, updatedTime } = ideaDetails;
+    const { summary, tags } = ideaDetails;
     const [ summaryChars, setSummaryChars ] = useState({valid: ideaDetails.summary.trim().length > 0, outline: "none"});
     const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
@@ -72,7 +72,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const updateData = async () => {
         loadingBarRef.current.continuousStart();
         await axios.patch(`http://localhost:3000/idea/${ideaId}`,
-            {"summary": summary, "tags": tags, "updatedDate": updatedDate, "updatedTime": updatedTime}
+            {"summary": summary, "tags": tags}
         )
         .then((response) => {
             navigate('/ideaeditor/p/3');

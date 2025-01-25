@@ -24,20 +24,20 @@ const IdeaEditor = () => {
         likes: 0,
         comments: 0,
         reads: 0,
-        updatedDate: "",
-        updatedTime: ""
+        lastUpdatedOn: "",
+        postedOn: ""
     })
 
-    const setDateTime = () => {
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        let date = new Date();
-        let hour = date.getHours();
-        setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}` });
-    }
+    // const setDateTime = () => {
+    //     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    //     let date = new Date();
+    //     let hour = date.getHours();
+    //     setIdeaDetails({...ideaDetails, updatedDate: `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`, updatedTime: `${String(hour > 12 || hour == 0 ? Math.abs(hour - 12) : hour).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${hour > 12 ? "PM" : "AM"}` });
+    // }
 
-    useEffect(() => {
-        setDateTime();
-    }, [location.pathname])  
+    // useEffect(() => {
+    //     setDateTime();
+    // }, [location.pathname])  
 
     return(
         <div className="idea-editor-outer">
