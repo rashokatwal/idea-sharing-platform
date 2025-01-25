@@ -20,27 +20,35 @@ connectToDb((err) => {
 })
 
 app.get('/ideas', (req, res) => {
-    let ideas = [];
-   //  console.log(dateTimeConverter(new Date()));
-    const filterRequest = {
-      "popularity": req.query.popularity.trim() == 0 ? null : req.query.popularity,
+   let ideas = [];
+
+   const filterRequest = {
+      "timePeriod": req.query.timePeriod.trim() == 0 ? null : req.query.timePeriod,
       "status": req.query.status.trim() == 0 ? null : req.query.status,
       "sortBy": req.query.time.trim() == 0 ? null : req.query.time
-    }
-   //  console.log(new Date());
-    const sortOptions = {
+   }
+
+   const sortOptions = {
       "Most Liked": {"likes": -1},
       "Most Commented": {"comments": -1},
-      "Newest First": {"lastUpdatedOn": -1, "postedOn": -1},
-      "Oldest First": {"lastUpdatedOn": 1, "postedOn": 1},
+      "Recently Posted": {"postedOn": -1},
+      "Recently Updated": {"lastUpdatedOn": -1},
       "Trending": {"reads": -1, "likes": -1, "comments": -1}
-    }
-   //  const popularity = req.query.popularity.trim() == 0 ? null : req.query.popularity;
-   //  const status = req.query.status.trim() == 0 ? null : req.query.status;
-   //  const sortBy = req.query.time.trim() == 0 ? null : req.query.time;
-    let filter = {
+   }
+
+   const timePeriodOptions = {
+      "Today": { $gte: new Date(new Date().setHours(0, 0, 0, 0)), $lte: new Date()},
+      "Last 7 Days": { $gte: new Date(new Date().setDate(new Date().getDate() - 7)), $lte: new Date() },
+      "Last 30 Days": { $gte: new Date(new Date().setDate(new Date().getDate() - 30)), $lte: new Date() }
+   }
+
+   let filter = {
        status: filterRequest.status || {$ne: 'Draft'},
-    };
+   };
+
+   if (timePeriodOptions[filterRequest.timePeriod]) {
+      filter.postedOn = timePeriodOptions[filterRequest.timePeriod];
+   }
 
     db.collection('ideas')
      .find(filter)

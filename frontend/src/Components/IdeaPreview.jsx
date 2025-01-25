@@ -73,6 +73,10 @@ const IdeaPreview = ({ ideaDetails }) => {
                         <span key={index} className="tag">"{tag.toUpperCase()}"</span>
                     ))}
                 </div>
+                <br />
+                <p className="idea-preview-date-time">
+                    {ideaDetails.lastUpdatedOn != "" ? "Last Update (" + lastUpdatedDateTime.date + ", " + lastUpdatedDateTime.time + ")" : ""}
+                </p>
             </div>
             <div className="extra-features">
                 <div className="like-comment-share">

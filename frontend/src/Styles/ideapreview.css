@@ -61,6 +61,7 @@
     opacity: 0.6;
     font-weight: 500;
     margin: 5px 0 0 0;
+    font-family: var(--accent-font);
 }
 
 .idea-preview .extra-features {

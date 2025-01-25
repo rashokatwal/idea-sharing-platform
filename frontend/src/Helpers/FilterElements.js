@@ -141,6 +141,6 @@ const status = ["Open for Collaboration", "In Progress", "Completed"];
 
 const timePeriod = ["Today", "Last 7 Days", "Last 30 Days"];
 
-const sortBy = ["Most Liked", "Most Commented", "Trending", "Newest First", "Oldest First"]
+const sortBy = ["Most Liked", "Most Commented", "Trending", "Recently Posted", "Recently Updated"]
   
 export { categories, categoryColors, status, timePeriod, sortBy }

@@ -38,7 +38,7 @@ const Explore = () => {
 
     const fetchIdeas = async () => {
         await axios
-            .get(`http://localhost:3000/ideas?popularity=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
+            .get(`http://localhost:3000/ideas?timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);
