@@ -24,7 +24,7 @@ const Idea = () => {
     useEffect(() => {
         setTimeout(() => {
             fetchIdea();
-        }, 2000)
+        }, 500)
     }, [])
 
     return (

@@ -71,7 +71,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
 
     const updateData = async () => {
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${ideaId}`,
+        await axios.patch(`http://localhost:3000/idea/${ideaId}requestType='updateIdea'`,
             {"summary": summary, "tags": tags}
         )
         .then((response) => {

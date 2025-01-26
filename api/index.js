@@ -48,7 +48,7 @@ app.get('/ideas', (req, res) => {
        category: filterRequest.category ? {$regex: filterRequest.category, $options: "i"} : null || {$exists: true},
    };
 
-   console.log(filter.category);
+   // console.log(filter.category);
 
    if (timePeriodOptions[filterRequest.timePeriod]) {
       filter.postedOn = timePeriodOptions[filterRequest.timePeriod];
@@ -119,12 +119,17 @@ app.delete('/idea/:id', (req, res) => {
 });
 
 app.patch('/idea/:id', (req, res) => {
+   const requestType = req.params.requestType || null;
    const updates = req.body;
    const date = new Date();
-   updates.lastUpdatedOn = date;
-   if(updates.status !== "Draft") {
+   if (requestType == "updateIdea") {
+      updates.lastUpdatedOn = date;
+   }
+
+   if (requestType == "postIdea") {
       updates.postedOn = date;
    }
+
    if (ObjectId.isValid(req.params.id)) {
       db.collection('ideas')
          .updateOne({_id: new ObjectId(req.params.id)}, {$set: updates})

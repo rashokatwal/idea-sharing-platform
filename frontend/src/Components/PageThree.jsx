@@ -20,7 +20,7 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
 
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${ideaId}`,
+        await axios.patch(`http://localhost:3000/idea/${ideaId}requestType='postIdea'`,
             {"status": "Completed"}
         )
         .then((response) => {

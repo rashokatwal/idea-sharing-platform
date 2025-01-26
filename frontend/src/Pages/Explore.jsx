@@ -64,7 +64,7 @@ const Explore = () => {
         setLoading(true);
         setTimeout(() => {
             fetchIdeas();
-        }, 2000)
+        }, 1000)
     }, [filterTimePeriod, filterStatus, filterSortBy])
 
     useEffect(() => {
