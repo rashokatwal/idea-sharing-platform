@@ -45,8 +45,10 @@ app.get('/ideas', (req, res) => {
 
    let filter = {
        status: filterRequest.status || {$ne: 'Draft'},
-       category: filterRequest.category || {$exists: true},
+       category: filterRequest.category ? {$regex: filterRequest.category, $options: "i"} : null || {$exists: true},
    };
+
+   console.log(filter.category);
 
    if (timePeriodOptions[filterRequest.timePeriod]) {
       filter.postedOn = timePeriodOptions[filterRequest.timePeriod];
