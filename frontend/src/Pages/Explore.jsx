@@ -16,6 +16,7 @@ const Explore = () => {
     const [ filterStatus, setFilterStatus ] = useState("");
     const [ filterSortBy, setFilterSortBy ] = useState("");
     const [ typingStatus, setTypingStatus ] = useState("");
+    let errorCode = null;
 
     const handleCallback = (childData) => {
         switch(childData.changedProperty) {
@@ -47,7 +48,10 @@ const Explore = () => {
                 setLoading(false);
                 console.log("fetched")
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                setLoading(false);
+                errorCode = error.code;
+            });
     }
 
     // const throttledFetchIdeas = useCallback(
@@ -85,9 +89,13 @@ const Explore = () => {
                         loading ? Array.from({ length: 9 }).map((_, index) => (
                             <IdeasSkeleton key={index} viewType={viewType}/>
                           )) 
-                          : ideas.map((idea) => (
-                            viewType === "grid" ? <Link to={"/idea/" + idea._id} key={idea._id}><CardComponent idea={idea}/></Link> : <Link to={"/idea/" + idea._id} key={idea._id}><ListComponent idea={idea}/></Link>
-                        ))
+                          : ideas.length > 0 ? ideas.map((idea) => (
+                                viewType === "grid" ? <Link to={"/idea/" + idea._id} key={idea._id}><CardComponent idea={idea}/></Link> : <Link to={"/idea/" + idea._id} key={idea._id}><ListComponent idea={idea}/></Link>
+                            ))
+                            : <div className="exception">
+                                    <img src="./src/Assets/broken-lightbulb.png"/>
+                                    <h3>No sparks here!</h3><span>Try searching something else.</span>
+                            </div>
                     }
                 </div>
             </div>
