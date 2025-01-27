@@ -10,6 +10,7 @@ const Idea = () => {
     let ideaId = location.pathname.split('/').pop();
     const [ ideaDetails, setIdeaDetails ] = useState({});
     const [ loading, setLoading ] = useState(true);
+    console.log(ideaId);
 
     const fetchIdea = async () => {
         await axios
