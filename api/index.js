@@ -3,6 +3,7 @@ const { connectToDb } = require('./database/dbConnection');
 // const ObjectId = require('mongodb').ObjectId;
 const cors = require('cors')
 const ideaRoutes = require('./routes/ideaRoute');
+const userRoutes = require('./routes/userRoute');
 
 //init app and middleware
 const app = express();
@@ -16,6 +17,7 @@ connectToDb((err) => {
     if (!err) {
          app.listen(port, () => console.log(`Listening on ${port}`));
          app.use('/', ideaRoutes);
+         app.use('/', userRoutes);
     }
 })
 
