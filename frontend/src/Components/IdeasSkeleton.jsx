@@ -19,7 +19,7 @@ const IdeasSkeleton = ({ viewType }) => {
             likesDateDisplay: "none"
         }
     return (
-        <div style={{textAlign: "left", border: "solid 1px #dce5ed", padding: "0 20px", borderRadius: "10px", boxShadow: "0 1px 5px rgba(0, 0, 0, 0.2)"}}>
+        <div style={{textAlign: "left", border: "solid 1px #dce5ed", padding: "0 20px", borderRadius: "10px", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)"}}>
             <SkeletonTheme baseColor='#dce5ed' highlightColor='#f0f7fc'>
                 <h1><Skeleton width={properties.titleWidth}/></h1>
                 <p><Skeleton count={properties.descriptionCount}/></p>
