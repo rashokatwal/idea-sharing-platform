@@ -94,7 +94,11 @@ const PageOne = () => {
                 { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
             )
             .then((response) => {
-                sessionStorage.setItem("sessionIdea", JSON.stringify(response.data));
+                let ideaDetails = response.data;
+                ideaDetails.title = titleChars.value;
+                ideaDetails.category = categoryChars.value;
+                ideaDetails.description = descriptionChars.value;
+                sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
                 navigate('/ideaeditor/p/2');
                 loadingBarRef.current.complete();
             })
@@ -106,7 +110,11 @@ const PageOne = () => {
                     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
                 )
                 .then((response) => {
-                    sessionStorage.setItem("sessionIdea", JSON.stringify(response.data));
+                    let ideaDetails = response.data;
+                    ideaDetails.title = titleChars.value;
+                    ideaDetails.category = categoryChars.value;
+                    ideaDetails.description = descriptionChars.value;
+                    sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
                     navigate('/ideaeditor/p/2');
                     loadingBarRef.current.complete();
                 })

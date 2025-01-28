@@ -92,11 +92,11 @@
 }
 
 .idea-form .idea-buttons .save-as-draft-button{
-    background-color: var(--secondary-accent);
+    background-color: #4c4c4c;
 }
 
 .idea-form .idea-buttons .edit-button{
-    background-color: #17A2B8;
+    background-color: #4c4c4c;
 }
 
 .idea-form .idea-buttons .delete-button{

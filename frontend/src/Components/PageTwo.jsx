@@ -10,17 +10,22 @@ import axios from "axios";
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
-    const sessionIdea = sessionStorage.getItem("sessionIdea");
-    const { summary, tags } = ideaDetails;
-    const [ summaryChars, setSummaryChars ] = useState({valid: ideaDetails.summary.trim().length > 0, outline: "none"});
-    const [ valid, setValid ] = useState(summaryChars.valid);
+    const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
+    // const { summary, tags } = ideaDetails;
+    const [ summaryChars, setSummaryChars ] = useState({
+        value: sessionIdea ? sessionIdea.summary : "",
+        // valid: sessionIdea ? sessionIdea.summary.trim().length > 0 : false, 
+        outline: "none"
+    });
+    const [ tags, setTags ] = useState(sessionIdea ? sessionIdea.tags : []);
+    // const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
 
     useEffect(() => {
         if (!sessionIdea) {
             navigate(-1);
         }
-        console.log(sessionIdea);
+        // console.log(sessionIdea);
     }, [sessionIdea, navigate]);
 
     const modules = {
@@ -37,49 +42,65 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     };
 
     const handlesummary = (value) => {
-        const updatedDetails = { ...ideaDetails, summary: value };
-        setIdeaDetails(updatedDetails);
+        // const updatedDetails = { ...ideaDetails, summary: value };
+        // setIdeaDetails(updatedDetails);
         const isSummaryValid = value.replace(/<[^>]*>/g, '').trim().length > 0;
         setSummaryChars({
-            valid: isSummaryValid,
+            value: value,
+            // valid: isSummaryValid,
             outline: isSummaryValid ? "none" : "red solid 2px",
         });
-        setValid(isSummaryValid);
     };
 
     const addTag = () => {
-        let tmpTags = new Set(ideaDetails.tags);
+        let tmpTags = new Set(tags);
         if (!tmpTags.has(newTag)) {
-            setIdeaDetails( {...ideaDetails, tags: [...ideaDetails.tags, newTag]} );
+            setTags( [...tags, newTag] );
             setNewTag("");
         }
     }
 
     const removeTag = (index) => {
-        setIdeaDetails({...ideaDetails, tags: [
-            ...ideaDetails.tags.slice(0, index),
-            ...ideaDetails.tags.slice(index + 1)
-          ]}); 
+        setTags([
+            ...tags.slice(0, index),
+            ...tags.slice(index + 1)
+          ]); 
     }
 
     const validate = async () => {
-        const isSummaryValid = ideaDetails.summary.trim().length > 0;
+        const isSummaryValid = summaryChars.value.trim().length > 0;
+        // console.log("validated")
+        setSummaryChars({...summaryChars, outline: isSummaryValid ? "none" : "red solid 2px" });
+        // setValid(isSummaryValid);
+        isSummaryValid ? await updateData() : null;
+    }
 
-        setSummaryChars({ valid: isSummaryValid, outline: isSummaryValid ? "none" : "red solid 2px" });
-        setValid(isSummaryValid);
-        valid ? await updateData() : null;
+    const checkForChanges = () => {
+        // console.log(tags == sessionIdea.tags);
+        return summaryChars.value == sessionIdea.summary && JSON.stringify(tags) == JSON.stringify(sessionIdea.tags) ? false : true;
     }
 
     const updateData = async () => {
+        // console.log('updateData called')
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}`,
-            {"summary": summary, "tags": tags}
-        )
-        .then((response) => {
+        if(sessionIdea == null || checkForChanges()) {
+            await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}`,
+                {"summary": summaryChars.value, "tags": tags}
+            )
+            .then((response) => {
+                let ideaDetails = response.data;
+                ideaDetails.summary = summaryChars.value;
+                ideaDetails.tags = tags;
+                sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
+                navigate('/ideaeditor/p/3');
+                loadingBarRef.current.complete();
+            })
+            .catch((error) => console.log(error));
+        }
+        else {
             navigate('/ideaeditor/p/3');
             loadingBarRef.current.complete();
-        })
-        .catch((error) => console.log(error));
+        }
     }
 
     const prevPage = () => {
@@ -99,12 +120,12 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
             </div>
 
             <p className="labels">Summary</p>
-            <ReactQuill modules={modules} value={ideaDetails.summary} onChange={handlesummary} className="idea-summary" style={{outline: summaryChars.outline}}/>
+            <ReactQuill modules={modules} value={summaryChars.value} onChange={handlesummary} className="idea-summary" style={{outline: summaryChars.outline}}/>
             <p className="labels">Tags</p>
             <div className="tags-input">
                 <input type="text" value={newTag} className="idea-tags" placeholder="e.g., AI, Healthcare, Sustainability" style={{flexGrow: 3}} onChange={(e) => {setNewTag(e.target.value)}} onKeyDown={(e)=> e.key == 'Enter' ? addTag() : ''}/>
                 <div className="tags" style={{flexGrow: 3}}>
-                {ideaDetails.tags.map((tag, index) => (
+                {tags.map((tag, index) => (
                     <span key={index} className="tag" style={{fontWeight: "600"}}>"{tag.toUpperCase()}"<span style={{marginLeft: "10px", cursor: "pointer"}} onClick={() => {removeTag(index)}}><FontAwesomeIcon icon="fa-solid fa-xmark" /></span></span>
                 ))}
                 </div>

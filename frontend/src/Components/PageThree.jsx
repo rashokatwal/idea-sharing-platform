@@ -9,7 +9,7 @@ import axios from "axios";
 const PageThree = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
-    const sessionIdea = sessionStorage.getItem("ideaId");
+    const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const { updatedDate, updatedTime } = ideaDetails;
 
     useEffect(() => {
@@ -20,11 +20,11 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
 
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${ideaId}?requestType='postIdea'`,
+        await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
             {"status": "Completed"}
         )
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             loadingBarRef.current.complete();
         })
         .catch((error) => console.log(error));
@@ -44,7 +44,7 @@ const PageThree = ({ ideaDetails, setIdeaDetails }) => {
                 <p className="header-subtitle" style={{lineHeight: "25px"}}>
                     Look over your idea, make any changes, and submit to inspire others.
                 </p>
-                <IdeaPreview ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} previewType={"author"}/>
+                <IdeaPreview ideaDetails={sessionIdea} previewType={"author"}/>
             </div>
 
             <div className="idea-buttons">
