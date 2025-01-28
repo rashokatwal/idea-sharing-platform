@@ -12,15 +12,18 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { LoadingBarProvider, useLoadingBar } from './Contexts/LoadingBarContext';
+import { AuthContextProvider } from './Contexts/AuthContext';
 
 const App = () => {
 
   return (
     <Router>
       <ScrollToTop />
-      <LoadingBarProvider>
-        <AppContent />
-      </LoadingBarProvider>
+      <AuthContextProvider>
+        <LoadingBarProvider>
+          <AppContent />
+        </LoadingBarProvider>
+      </AuthContextProvider>
     </Router>
   );
 };
