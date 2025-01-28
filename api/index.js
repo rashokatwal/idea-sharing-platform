@@ -1,5 +1,7 @@
+require('dotenv').config()
+
 const express = require('express');
-const { connectToDb } = require('./database/dbConnection');
+// const { connectToDb } = require('./database/dbConnection');
 const cors = require('cors')
 const ideaRoutes = require('./routes/ideaRoute');
 const userRoutes = require('./routes/userRoute');
