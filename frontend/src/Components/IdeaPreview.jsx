@@ -6,10 +6,10 @@ import { categoryColors } from "../Helpers/FilterElements";
 import { dateTimeConverter } from '../Helpers/dateUtil';
 import axios from 'axios';
 
-const IdeaPreview = ({ ideaDetails }) => {
+const IdeaPreview = ({ ideaDetails, previewType }) => {
     const [ isLiked, setIsLiked ] = useState(false);
     const [ isSaved, setIsSaved ] = useState(false);
-    const lastUpdatedDateTime = dateTimeConverter(ideaDetails.lastUpdatedOn);
+    const lastUpdatedDateTime = dateTimeConverter(ideaDetails.updatedAt);
     const postedDateTime = dateTimeConverter(ideaDetails.postedOn);
 
     const updateLike = async () => {
@@ -45,7 +45,9 @@ const IdeaPreview = ({ ideaDetails }) => {
     }
 
     useEffect(() => {
-        updateReads();
+        if(previewType == "user") {
+            updateReads();
+        }
     }, [])
 
     return (
@@ -80,13 +82,13 @@ const IdeaPreview = ({ ideaDetails }) => {
             </div>
             <div className="extra-features">
                 <div className="like-comment-share">
-                    <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} onClick={handleLike}/> {ideaDetails.likes}</span>
+                    <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} onClick={() => previewType == "user" ? handleLike : null}/> {ideaDetails.likes}</span>
                     <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
                     <span className="collaborate" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-handshake" /> Collab</span>
-                    <span className="save" style={{cursor: "pointer", marginLeft: "15px"}} onClick={handleSave}><FontAwesomeIcon icon={(isSaved ? "fa-solid" : "fa-regular") + " fa-bookmark"} /> {isSaved ? "Unsave" : "Save"}</span>
+                    <span className="save" style={{cursor: "pointer", marginLeft: "15px"}} onClick={() => previewType == "user" ? handleSave : null}><FontAwesomeIcon icon={(isSaved ? "fa-solid" : "fa-regular") + " fa-bookmark"} /> {isSaved ? "Unsave" : "Save"}</span>
                 </div>
             </div>
         </div>

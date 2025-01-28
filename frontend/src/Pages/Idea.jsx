@@ -30,7 +30,7 @@ const Idea = () => {
     return (
         <div className="idea-outer">
             <div className="idea-inner">
-                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails}/>}
+                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails} previewType={"user"}/>}
             </div>
         </div>
     )

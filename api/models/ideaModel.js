@@ -13,7 +13,7 @@ const ideaSchema = new Schema({
     },
     summary: {
         type: String,
-        required: true
+        default: ""
     },
     author: {
         type: String,
@@ -25,31 +25,28 @@ const ideaSchema = new Schema({
     },
     tags: {
         type: Array,
-        required: true
+        default: []
     },
     likes: {
         type: Number,
-        required: true
+        default: 0
     },
     comments: {
         type: Number,
-        required: true
+        default: 0
     },
     reads: {
         type: Number,
-        required: true
+        default: 0
     },
     status: {
         type: String,
-        required: true
-    },
-    lastUpdatedOn: {
-        type: Date,
-        required: true
+        enum: ["Open for Collaboration", "In Progress", "Completed", "Draft"],
+        default: "Draft",
     },
     postedOn: {
         type: Date,
-        required: true
+        default: Date.now()
     }
 }, { timestamps: true })
 

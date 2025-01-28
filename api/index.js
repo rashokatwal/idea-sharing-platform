@@ -1,9 +1,9 @@
 const express = require('express');
 const { connectToDb } = require('./database/dbConnection');
-// const ObjectId = require('mongodb').ObjectId;
 const cors = require('cors')
 const ideaRoutes = require('./routes/ideaRoute');
 const userRoutes = require('./routes/userRoute');
+const mongoose = require('mongoose');
 
 //init app and middleware
 const app = express();
@@ -11,15 +11,29 @@ const port = "3000";
 
 app.use(cors());
 app.use(express.json());
-// routes
+
 //db connection
-connectToDb((err) => {
-    if (!err) {
-         app.listen(port, () => console.log(`Listening on ${port}`));
-         app.use('/', ideaRoutes);
-         app.use('/', userRoutes);
-    }
-})
+// connectToDb((err) => {
+//     if (!err) {
+//          app.listen(port, () => console.log(`Listening on ${port}`));
+//          app.use('/', ideaRoutes);
+//          app.use('/', userRoutes);
+//     }
+// })
+
+mongoose.connect('mongodb://localhost:27017/mindhop')
+            .then(() => {
+                // listen for requests
+               app.listen(port, () => {
+                  console.log('connected to db & listening on port', port)
+               })
+               app.use('/', ideaRoutes);
+               app.use('/', userRoutes);
+            })
+            .catch((error) => {
+                console.log(error)
+                return cb(error)
+            })
 
 // app.get('/ideas', (req, res) => {
 //    let ideas = [];

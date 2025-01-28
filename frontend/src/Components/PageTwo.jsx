@@ -10,17 +10,18 @@ import axios from "axios";
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
-    const ideaId = localStorage.getItem("ideaId");
+    const sessionIdea = sessionStorage.getItem("sessionIdea");
     const { summary, tags } = ideaDetails;
     const [ summaryChars, setSummaryChars ] = useState({valid: ideaDetails.summary.trim().length > 0, outline: "none"});
     const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
 
     useEffect(() => {
-        if (!ideaId) {
+        if (!sessionIdea) {
             navigate(-1);
         }
-    }, [ideaId, navigate]);
+        console.log(sessionIdea);
+    }, [sessionIdea, navigate]);
 
     const modules = {
         toolbar: [
@@ -62,7 +63,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     }
 
     const validate = async () => {
-        const isSummaryValid = ideaDetails.title.trim().length > 0;
+        const isSummaryValid = ideaDetails.summary.trim().length > 0;
 
         setSummaryChars({ valid: isSummaryValid, outline: isSummaryValid ? "none" : "red solid 2px" });
         setValid(isSummaryValid);
@@ -71,7 +72,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
 
     const updateData = async () => {
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${ideaId}requestType='updateIdea'`,
+        await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}`,
             {"summary": summary, "tags": tags}
         )
         .then((response) => {

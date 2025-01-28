@@ -21,6 +21,6 @@ router.post('/idea', postIdea);
 
 router.patch('/idea/:id', updateIdea);
 
-// router.delete('/idea/:id', deleteIdea);
+router.delete('/idea/:id', deleteIdea);
 
 module.exports = router;

@@ -20,12 +20,9 @@ const IdeaEditor = () => {
         summary: "",
         tags: [],
         author: "Jon Doe",
-        status: "Draft",
         likes: 0,
         comments: 0,
         reads: 0,
-        lastUpdatedOn: "",
-        postedOn: ""
     })
 
     // const setDateTime = () => {

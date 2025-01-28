@@ -31,10 +31,10 @@ const Description = () => {
                 <p className="description-paragraph">
                     At MindHop, we believe that every great idea deserves to be shared. Our platform was created to bring thinkers, creators, and visionaries together, fostering a space where collaboration turns thoughts into reality. Whether you're brainstorming your next big project or looking for inspiration, MindHop is here to connect you with like-minded individuals and spark meaningful conversations.
                 </p>
-                <p className="description-paragraph">
+                {/* <p className="description-paragraph">
                     We aim to simplify the process of sharing ideas and collaborating with others. With intuitive tools, engaging discussions, and a supportive community, MindHop empowers you to explore innovative possibilities and make a real impact. Together, we can create, innovate, and inspire change.
                 </p>
-                <br />
+                <br /> */}
                 {/* <p className="mission-statement">
                     "Our mission is to provide a platform that bridges creativity and collaboration,<br /> empowering individuals to share and grow their ideas."
                 </p> */}
