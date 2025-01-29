@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import Explore from "./Pages/Explore";
+import SignUp from './Pages/SignUp';
+import SignIn from './Pages/SignIn';
 import Navbar from "./Components/Navbar";
 import ScrollToTop from "./Components/ScrollToTop";
 import IdeaEditor from "./Pages/IdeaEditor";
@@ -31,7 +33,7 @@ const App = () => {
 const AppContent = () => {
   const location = useLocation();
 
-  const noNavAndFooterRoutes = ["/login", "/register"];
+  const noNavAndFooterRoutes = ["/signin", "/signup"];
   const shouldShowNavAndFooter = !noNavAndFooterRoutes.includes(location.pathname) && !location.pathname.includes("ideaeditor");
 
   const noLoadingBar = ["/ideaeditor/p/2", "/ideaeditor/p/2"];
@@ -55,6 +57,8 @@ const AppContent = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/explore" element={<Explore />} />
+        <Route exact path="/signin" element={<SignIn />} />
+        <Route exact path="/signup" element={<SignUp />} />
         {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
         {location.pathname.includes("ideaeditor") && <Route path="*" element={<IdeaEditor />} />}
       </Routes>

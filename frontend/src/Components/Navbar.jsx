@@ -5,7 +5,7 @@ const Navbar = () => {
     return ( 
         <div className="navbar-outer">
             <div className="navbar-inner">
-                <Link to="/"><img src="/src/Assets/logo.png" alt="logo" className="logo" /></Link>
+                <Link to="/"><img src="/src/Assets/logo-black.png" alt="logo" className="logo" /></Link>
                 <div className="searchBar-outer">
                     <input type="text" className="searchBar" placeholder="Search for Ideas"/>
                     <button className="searchButton">
@@ -24,9 +24,9 @@ const Navbar = () => {
                     </li>
                     <li><Link to="/explore">Explore</Link></li>
                     <li>
-                        <button className="primary-button">
-                            Sign In
-                        </button>
+                        <Link to="/signin">
+                            <button className="primary-button">Sign In</button>
+                        </Link>
                     </li>
                 </ul>
             </div>

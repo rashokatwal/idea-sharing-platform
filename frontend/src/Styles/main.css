@@ -11,7 +11,7 @@
 :root {
     --background-color: #fafafa;
     --primary-color: #1c1c1c;
-    --accent-color: #2D89FF;
+    --accent-color: #2BB3E7;
     --text-color: #0f0f0f;  
     --secondary-accent: #20C997;
     --primary-font: "Work Sans", serif;
@@ -27,7 +27,7 @@ body {
 }
 
 .primary-button {
-  padding: 10px 15px;
+  padding: 8px 15px;
   border-radius: 50px;
   border: none;
   background-color: var(--accent-color);
