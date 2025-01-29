@@ -77,4 +77,12 @@
     width: 40px;
     border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.call-to-action-section .right-arrow:hover { 
+    opacity: 0.8;
 }

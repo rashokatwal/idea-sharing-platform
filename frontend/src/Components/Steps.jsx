@@ -1,5 +1,6 @@
 import '../Styles/steps.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const Steps = () => {
     return (
@@ -77,9 +78,11 @@ const Steps = () => {
                     <h2>
                         Get Started
                     </h2>
-                    <button className="right-arrow">
-                        <FontAwesomeIcon icon="fa-solid fa-arrow-right" />
-                    </button>
+                    <Link to='/signin'>
+                        <button className='right-arrow'>
+                            <FontAwesomeIcon icon="fa-solid fa-arrow-right" />
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

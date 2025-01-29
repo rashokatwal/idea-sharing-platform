@@ -3,7 +3,7 @@ import Autocomplete from '../Components/Autocomplete';
 import { categories } from '../Helpers/FilterElements';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
-import { useLoadingBar } from '../Contexts/LoadingBarContext';
+import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 

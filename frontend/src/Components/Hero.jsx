@@ -1,4 +1,6 @@
 import '../Styles/hero.css';
+import { Link } from 'react-router-dom';
+
 const Hero = () => {
     return ( 
         <div className="hero-outer">
@@ -11,9 +13,11 @@ const Hero = () => {
                         Collaborate with thinkers, creators, and doers to bring your ideas to life.
                     </h4>
                     <br />
-                    <button className="primary-button">
-                        Get Started
-                    </button>
+                    <Link to="/signin">
+                        <button className="primary-button">
+                            Get Started
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

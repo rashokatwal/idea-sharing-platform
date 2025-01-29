@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
 import { useNavigate } from "react-router-dom";
-import { useLoadingBar } from '../Contexts/LoadingBarContext';
+import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
 
-const PageThree = ({ ideaDetails, setIdeaDetails }) => {
+const PageThree = () => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;

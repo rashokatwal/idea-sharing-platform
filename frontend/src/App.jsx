@@ -13,7 +13,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import { LoadingBarProvider, useLoadingBar } from './Contexts/LoadingBarContext';
+import { LoadingBarProvider } from './Contexts/LoadingBarContext';
+import { useLoadingBar } from './Hooks/useLoadingBar';
 import { AuthContextProvider } from './Contexts/AuthContext';
 
 const App = () => {
@@ -48,7 +49,6 @@ const AppContent = () => {
         }, 500);
       }
 
-      // return () => clearTimeout(timeout);
   }, [location.pathname]);
 
   return (

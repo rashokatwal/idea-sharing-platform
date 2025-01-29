@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill-new';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useNavigate } from 'react-router-dom';
-import { useLoadingBar } from '../Contexts/LoadingBarContext';
+import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
 
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
