@@ -31,21 +31,21 @@ const userSchema = new Schema({
 userSchema.statics.signup = async function (email, password) {
 
     if (!email || !password) {
-        throw Error("Email and password are required");
+        throw Error("Email and password are required!");
     }
 
     if (!validator.isEmail(email)) {
-        throw Error("Invalid email address");
+        throw Error("Invalid email address!");
     }
 
     if (!validator.isStrongPassword(password)) {
-        throw Error("Password is too weak");
+        throw Error("Your password is weak!");
     }
 
     const exists = await this.findOne({email});
 
     if(exists) {
-        throw Error("Email already in use");
+        throw Error("Email already in use!");
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -58,7 +58,7 @@ userSchema.statics.signup = async function (email, password) {
 
 userSchema.statics.login = async function (email, password) {
     if (!email || !password) {
-        throw Error("Email and password are required");
+        throw Error("Email and Password are required");
     }
 
     const user = await this.findOne({email});

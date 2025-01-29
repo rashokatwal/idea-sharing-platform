@@ -2,14 +2,12 @@ import { useState } from 'react';
 import '../Styles/signin-signup.css';
 import { Link } from 'react-router-dom';
 import { useSignUp } from '../Hooks/useSignUp';
-import { useLoadingBar } from '../Hooks/useLoadingBar';
 
 const SignUp = () => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ showPassword, setShowPassword ] = useState(false);
     const { signup, isLoading, error } = useSignUp();
-    const loadingBarRef = useLoadingBar();
 
     const togglePassword = () => {
         setShowPassword(!showPassword)
@@ -17,7 +15,6 @@ const SignUp = () => {
 
     const handleSignIn = async (e) => {
         e.preventDefault();
-        // if(isLoading) loadingBarRef.current.continuousStart();
         await signup(email, password);
     }
 
@@ -30,7 +27,7 @@ const SignUp = () => {
                 </h2>
                 <input type='text' placeholder="Email" value={email} className='email-input' onChange={(e) => setEmail(e.target.value)} required/><br />
                 <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} className='password-input' onChange={(e) => setPassword(e.target.value)} required/>
-                <p className="error">{error}</p>
+                <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
                 <div className='password-options'>
                     <span style={{display: 'flex', alignItems: 'center', gap: '5px'}}><input type="checkbox" className='show-password' onChange={togglePassword}/>Show Password</span>
                 </div>
