@@ -28,7 +28,7 @@
 
 .searchBar {
     padding: 10px 15px;
-    border: solid 3px #747474;
+    border: solid 2px rgba(0, 0, 0, 0.5);
     border-radius: 50px;
     min-width: 300px;
     font-size: 15px;
