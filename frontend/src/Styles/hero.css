@@ -36,6 +36,20 @@
     transition: 0.5s;
 }
 
+.hero-main-headline {
+    font-size: 3vw;
+    font-weight: 700;
+}
+
+.hero-sub-headline {
+    font-size: 1.2vw;
+    font-weight: 600;
+}
+
+.hero-cover .primary-button {
+    font-size: 1.2vw;
+}
+
 .hero-sub-headline, .hero-main-headline, .hero-cover .primary-button{
     margin: 10px;
     margin-left: 50px;
