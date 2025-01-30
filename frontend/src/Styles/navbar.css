@@ -58,6 +58,9 @@
 
 .navLinks li:not(.initial-list) {
     margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navLinks li a {
@@ -69,4 +72,14 @@
 .navLinks li a:hover {
     color: var(--accent-color);
     /* font-weight: 500 */
+}
+
+.navLinks .author-avatar {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    border: solid 2px rgba(0, 0, 0, 1);
+    outline: solid 3px var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
 }

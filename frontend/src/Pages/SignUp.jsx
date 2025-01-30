@@ -13,7 +13,7 @@ const SignUp = () => {
         setShowPassword(!showPassword)
     }
 
-    const handleSignIn = async (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
         await signup(email, password);
     }
@@ -31,7 +31,7 @@ const SignUp = () => {
                 <div className='password-options'>
                     <span style={{display: 'flex', alignItems: 'center', gap: '5px'}}><input type="checkbox" className='show-password' onChange={togglePassword}/>Show Password</span>
                 </div>
-                <button className="primary-button signup-button" type='submit' disabled={isLoading} onClick={handleSignIn}>Sign Up</button>
+                <button className="primary-button signup-button" type='submit' disabled={isLoading} onClick={handleSignUp}>Sign Up</button>
                 <p>Or Sign Up with</p>
                 <div className='social-signup'>
 

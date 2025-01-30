@@ -56,21 +56,25 @@ userSchema.statics.signup = async function (email, password) {
     return user;
 }
 
-userSchema.statics.login = async function (email, password) {
+userSchema.statics.signin = async function (email, password) {
     if (!email || !password) {
-        throw Error("Email and Password are required");
+        throw Error("Email and Password are required!");
+    }
+
+    if (!validator.isEmail(email)) {
+        throw Error("Invalid email address!");
     }
 
     const user = await this.findOne({email});
 
     if(!user) {
-        throw Error("Incorrect credentials");
+        throw Error("Incorrect Email or Password!");
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if(!match) {
-        throw Error("Incorrect credentials");
+        throw Error("Incorrect Email or Password!");
     }
 
     return user;

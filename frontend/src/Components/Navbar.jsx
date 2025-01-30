@@ -1,7 +1,17 @@
 import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { useSignout } from '../Hooks/useSignout';
+import { useAuthContext } from '../Hooks/useAuthContext';
 const Navbar = () => {
+    const { signout } = useSignout();
+    const userStatus = useAuthContext();
+
+    const handleSignout = () => {
+        signout();
+        window.location.href = '/';
+    }
+
     return ( 
         <div className="navbar-outer">
             <div className="navbar-inner">
@@ -23,11 +33,26 @@ const Navbar = () => {
                         }}>About</a>
                     </li>
                     <li><Link to="/explore">Explore</Link></li>
-                    <li>
-                        <Link to="/signin">
-                            <button className="primary-button">Sign In</button>
-                        </Link>
-                    </li>
+                    {!userStatus.isAuthenticated && (
+                        <div>
+                            <li>
+                                <Link to="/signin">
+                                    <button className="primary-button">Sign In</button>
+                                </Link>
+                            </li>
+                        </div>
+                    )}
+                    {userStatus.isAuthenticated && (
+                        <div style={{display: 'flex'}}>
+                            <li>
+                                <img className="author-avatar" src='/src/Assets/default_user.png' onClick={handleSignout}/>
+                            </li>
+                            <li>
+                                <Link to="/ideaeditor/p/1">
+                                    <button className="primary-button">Post Idea</button>
+                                </Link>
+                            </li>
+                        </div>)}
                 </ul>
             </div>
         </div>
