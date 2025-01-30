@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     margin: auto;
-    max-width: 1000px;
+    max-width: 1100px;
     font-family: var(--primary-font);   
     padding: 10px 0px;
 }       
@@ -76,10 +76,10 @@
 
 .navLinks .author-avatar {
     display: inline-block;
-    height: 35px;
-    width: 35px;
-    border: solid 2px rgba(0, 0, 0, 1);
-    outline: solid 3px var(--accent-color);
+    height: 27px;
+    width: 27px;
+    border: solid 2px rgba(0, 0, 0, 0.5);
+    /* outline: solid 3px var(--accent-color); */
     border-radius: 50%;
     cursor: pointer;
 }

@@ -47,7 +47,7 @@ const Navbar = () => {
                             <li>
                                 <img className="author-avatar" src='/src/Assets/default_user.png' onClick={handleSignout}/>
                             </li>
-                            <li>
+                            <li style={{marginLeft: '10px'}}>
                                 <Link to="/ideaeditor/p/1">
                                     <button className="primary-button">Post Idea</button>
                                 </Link>
