@@ -6,12 +6,13 @@ const {
     updateIdea,
     deleteIdea
 } = require('../controllers/ideaController');
+const authenticateAPIKey = require('../middleware/authenticateAPIKey');
 
 // const dbMiddleware = require('../middleware/dbMiddleware');
 
 const router = express.Router();
 
-// router.use(dbMiddleware);
+router.use(authenticateAPIKey);
 
 router.get('/ideas', getIdeas);
 

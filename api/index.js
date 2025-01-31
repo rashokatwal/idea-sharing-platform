@@ -6,6 +6,7 @@ const cors = require('cors')
 const ideaRoutes = require('./routes/ideaRoute');
 const userRoutes = require('./routes/userRoute');
 const mongoose = require('mongoose');
+const { generateApiKey } = require('./controllers/apiKeyController');
 
 //init app and middleware
 const app = express();
@@ -26,11 +27,14 @@ app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/mindhop')
             .then(() => {
                 // listen for requests
-               app.listen(port, () => {
-                  console.log('connected to db & listening on port', port)
-               })
-               app.use('/', ideaRoutes);
-               app.use('/', userRoutes);
+                app.listen(port, () => {
+                    console.log('connected to db & listening on port', port)
+                })
+                app.get('/generateapikey', async (req, res) => {
+                    await generateApiKey(req, res);
+                });
+                app.use('/', ideaRoutes);
+                app.use('/', userRoutes);
             })
             .catch((error) => {
                 console.log(error)
