@@ -3,13 +3,13 @@ import ReactQuill from 'react-quill-new';
 // import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 // import axios from "axios";
 import api from "../Helpers/api";
 
-const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
-    const navigate = useNavigate();
+const PageTwo = ({ changePages }) => {
+    // const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const { summary, tags } = ideaDetails;
@@ -22,12 +22,12 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     // const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
 
-    useEffect(() => {
-        if (!sessionIdea) {
-            navigate(-1);
-        }
-        // console.log(sessionIdea);
-    }, [sessionIdea, navigate]);
+    // useEffect(() => {
+    //     if (!sessionIdea) {
+    //         navigate(-1);
+    //     }
+    //     // console.log(sessionIdea);
+    // }, [sessionIdea, navigate]);
 
     const modules = {
         toolbar: [
@@ -93,19 +93,28 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
                 ideaDetails.summary = summaryChars.value;
                 ideaDetails.tags = tags;
                 sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                navigate('/ideaeditor/p/3');
+                // navigate('/ideaeditor/p/3');
+                changePages(3);
                 loadingBarRef.current.complete();
             })
             .catch((error) => console.log(error));
         }
         else {
-            navigate('/ideaeditor/p/3');
-            loadingBarRef.current.complete();
+            // navigate('/ideaeditor/p/3');
+            changePages(3);
+            setTimeout(() =>{
+                loadingBarRef.current.complete();
+            }, 500)
         }
     }
 
     const prevPage = () => {
-        navigate(-1);
+        // navigate(-1);
+        loadingBarRef.current.continuousStart();
+        changePages(1);
+        setTimeout(() =>{
+            loadingBarRef.current.complete();
+        }, 500)
     }
     
     return (

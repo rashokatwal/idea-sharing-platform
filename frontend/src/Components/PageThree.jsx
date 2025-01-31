@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
 
-const PageThree = () => {
-    const navigate = useNavigate();
+const PageThree = ({ changePages }) => {
+    // const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const { updatedDate, updatedTime } = ideaDetails;
 
-    useEffect(() => {
-        if (!sessionIdea) {
-            navigate(-1);
-        }
-    }, [sessionIdea, navigate]);
+    // useEffect(() => {
+    //     if (!sessionIdea) {
+    //         navigate(-1);
+    //     }
+    // }, [sessionIdea, navigate]);
 
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
@@ -31,7 +31,12 @@ const PageThree = () => {
     }
 
     const editIdea = () => {
-        navigate('/ideaeditor/p/1', {replace: true})
+        // navigate('/ideaeditor/p/1', {replace: true})
+        loadingBarRef.current.continuousStart();
+        changePages(1);
+        setTimeout(() =>{
+            loadingBarRef.current.complete();
+        }, 500)
     }
 
     return (

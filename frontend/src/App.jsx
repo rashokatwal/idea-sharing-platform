@@ -63,7 +63,7 @@ const AppContent = () => {
         <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
         <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
         {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
-        {location.pathname.includes("ideaeditor") && <Route path="*" element={<IdeaEditor />} />}
+        {location.pathname.includes("ideaeditor") && <Route path="*" element={userStatus.isAuthenticated ? <IdeaEditor /> : <Navigate to="/" />} />}
       </Routes>
       {shouldShowNavAndFooter && <Footer />}
     </div>

@@ -44,11 +44,14 @@ const Navbar = () => {
                     )}
                     {userStatus.isAuthenticated && (
                         <div style={{display: 'flex'}}>
-                            <li>
+                            <li style={{cursor: 'pointer'}}>
+                                <FontAwesomeIcon icon="fa-regular fa-bell" />
+                            </li>
+                            <li style={{marginLeft: '20px'}}>
                                 <img className="author-avatar" src='/src/Assets/default_user.png' onClick={handleSignout}/>
                             </li>
                             <li style={{marginLeft: '10px'}}>
-                                <Link to="/ideaeditor/p/1">
+                                <Link to="/ideaeditor">
                                     <button className="primary-button">Post Idea</button>
                                 </Link>
                             </li>

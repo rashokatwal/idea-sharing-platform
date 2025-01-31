@@ -4,12 +4,12 @@ import { categories } from '../Helpers/FilterElements';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import api from "../Helpers/api";
 
-const PageOne = () => {
+const PageOne = ({ changePages }) => {
     const loadingBarRef = useLoadingBar();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const [ ideaDetails, setIdeaDetails ] = useState(sessionIdea || {title: "", category: "", description: ""});
     const [titleChars, setTitleChars] = useState({
@@ -99,7 +99,8 @@ const PageOne = () => {
                 ideaDetails.category = categoryChars.value;
                 ideaDetails.description = descriptionChars.value;
                 sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                navigate('/ideaeditor/p/2');
+                // navigate('/ideaeditor/p/2');
+                changePages(2);
                 loadingBarRef.current.complete();
             })
             .catch((error) => console.log(error));
@@ -115,14 +116,19 @@ const PageOne = () => {
                     ideaDetails.category = categoryChars.value;
                     ideaDetails.description = descriptionChars.value;
                     sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                    navigate('/ideaeditor/p/2');
+                    // navigate('/ideaeditor/p/2');
+                    changePages(2);
                     loadingBarRef.current.complete();
                 })
                 .catch((error) => console.log(error))
             }
             else{
-                navigate('/ideaeditor/p/2');
-                loadingBarRef.current.complete();
+                // navigate('/ideaeditor/p/2');
+                // loadingBarRef.current.continuousStart();
+                changePages(1);
+                setTimeout(() =>{
+                    loadingBarRef.current.complete();
+                }, 500)
             }
         }
     }

@@ -7,23 +7,29 @@ import PageThree from "../Components/PageThree";
 import { useLocation } from 'react-router-dom';
 
 const IdeaEditor = () => {
-    const location = useLocation();
-    let page = Number(location.pathname.split('/').pop()) || 1;
-    useEffect(() => {
-        page = Number(location.pathname.split('/').pop());
-    })
+    // const location = useLocation();
+    // let page = Number(location.pathname.split('/').pop()) || 1;
+    // useEffect(() => {
+    //     page = Number(location.pathname.split('/').pop());
+    // })
 
-    const [ ideaDetails, setIdeaDetails ] = useState({
-        title: "",
-        description: "",
-        category: "",
-        summary: "",
-        tags: [],
-        author: "Jon Doe",
-        likes: 0,
-        comments: 0,
-        reads: 0,
-    })
+    const [ page, setPage ] = useState(1);
+
+    // const [ ideaDetails, setIdeaDetails ] = useState({
+    //     title: "",
+    //     description: "",
+    //     category: "",
+    //     summary: "",
+    //     tags: [],
+    //     author: "Jon Doe",
+    //     likes: 0,
+    //     comments: 0,
+    //     reads: 0,
+    // })
+
+    const changePages = (pageNumber) => {
+        setPage(pageNumber);
+    }
 
     // const setDateTime = () => {
     //     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -40,9 +46,9 @@ const IdeaEditor = () => {
         <div className="idea-editor-outer">
             <div className="idea-editor-inner">
                 <div className="idea-form">
-                    {page === 1 && <PageOne ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
-                    {page === 2 && <PageTwo ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
-                    {page === 3 && <PageThree ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails}/>}
+                    {page === 1 && <PageOne changePages={changePages} />}
+                    {page === 2 && <PageTwo changePages={changePages}/>}
+                    {page === 3 && <PageThree changePages={changePages}/>}
                 </div>
             </div>
         </div>
