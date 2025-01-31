@@ -7,7 +7,7 @@ import SignIn from './Pages/SignIn';
 import Navbar from "./Components/Navbar";
 import ScrollToTop from "./Components/ScrollToTop";
 import IdeaEditor from "./Pages/IdeaEditor";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import Idea from "./Pages/Idea";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -16,6 +16,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { LoadingBarProvider } from './Contexts/LoadingBarContext';
 import { useLoadingBar } from './Hooks/useLoadingBar';
 import { AuthContextProvider } from './Contexts/AuthContext';
+import { useAuthContext } from './Hooks/useAuthContext';
 
 const App = () => {
 
@@ -41,6 +42,8 @@ const AppContent = () => {
 
   const loadingBarRef = useLoadingBar();
 
+  const userStatus = useAuthContext();
+
   useEffect(() => {
       if(!noLoadingBar.includes(location.pathname)) {
         loadingBarRef.current.continuousStart();
@@ -57,8 +60,8 @@ const AppContent = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/explore" element={<Explore />} />
-        <Route exact path="/signin" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
+        <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
         {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
         {location.pathname.includes("ideaeditor") && <Route path="*" element={<IdeaEditor />} />}
       </Routes>

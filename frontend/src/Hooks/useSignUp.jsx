@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../Helpers/api';
 
 export const useSignUp = () => {
     const [ error, setError ] = useState(null);
@@ -18,7 +19,7 @@ export const useSignUp = () => {
         setError(null);
 
         const response = async () => {
-            let response = await axios.post('http://localhost:3000/auth/signup',
+            let response = await api.post('/auth/signup',
                 { email: email, password: password }
             )
             .then((response) => {

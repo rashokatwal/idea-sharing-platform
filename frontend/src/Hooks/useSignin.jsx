@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 import { useLoadingBar } from './useLoadingBar';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../Helpers/api';
 
 export const useSignin = () => {
     const [ error, setError ] = useState(null);
@@ -18,14 +19,14 @@ export const useSignin = () => {
         setError(null);
 
         const response = async () => {
-            let response = await axios.post('http://localhost:3000/auth/signin',
+            let response = await api.post('/auth/signin',
                 { email: email, password: password }
             )
             .then((response) => {
                 localStorage.setItem('user', JSON.stringify(response.data));
                 dispatch({type: 'LOGIN', payload: response.data});
                 setIsLoading(false);
-                window.location.href = '/';
+                // window.location.href = '/';
             })
             .catch((error) => {
                 setError(error.response.data);
