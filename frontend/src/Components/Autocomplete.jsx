@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../Styles/autocomplete.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 
 const Autocomplete = ({ suggestions, placeholder, value, onChange, outline }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);

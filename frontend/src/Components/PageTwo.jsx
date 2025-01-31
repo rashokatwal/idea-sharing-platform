@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useNavigate } from 'react-router-dom';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-import axios from "axios";
+// import axios from "axios";
+import api from "../Helpers/api";
 
 const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
     const navigate = useNavigate();
@@ -84,7 +85,7 @@ const PageTwo = ({ ideaDetails, setIdeaDetails }) => {
         // console.log('updateData called')
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null || checkForChanges()) {
-            await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}`,
+            await api.patch(`/idea/${sessionIdea._id}`,
                 {"summary": summaryChars.value, "tags": tags}
             )
             .then((response) => {

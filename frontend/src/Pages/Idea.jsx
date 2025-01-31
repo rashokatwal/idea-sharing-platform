@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import IdeaPreview from "../Components/IdeaPreview";
 import {useLocation} from "react-router-dom";
 import "../Styles/idea.css";
-import axios from 'axios'; 
+// import axios from 'axios'; 
 import IdeaPreviewSkeleton from '../Components/IdeaPreviewSkeleton';
+import api from '../Helpers/api';
 
 const Idea = () => {
     const location = useLocation();
@@ -12,8 +13,8 @@ const Idea = () => {
     const [ loading, setLoading ] = useState(true);
 
     const fetchIdea = async () => {
-        await axios
-         .get(`http://localhost:3000/idea/${ideaId}`)
+        await api
+         .get(`/idea/${ideaId}`)
          .then((response) => {
             setIdeaDetails(response.data);
             setLoading(false);

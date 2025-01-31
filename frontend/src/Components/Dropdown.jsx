@@ -42,6 +42,7 @@ const Dropdown = ({ suggestions, placeholder, onChange }) => {
                  readOnly= { true }
                 />
                 <FontAwesomeIcon icon="fa-solid fa-sort-down" style={{marginBottom: "3px"}}/>
+                <FontAwesomeIcon icon="fa-solid fa-xmark" style={{ marginLeft: "10px", opacity: '0.6'}} size='xs' onClick={() => handleSelect("")}/>
             </div>
             <ul className="dropdown-list">
                 {filteredSuggestions.map((suggestion, index) => (

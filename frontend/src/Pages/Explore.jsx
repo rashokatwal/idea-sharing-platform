@@ -4,8 +4,9 @@ import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
 import CardComponent from '../Components/CardComponent';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import IdeasSkeleton from '../Components/IdeasSkeleton';
+import api from '../Helpers/api';
 // import { throttleFunction } from '../Helpers/throttleUtil';
 
 const Explore = () => {
@@ -41,8 +42,8 @@ const Explore = () => {
     const [ ideas, setIdeas ] = useState([]);
 
     const fetchIdeas = async () => {
-        await axios
-            .get(`http://localhost:3000/ideas?category=${filterCategory}&timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
+        await api
+            .get(`/ideas?category=${filterCategory}&timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
             .then((response) => {
                 setIdeas(response.data);
                 setLoading(false);

@@ -10,6 +10,7 @@ const getIdeas = async (req, res) => {
     let sortOptions = {};
     let timePeriodOptions = {};
     let filter = {};
+    console.log(JSON.stringify(req.query))
 
     if(JSON.stringify(req.query) != '{}') {
         filterRequest = {

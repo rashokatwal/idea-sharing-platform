@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryColors } from "../Helpers/FilterElements";
 import { dateTimeConverter } from '../Helpers/dateUtil';
-import axios from 'axios';
+import api from '../Helpers/api';
 
 const IdeaPreview = ({ ideaDetails, previewType }) => {
     const [ isLiked, setIsLiked ] = useState(false);
@@ -19,8 +19,8 @@ const IdeaPreview = ({ ideaDetails, previewType }) => {
     }, [])
 
     const updateLike = async () => {
-        await axios
-            .patch(`http://localhost:3000/idea/${ideaDetails._id}`,
+        await api
+            .patch(`/idea/${ideaDetails._id}`,
                 { "likes" : ideaDetails.likes },
             )
             .then((response) => {
@@ -30,8 +30,8 @@ const IdeaPreview = ({ ideaDetails, previewType }) => {
     }
 
     const updateReads = async () => {
-        await axios
-           .patch(`http://localhost:3000/idea/${ideaDetails._id}`,
+        await api
+           .patch(`/idea/${ideaDetails._id}`,
                 { "reads" : ideaDetails.reads + 1 },
             )
            .then((response) => {

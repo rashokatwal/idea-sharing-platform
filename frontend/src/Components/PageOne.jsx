@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import api from "../Helpers/api";
 
 const PageOne = () => {
     const loadingBarRef = useLoadingBar();
@@ -90,7 +90,7 @@ const PageOne = () => {
     const saveData = async() => {
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null) {
-            await axios.post('http://localhost:3000/idea/',
+            await api.post('/idea',
                 { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
             )
             .then((response) => {
@@ -106,7 +106,7 @@ const PageOne = () => {
         } 
         else {
             if(checkForChanges()) {
-                await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}`,
+                await api.patch(`/idea/${sessionIdea._id}`,
                     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
                 )
                 .then((response) => {
