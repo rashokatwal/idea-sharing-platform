@@ -47,8 +47,15 @@ const Navbar = () => {
                             <li style={{cursor: 'pointer'}}>
                                 <FontAwesomeIcon icon="fa-regular fa-bell" />
                             </li>
-                            <li style={{marginLeft: '20px'}}>
-                                <img className="author-avatar" src='/src/Assets/default_user.png' onClick={handleSignout}/>
+                            <li style={{marginLeft: '20px', position: 'relative'}}>
+                                <img className="author-avatar" src='/src/Assets/default_user.png'/>
+                                <div className="dropdown-navbar">         
+                                    <img className="author-avatar" src='/src/Assets/default_user.png' style={{height: '40px', width: '40px'}}/>
+                                    <ul className="dropdown-list">
+                                        <li className="dropdown-item" onClick={handleSignout}>Sign Out</li>
+                                        <li className="dropdown-item" onClick={handleSignout}>Sign Out</li>
+                                    </ul>
+                                </div>
                             </li>
                             <li style={{marginLeft: '10px'}}>
                                 <Link to="/ideaeditor">
