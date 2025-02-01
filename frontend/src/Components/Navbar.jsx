@@ -49,11 +49,17 @@ const Navbar = () => {
                             </li>
                             <li style={{marginLeft: '20px', position: 'relative'}}>
                                 <img className="author-avatar" src='/src/Assets/default_user.png'/>
-                                <div className="dropdown-navbar">         
-                                    <img className="author-avatar" src='/src/Assets/default_user.png' style={{height: '40px', width: '40px'}}/>
+                                <div className="dropdown-navbar">    
+                                    <div className='user-details'>
+                                        <img className="author-avatar" src='/src/Assets/default_user.png' style={{height: '40px', width: '40px'}}/>
+                                        <div style={{marginLeft: '10px'}}>
+                                            <p style={{margin: '0', fontWeight: '600'}}>John Doe</p>
+                                            <p style={{margin: '0', fontSize: '13px'}}>@jondoe</p>
+                                        </div>
+                                    </div>     
                                     <ul className="dropdown-list">
                                         <li className="dropdown-item" onClick={handleSignout}>Sign Out</li>
-                                        <li className="dropdown-item" onClick={handleSignout}>Sign Out</li>
+                                        <li className="dropdown-item" onClick={handleSignout}><FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" /> Sign Out</li>
                                     </ul>
                                 </div>
                             </li>
