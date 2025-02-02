@@ -1,0 +1,16 @@
+.complete-profile-outer {
+    min-width: 100%;
+    position: relative;
+}
+
+.complete-profile-inner {
+    margin: auto;
+    width: 1100px;
+    position: relative;
+    text-align: left;
+    padding: 50px 50px;
+}
+
+.complete-profile-inner .header-title {
+    color: var(--accent-color);
+}
