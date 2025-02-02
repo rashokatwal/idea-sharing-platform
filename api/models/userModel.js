@@ -14,6 +14,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    profileCompleted: {
+        type: Boolean,
+        default: false
+    }
     // username: {
     //     type: String,
     //     // required: true,

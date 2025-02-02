@@ -75,7 +75,7 @@ const Navbar = () => {
                                     <ul className="dropdown-list">
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-lightbulb" className='icon'/><span className='text'>My Ideas</span></li>
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-bookmark" className='icon'/><span className='text'>Saved Ideas</span></li>
-                                        <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-bell" className='icon'/><span className='text'>Notifications</span></li>
+                                        <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-handshake" className='icon'/><span className='text'>Collaborations</span></li>
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-solid fa-circle-half-stroke" className='icon'/><span className='text'>Theme</span></li>
                                         <li className="dropdown-item" onClick={handleSignout}><FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" className='icon'/><span className='text'>Sign Out</span></li>
                                     </ul>
