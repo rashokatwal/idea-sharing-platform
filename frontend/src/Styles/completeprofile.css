@@ -9,8 +9,69 @@
     position: relative;
     text-align: left;
     padding: 50px 50px;
+    font-family: var(--accent-font);
 }
 
 .complete-profile-inner .header-title {
     color: var(--accent-color);
+}
+
+.complete-profile-inner .steps {
+    margin: 33px 20px;
+}
+
+.complete-profile-inner .steps .next-prev-buttons {
+    margin-top: 20px;
+}
+
+.complete-profile-inner .steps .step-header {
+    font-weight: 600;
+}
+
+.complete-profile-inner .steps .step-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.upload-profile-pic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    outline: dashed 5px #AAE1F5;
+    border: solid 10px var(--background-color);
+    cursor: pointer;
+}
+
+.user-fullname {
+    font-family: var(--accent-font);
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    border: none;
+    background-color: transparent;
+}
+
+.user-username {
+    font-family: var(--accent-font);
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+}
+
+.user-fullname:focus, .user-username:focus {
+    outline: none;
+}
+
+.user-bio {
+    margin-top: 30px;
+    height: 200px;
 }
