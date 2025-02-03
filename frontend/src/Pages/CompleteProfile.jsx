@@ -3,7 +3,7 @@ import '../Styles/completeprofile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CompleteProfile = () => {
-    const [ step, setStep ] = useState(2);
+    const [ step, setStep ] = useState(1);
 
     return (
         <div className="complete-profile-outer">
@@ -47,7 +47,7 @@ const StepTwo = ({ setStep }) => {
                 Step 2: Additional Information
             </h3>
             <div className='step-main'>
-                <div className="step-two-form">
+                <div className="step-two-form steps-forms">
                     <div className='email'>
                         <label>Email</label>
                         <div className='user-email-outer input-wrapper'>
@@ -89,6 +89,55 @@ const StepTwo = ({ setStep }) => {
             </div>
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(1)}>Go Back</button>
+                <div>
+                    <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
+                    <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const StepThree = ({ setStep }) => {
+    return (
+        <div className="step-two steps">
+            <h3 className='step-header'>
+                Step 3: Social Links
+            </h3>
+            <div className='step-main'>
+                <div className="step-three-form steps-forms">
+                    <div className="instagram">
+                        <label>Instagram</label>
+                        <div className='user-instagram-outer input-wrapper'>
+                            <FontAwesomeIcon icon="fa-brands fa-instagram" />
+                            <input className='user-instagram' type='text'/>
+                        </div>
+                    </div>
+                    <div className='linkedin'>
+                        <label>LinkedIn</label>
+                        <div className='user-linkedin-outer input-wrapper'>
+                            <FontAwesomeIcon icon="fa-brands fa-linkedin" />
+                            <input className='user-linkedin' type='text'/>
+                        </div>
+                    </div>
+                    <div className="twitter">
+                        <label>X (Twitter)</label>
+                        <div className='user-twitter-outer input-wrapper'>
+                            <FontAwesomeIcon icon="fa-brands fa-x-twitter" />
+                            <input className='user-twitter' type='text'/>
+                        </div>
+                    </div>
+                    <div className="github">
+                        <label>Github</label>
+                        <div className='user-github-outer input-wrapper'>
+                            <FontAwesomeIcon icon="fa-brands fa-github" />
+                            <input className='user-github' type='text'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='next-prev-buttons'>
+                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Go Back</button>
                 <div>
                     <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
                     <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>

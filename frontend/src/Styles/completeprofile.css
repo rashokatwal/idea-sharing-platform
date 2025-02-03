@@ -79,7 +79,7 @@
     height: 200px;
 }
 
-.step-two-form {
+.steps-forms {
     width: 50%;
     padding: 10px 20px;
     display: flex;
@@ -87,13 +87,13 @@
     gap: 20px;
 }
 
-.step-two-form label {
+.steps-forms label {
     display: block;
     margin-bottom: 10px;
     font-size: 15px;
 }
 
-.step-two-form .input-wrapper {
+.steps-forms .input-wrapper {
     border: solid 2px rgba(0, 0, 0, 0.2);
     width: 100%;
     border-radius: 10px;
@@ -106,17 +106,17 @@
     cursor: text;
 }
 
-.step-two-form .input-wrapper:focus-within {
+.steps-forms .input-wrapper:focus-within {
     outline: solid 3px var(--accent-color);
 }
 
-.step-two-form input {
+.steps-forms input {
     width: 100%;
     padding: 12px 0px;
     border: none;
 }
 
-.step-two-form input:focus {
+.steps-forms input:focus {
     outline: none;
 }
 
