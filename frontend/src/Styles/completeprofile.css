@@ -22,6 +22,9 @@
 
 .complete-profile-inner .steps .next-prev-buttons {
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .complete-profile-inner .steps .step-header {
@@ -74,4 +77,56 @@
 .user-bio {
     margin-top: 30px;
     height: 200px;
+}
+
+.step-two-form {
+    width: 50%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-two-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.step-two-form .input-wrapper {
+    border: solid 2px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px;
+    cursor: text;
+}
+
+.step-two-form .input-wrapper:focus-within {
+    outline: solid 3px var(--accent-color);
+}
+
+.step-two-form input {
+    width: 100%;
+    padding: 12px 0px;
+    border: none;
+}
+
+.step-two-form input:focus {
+    outline: none;
+}
+
+.phone-number-dob {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.phone-number, .dob {
+    flex: 1 1;
 }

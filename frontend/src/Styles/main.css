@@ -43,3 +43,21 @@ body {
 .primary-button:hover {
   opacity: 0.8;
 }
+
+.secondary-button {
+  padding: 6px 15px;
+  border-radius: 50px;
+  border: solid 3px var(--accent-color);
+  background-color: transparent;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+.secondary-button:hover {
+  opacity: 0.8;
+}
