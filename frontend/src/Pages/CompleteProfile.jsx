@@ -1,18 +1,63 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import '../Styles/completeprofile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
+    const stepOneRef = useRef(null);
+    const stepTwoRef = useRef(null);
+    const stepThreeRef = useRef(null);
+    const references = {
+        1: stepOneRef,
+        2: stepTwoRef,
+        3: stepThreeRef,
+    }
+    const steps = [<StepOne setStep={setStep}/>, <StepTwo setStep={setStep}/>, <StepThree setStep={setStep} />]
+    // console.log(references[1]);
+    const nodeRef = references[step];
+    // const [ slideDirection, setSlideDirection ] = useState("slide");
+
+    // const nextStep = (step) => {
+    //     setSlideDirection("forward");
+    //     setStep(step);
+    // };
+
+    // const prevStep = (step) => {
+    //     setSlideDirection("backward");
+    //     setStep(step);
+    // };
 
     return (
         <div className="complete-profile-outer">
             <div className="complete-profile-inner">
                 <h1 className="header-title">Complete Your Profile</h1>
                 <p className="header-subtitle">Please complete your profile information to start using the platform.</p>
-                {step === 1 && <StepOne setStep={setStep}/>}
-                {step === 2 && <StepTwo setStep={setStep} />}
-                {step === 3 && <StepThree setStep={setStep} />}
+                <SwitchTransition mode={"out-in"}>
+                    <CSSTransition
+                        key={step}
+                        timeout={3000}
+                        nodeRef={nodeRef}
+                        addEndListener={(done) => {
+                            nodeRef.current.addEventListener("transitionend", done, false);
+                        }}
+                        classNames="slide"
+                    >
+                        <div ref={nodeRef}>
+                            {/* {step === 1 && <StepOne setStep={setStep}/>}
+                            {step === 2 && <StepTwo setStep={setStep} />}
+                            {step === 3 && <StepThree setStep={setStep} />} */}
+                            {steps[step - 1]}
+                        </div>
+                    </CSSTransition>
+                </SwitchTransition>
+                {/* <div className='next-prev-buttons'>
+                    <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => prevStep()}>Go Back</button>
+                    <div>
+                        <button className='primary-button' style={{fontSize: '16px'}} onClick={() => nextStep()}>Continue</button>
+                        <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => nextStep()}>Skip</button>
+                    </div>
+                </div> */}
             </div>
         </div>
     )
@@ -28,10 +73,10 @@ const StepOne = ({ setStep }) => {
                 <div className='upload-profile-pic'>
                     <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'/>
                 </div>
-                <p style={{margin: "30px 0px", fontWeight: '500'}}>Upload Profile Photo</p>
+                <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                 <input className='user-fullname' type='text' placeholder="John Doe"/>
                 <input className='user-username' type='text' placeholder="@johndoe"/>
-                <textarea className='user-bio' placeholder='Bio' />
+                <textarea className='user-bio' placeholder='Bio' style={{width: "50%"}}/>
             </div>
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Continue</button>
@@ -88,7 +133,7 @@ const StepTwo = ({ setStep }) => {
                 </div>
             </div>
             <div className='next-prev-buttons'>
-                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(1)}>Go Back</button>
+                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => {setStep(1); setSlideDirection("backward")}}>Go Back</button>
                 <div>
                     <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
                     <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>

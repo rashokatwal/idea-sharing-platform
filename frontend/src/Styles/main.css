@@ -61,3 +61,64 @@ body {
 .secondary-button:hover {
   opacity: 0.8;
 }
+
+/* body {
+  padding: 2rem;
+  font-family: sans-serif;
+  text-align: center;
+} */
+
+.label {
+  margin-bottom: 0.5rem;
+}
+
+.modes {
+  margin-bottom: 1rem;
+}
+
+.button-container {
+  margin-bottom: 0.5rem;
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.slide-enter-active,
+.slide-exit-active {
+  transition: opacity 500ms, transform 500ms;
+}
+
+
+/* .backward-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.backward-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.backward-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.backward-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+} */
+/* .backward-enter-active,
+.backward-exit-active {
+  transition: opacity 500ms, transform 500ms;
+} */
