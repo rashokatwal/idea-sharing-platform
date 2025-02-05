@@ -76,6 +76,7 @@ const StepOne = ({ setStep }) => {
                 <div className="form-section"  style={{flex: '1 1'}}>
                     <div className='upload-profile-pic'>
                         <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'/>
+                        <input type="file" className="input-pp" />
                     </div>
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                     <input className='user-fullname' type='text' placeholder="John Doe"/>
@@ -146,7 +147,7 @@ const StepTwo = ({ setStep }) => {
                 
             </div> */}
             <div className='next-prev-buttons'>
-                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => {setStep(1); setSlideDirection("backward")}}>Go Back</button>
+                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(1)}>Go Back</button>
                 <div>
                     <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
                     <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>

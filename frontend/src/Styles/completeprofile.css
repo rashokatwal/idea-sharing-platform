@@ -62,6 +62,10 @@
     cursor: pointer;
 }
 
+.upload-profile-pic .input-pp {
+    display: none;
+}
+
 .user-fullname {
     font-family: var(--accent-font);
     text-align: center;
