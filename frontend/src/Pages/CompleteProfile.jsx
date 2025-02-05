@@ -98,7 +98,7 @@ const StepTwo = ({ setStep }) => {
             </h3>
             <div className='step-main'>
                 <div className='image-section' style={{flex: '1 1'}}>
-                    <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
+                    <img src="/src/Assets/complete-profile-step-2.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
                 </div>
                 <div className="form-section"  style={{flex: '1 1'}}>
                 <div className="step-two-form steps-forms">
@@ -164,7 +164,7 @@ const StepThree = ({ setStep }) => {
             </h3>
             <div className='step-main'>
                 <div className='image-section' style={{flex: '1 1'}}>
-                    <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
+                    <img src="/src/Assets/complete-profile-step-3.png" alt="Profile Pic" style={{maxWidth: '100%', borderRadius: '20px'}}/>
                 </div>
                 <div className="form-section"  style={{flex: '1 1'}}>
                     <div className="step-three-form steps-forms">
