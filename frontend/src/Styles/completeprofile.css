@@ -69,8 +69,8 @@
     font-weight: 600;
     border: none;
     background-color: transparent;
-    border-bottom: solid 1px;
-    max-width: fit-content;
+    /* border-bottom: solid 1px;
+    max-width: fit-content; */
 }
 
 .user-username {
@@ -81,8 +81,8 @@
     font-weight: 500;
     border: none;
     background-color: transparent;
-    border-bottom: solid 1px;
-    max-width: fit-content;
+    /* border-bottom: solid 1px;
+    max-width: fit-content; */
 }
 
 .user-fullname:focus, .user-username:focus {
@@ -91,7 +91,7 @@
 
 .user-bio {
     margin-top: 30px;
-    height: 150px;
+    height: 200px;
 }
 
 .steps-forms {
