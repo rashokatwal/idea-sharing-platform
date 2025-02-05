@@ -70,13 +70,18 @@ const StepOne = ({ setStep }) => {
                 Step 1: Set up your profile
             </h3>
             <div className='step-main'>
-                <div className='upload-profile-pic'>
-                    <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'/>
+                <div className='image-section' style={{flex: '1 1'}}>
+                    <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
                 </div>
-                <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
-                <input className='user-fullname' type='text' placeholder="John Doe"/>
-                <input className='user-username' type='text' placeholder="@johndoe"/>
-                <textarea className='user-bio' placeholder='Bio' style={{width: "50%"}}/>
+                <div className="form-section"  style={{flex: '1 1'}}>
+                    <div className='upload-profile-pic'>
+                        <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'/>
+                    </div>
+                    <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
+                    <input className='user-fullname' type='text' placeholder="John Doe"/>
+                    <input className='user-username' type='text' placeholder="@johndoe"/>
+                    <textarea className='user-bio' placeholder='Bio' style={{width: "100%"}}/>
+                </div>
             </div>
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Continue</button>
@@ -92,6 +97,10 @@ const StepTwo = ({ setStep }) => {
                 Step 2: Additional Information
             </h3>
             <div className='step-main'>
+                <div className='image-section' style={{flex: '1 1'}}>
+                    <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
+                </div>
+                <div className="form-section"  style={{flex: '1 1'}}>
                 <div className="step-two-form steps-forms">
                     <div className='email'>
                         <label>Email</label>
@@ -131,7 +140,11 @@ const StepTwo = ({ setStep }) => {
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
+            {/* <div className='step-main'>
+                
+            </div> */}
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => {setStep(1); setSlideDirection("backward")}}>Go Back</button>
                 <div>
@@ -150,36 +163,42 @@ const StepThree = ({ setStep }) => {
                 Step 3: Social Links
             </h3>
             <div className='step-main'>
-                <div className="step-three-form steps-forms">
-                    <div className="instagram">
-                        <label>Instagram</label>
-                        <div className='user-instagram-outer input-wrapper'>
-                            <FontAwesomeIcon icon="fa-brands fa-instagram" />
-                            <input className='user-instagram' type='text'/>
+                <div className='image-section' style={{flex: '1 1'}}>
+                    <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
+                </div>
+                <div className="form-section"  style={{flex: '1 1'}}>
+                    <div className="step-three-form steps-forms">
+                        <div className="instagram">
+                            <label>Instagram</label>
+                            <div className='user-instagram-outer input-wrapper'>
+                                <FontAwesomeIcon icon="fa-brands fa-instagram" />
+                                <input className='user-instagram' type='text'/>
+                            </div>
                         </div>
-                    </div>
-                    <div className='linkedin'>
-                        <label>LinkedIn</label>
-                        <div className='user-linkedin-outer input-wrapper'>
-                            <FontAwesomeIcon icon="fa-brands fa-linkedin" />
-                            <input className='user-linkedin' type='text'/>
+                        <div className='linkedin'>
+                            <label>LinkedIn</label>
+                            <div className='user-linkedin-outer input-wrapper'>
+                                <FontAwesomeIcon icon="fa-brands fa-linkedin" />
+                                <input className='user-linkedin' type='text'/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="twitter">
-                        <label>X (Twitter)</label>
-                        <div className='user-twitter-outer input-wrapper'>
-                            <FontAwesomeIcon icon="fa-brands fa-x-twitter" />
-                            <input className='user-twitter' type='text'/>
+                        <div className="twitter">
+                            <label>X (Twitter)</label>
+                            <div className='user-twitter-outer input-wrapper'>
+                                <FontAwesomeIcon icon="fa-brands fa-x-twitter" />
+                                <input className='user-twitter' type='text'/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="github">
-                        <label>Github</label>
-                        <div className='user-github-outer input-wrapper'>
-                            <FontAwesomeIcon icon="fa-brands fa-github" />
-                            <input className='user-github' type='text'/>
+                        <div className="github">
+                            <label>Github</label>
+                            <div className='user-github-outer input-wrapper'>
+                                <FontAwesomeIcon icon="fa-brands fa-github" />
+                                <input className='user-github' type='text'/>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Go Back</button>
