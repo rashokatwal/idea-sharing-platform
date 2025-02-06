@@ -1,21 +1,39 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import '../Styles/completeprofile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SwitchTransition, CSSTransition } from "react-transition-group";
+import { AuthContext } from '../Contexts/AuthContext';
+// import { LoadingBarContext } from '../Contexts/LoadingBarContext';
+import { useLoadingBar } from '../Hooks/useLoadingBar';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
     const stepOneRef = useRef(null);
     const stepTwoRef = useRef(null);
     const stepThreeRef = useRef(null);
-    const references = {
-        1: stepOneRef,
-        2: stepTwoRef,
-        3: stepThreeRef,
-    }
-    const steps = [<StepOne setStep={setStep}/>, <StepTwo setStep={setStep}/>, <StepThree setStep={setStep} />]
+    const references = [stepOneRef, stepTwoRef, stepThreeRef]
     // console.log(references[1]);
-    const nodeRef = references[step];
+    const nodeRef = references[step - 1];
+    let email = useContext(AuthContext).user.email;
+    const [ userDetails, setUserDetails ] = useState({
+        profilePhoto: '',
+        fullname: '',
+        username: '',
+        bio: '',
+        email: email,
+        phoneNumber: '',
+        dob: '',
+        address: '',
+        portfolio: '',
+        socialLinks: {
+            instagram: '',
+            twitter: '',
+            linkedin: '',
+            github: ''
+        }
+    });
+    const sessionUserDetails = JSON.parse(sessionStorage.getItem("sessionUserDetails")) || null;
+    const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} />]
     // const [ slideDirection, setSlideDirection ] = useState("slide");
 
     // const nextStep = (step) => {
@@ -63,9 +81,68 @@ const CompleteProfile = () => {
     )
 }
 
-const StepOne = ({ setStep }) => {
+const StepOne = ({ setStep, sessionUserDetails }) => {
+    const loadingBarRef = useLoadingBar();
     const imageInputRef = useRef(null);
     const [ image, setImage ] = useState(null);
+    const [ fullname, setFullname ] = useState({
+        value: sessionUserDetails ? sessionUserDetails.fullname : "",
+        valid: sessionUserDetails ? sessionUserDetails.fullname.trim().length > 0 : false,
+        outline: "solid 2px rgba(0, 0, 0, 0.2)",
+    })
+    const [ username, setUsername ] = useState({
+        value: sessionUserDetails ? sessionUserDetails.username : "",
+        valid: sessionUserDetails ? sessionUserDetails.username.trim().length > 0 : false,
+        outline: "solid 2px rgba(0, 0, 0, 0.2)",
+    })
+    const [ bio, setBio ] = useState({
+        value: sessionUserDetails ? sessionUserDetails.bio : "",
+        valid: sessionUserDetails ? sessionUserDetails.bio.trim().length > 0 : false,
+        outline: "none",
+    })
+    const [ valid, setValid ] = useState(fullname.valid && username.valid && bio.valid);
+
+    const handleFullname = (value) => {
+        // const updatedDetails = { ...ideaDetails, title: value };
+        // setIdeaDetails(updatedDetails);
+        const isFullnameValid = value.trim().length > 0;
+        setFullname({
+            value: value,
+            valid: isFullnameValid,
+            outline: isFullnameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px",
+        });
+
+        const isValid = isFullnameValid && username.valid && bio.valid;
+        setValid(isValid);
+    };
+
+    const handleUsername = (value) => {
+        // const updatedDetails = { ...ideaDetails, title: value };
+        // setIdeaDetails(updatedDetails);
+        const isUsernameValid = value.trim().length > 0;
+        setUsername({
+            value: value,
+            valid: isUsernameValid,
+            outline: isUsernameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px",
+        });
+
+        const isValid = isUsernameValid && fullname.valid && bio.valid;
+        setValid(isValid);
+    };
+
+    const handleBio = (value) => {
+        // const updatedDetails = { ...ideaDetails, title: value };
+        // setIdeaDetails(updatedDetails);
+        const isBioValid = value.trim().length > 0;
+        setBio({
+            value: value,
+            valid: isBioValid,
+            outline: isBioValid ? "none" : "red solid 2px",
+        });
+
+        const isValid = isBioValid && fullname.valid && username.valid;
+        setValid(isValid);
+    };
 
     const handleDivClick = () => {
         imageInputRef.current.click();
@@ -76,6 +153,90 @@ const StepOne = ({ setStep }) => {
         const objectUrl = URL.createObjectURL(file);
         setImage(objectUrl);
     }
+
+    // const handleDescription = (value) => {
+    //     // const updatedDetails = { ...ideaDetails, description: value };
+    //     // setIdeaDetails(updatedDetails);
+    //     const isDescriptionValid = value.trim().length > 0;
+    //     setDescriptionChars({
+    //         value: value,
+    //         valid: isDescriptionValid,
+    //         outline: isDescriptionValid ? "none" : "red solid 2px",
+    //     });
+
+    //     const isValid = fullname.valid && username.valid && isDescriptionValid;
+    //     setValid(isValid);
+    // };
+
+    const checkForChanges = () => {
+        return fullname.value == sessionUserDetails.fullname && username.value == sessionUserDetails.username && bio.value == sessionUserDetails.bio ? false : true;
+    }
+
+    const handleStepOneSubmission = async() => {
+        console.log("clidked");
+        const isFullnameValid = fullname.value.trim().length > 0;
+        const isUsernameValid = (username.value.trim().length > 0);
+        const isBioValid = bio.value.trim().length > 0;
+
+        setFullname({...fullname, valid: isFullnameValid, outline: isFullnameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px" });
+        setUsername({...username, valid: isUsernameValid, outline: isUsernameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px" });
+        setBio({...bio, valid: isBioValid, outline: isBioValid ? "none" : "red solid 2px" });
+        setValid(isFullnameValid && isUsernameValid && isBioValid);
+        valid ? await saveData() : null;
+    }
+
+    const saveData = async() => {
+        console.log("saved")
+        loadingBarRef.current.continuousStart();
+        if(sessionUserDetails == null) {
+            // await api.post('/idea',
+            //     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
+            // )
+            // .then((response) => {
+            //     let ideaDetails = response.data;
+            //     ideaDetails.title = titleChars.value;
+            //     ideaDetails.category = categoryChars.value;
+            //     ideaDetails.description = descriptionChars.value;
+            //     sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
+            //     // navigate('/ideaeditor/p/2');
+            //     changePages(2);
+            //     loadingBarRef.current.complete();
+            // })
+            // .catch((error) => console.log(error));
+            loadingBarRef.current.complete();
+            setStep(2);
+        } 
+        else {
+            if(checkForChanges()) {
+                // await api.patch(`/idea/${sessionIdea._id}`,
+                //     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
+                // )
+                // .then((response) => {
+                //     let ideaDetails = response.data;
+                //     ideaDetails.title = titleChars.value;
+                //     ideaDetails.category = categoryChars.value;
+                //     ideaDetails.description = descriptionChars.value;
+                //     sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
+                //     // navigate('/ideaeditor/p/2');
+                    setStep(2);
+                    loadingBarRef.current.complete();
+                // })
+                // .catch((error) => console.log(error))
+            // }
+            // else{
+                // navigate('/ideaeditor/p/2');
+                // loadingBarRef.current.continuousStart();
+                setStep(2);
+                setTimeout(() =>{
+                    loadingBarRef.current.complete();
+                }, 500)
+            }
+        }
+    }
+
+    // const handleStepOneSubmission = () => {
+    //     setStep(2);
+    // }
 
     return (
         <div className="step-one steps">
@@ -92,13 +253,13 @@ const StepOne = ({ setStep }) => {
                         <input ref={imageInputRef} type="file" className="input-pp" accept="image/*" onChange={(e) => handlePictureUpload(e.target.files[0])}/>
                     </div>
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
-                    <input className='user-fullname' type='text' placeholder="John Doe"/>
-                    <input className='user-username' type='text' placeholder="@johndoe"/>
-                    <textarea className='user-bio' placeholder='Bio' style={{width: "100%"}}/>
+                    <input className='user-fullname' type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
+                    <input className='user-username' type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
+                    <textarea className='user-bio' placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
                 </div>
             </div>
             <div className='next-prev-buttons'>
-                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Continue</button>
+                <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => handleStepOneSubmission()}>Continue</button>
             </div>
         </div>
     )
