@@ -5,6 +5,8 @@ import { SwitchTransition, CSSTransition } from "react-transition-group";
 import { AuthContext } from '../Contexts/AuthContext';
 // import { LoadingBarContext } from '../Contexts/LoadingBarContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
+import { useAuthContext } from '../Hooks/useAuthContext';
+import axios from 'axios';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -82,9 +84,10 @@ const CompleteProfile = () => {
 }
 
 const StepOne = ({ setStep, sessionUserDetails }) => {
+    const userStatus = useAuthContext();
     const loadingBarRef = useLoadingBar();
     const imageInputRef = useRef(null);
-    const [ image, setImage ] = useState(null);
+    const [ image, setImage ] = useState('');
     const [ fullname, setFullname ] = useState({
         value: sessionUserDetails ? sessionUserDetails.fullname : "",
         valid: sessionUserDetails ? sessionUserDetails.fullname.trim().length > 0 : false,
@@ -168,9 +171,9 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     //     setValid(isValid);
     // };
 
-    const checkForChanges = () => {
-        return fullname.value == sessionUserDetails.fullname && username.value == sessionUserDetails.username && bio.value == sessionUserDetails.bio ? false : true;
-    }
+    // const checkForChanges = () => {
+    //     return fullname.value == sessionUserDetails.fullname && username.value == sessionUserDetails.username && bio.value == sessionUserDetails.bio ? false : true;
+    // }
 
     const handleStepOneSubmission = async() => {
         console.log("clidked");
@@ -186,52 +189,47 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     }
 
     const saveData = async() => {
-        console.log("saved")
+        // console.log("saved")
         loadingBarRef.current.continuousStart();
-        if(sessionUserDetails == null) {
-            // await api.post('/idea',
-            //     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
-            // )
-            // .then((response) => {
-            //     let ideaDetails = response.data;
-            //     ideaDetails.title = titleChars.value;
-            //     ideaDetails.category = categoryChars.value;
-            //     ideaDetails.description = descriptionChars.value;
-            //     sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-            //     // navigate('/ideaeditor/p/2');
-            //     changePages(2);
-            //     loadingBarRef.current.complete();
-            // })
-            // .catch((error) => console.log(error));
-            loadingBarRef.current.complete();
-            setStep(2);
-        } 
-        else {
-            if(checkForChanges()) {
-                // await api.patch(`/idea/${sessionIdea._id}`,
-                //     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
-                // )
-                // .then((response) => {
-                //     let ideaDetails = response.data;
-                //     ideaDetails.title = titleChars.value;
-                //     ideaDetails.category = categoryChars.value;
-                //     ideaDetails.description = descriptionChars.value;
-                //     sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                //     // navigate('/ideaeditor/p/2');
-                    setStep(2);
-                    loadingBarRef.current.complete();
-                // })
-                // .catch((error) => console.log(error))
+        // if(sessionUserDetails == null) {
+            await axios.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
+                { fullname: fullname.value, username: username.value, bio: bio.value }
+            )
+            .then((response) => {
+                let userDetails = response.data;
+                sessionStorage.setItem("sessionUserDetails", JSON.stringify(userDetails));
+                // navigate('/ideaeditor/p/2');
+                setStep(2);
+                loadingBarRef.current.complete();
+            })
+            .catch((error) => console.log(error));
+        // } 
+        // else {
+            // if(checkForChanges()) {
+            //     await api.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
+            //         { fullname: fullname.value, username: username.value, bio: bio.value }
+            //     )
+            //     .then((response) => {
+            //         let ideaDetails = response.data;
+            //         ideaDetails.title = titleChars.value;
+            //         ideaDetails.category = categoryChars.value;
+            //         ideaDetails.description = descriptionChars.value;
+            //         sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
+            //         // navigate('/ideaeditor/p/2');
+            //         setStep(2);
+            //         loadingBarRef.current.complete();
+            //     })
+            //     .catch((error) => console.log(error))
             // }
             // else{
                 // navigate('/ideaeditor/p/2');
                 // loadingBarRef.current.continuousStart();
-                setStep(2);
-                setTimeout(() =>{
-                    loadingBarRef.current.complete();
-                }, 500)
-            }
-        }
+                // setStep(2);
+                // setTimeout(() =>{
+                //     loadingBarRef.current.complete();
+                // }, 500)
+            // }
+        // }
     }
 
     // const handleStepOneSubmission = () => {

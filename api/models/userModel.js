@@ -17,18 +17,21 @@ const userSchema = new Schema({
     profileCompleted: {
         type: Boolean,
         default: false
+    },
+    fullName: {
+        type: String,
+    },
+    username: {
+        type: String,
+        // required: true,
+        unique: true,
+    },
+    bio: {
+        type: String,
+    },
+    phoneNumber: {
+        type: Number,
     }
-    // username: {
-    //     type: String,
-    //     // required: true,
-    //     unique: true,
-    //     minlength: 3,
-    //     maxlength: 20
-    // },
-    // fullName: {
-    //     type: String,
-    //     // required: true
-    // },
 
 })
 
@@ -80,6 +83,21 @@ userSchema.statics.signin = async function (email, password) {
     if(!match) {
         throw Error("Incorrect Email or Password!");
     }
+
+    return user;
+}
+
+userSchema.statics.updateDetails = async function (updates, id) {
+    const username = updates.username ? updates.username : null;
+
+    if(username) {
+        const exists = await this.findOne({username});
+        if(exists) {
+            throw Error("Username already exists!");
+        }
+    }
+
+    const user = await this.findByIdAndUpdate(id, updates, {new: true});
 
     return user;
 }
