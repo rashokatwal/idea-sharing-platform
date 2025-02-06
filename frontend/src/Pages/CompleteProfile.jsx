@@ -64,6 +64,19 @@ const CompleteProfile = () => {
 }
 
 const StepOne = ({ setStep }) => {
+    const imageInputRef = useRef(null);
+    const [ image, setImage ] = useState(null);
+
+    const handleDivClick = () => {
+        imageInputRef.current.click();
+    }
+
+    const handlePictureUpload = (file) => {
+        console.log(file);
+        const objectUrl = URL.createObjectURL(file);
+        setImage(objectUrl);
+    }
+
     return (
         <div className="step-one steps">
             <h3 className='step-header'>
@@ -74,9 +87,9 @@ const StepOne = ({ setStep }) => {
                     <img src="/src/Assets/complete-profile.png" alt="Profile Pic" style={{maxWidth: '100%'}}/>
                 </div>
                 <div className="form-section"  style={{flex: '1 1'}}>
-                    <div className='upload-profile-pic'>
-                        <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'/>
-                        <input type="file" className="input-pp" />
+                    <div className='upload-profile-pic' style={{background: image ? `url(${image})` : 'var(--accent-color)'}} onClick={() => handleDivClick()}>
+                        <FontAwesomeIcon icon="fa-solid fa-plus" size='2x'color='white'className='picture-add-icon'/>
+                        <input ref={imageInputRef} type="file" className="input-pp" accept="image/*" onChange={(e) => handlePictureUpload(e.target.files[0])}/>
                     </div>
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                     <input className='user-fullname' type='text' placeholder="John Doe"/>

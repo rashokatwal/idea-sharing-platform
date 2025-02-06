@@ -56,10 +56,18 @@
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    background-color: var(--accent-color);
     outline: dashed 5px #AAE1F5;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     border: solid 5px var(--background-color);
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.upload-profile-pic:hover {
+    outline: dotted 5px #AAE1F5;
+    opacity: 0.8;
 }
 
 .upload-profile-pic .input-pp {
