@@ -6,7 +6,7 @@ import { AuthContext } from '../Contexts/AuthContext';
 // import { LoadingBarContext } from '../Contexts/LoadingBarContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useAuthContext } from '../Hooks/useAuthContext';
-import axios from 'axios';
+import api from '../Helpers/api';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -192,8 +192,8 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
         // console.log("saved")
         loadingBarRef.current.continuousStart();
         // if(sessionUserDetails == null) {
-            await axios.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
-                { fullname: fullname.value, username: username.value, bio: bio.value }
+            await api.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
+                {profileImage: image, fullname: fullname.value, username: username.value, bio: bio.value }
             )
             .then((response) => {
                 let userDetails = response.data;
@@ -251,9 +251,9 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                         <input ref={imageInputRef} type="file" className="input-pp" accept="image/*" onChange={(e) => handlePictureUpload(e.target.files[0])}/>
                     </div>
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
-                    <input className='user-fullname' type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
-                    <input className='user-username' type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
-                    <textarea className='user-bio' placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
+                    <input className='user-fullname' value={fullname.value} type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
+                    <input className='user-username' value={username.value} type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
+                    <textarea className='user-bio' value={bio.value} placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
                 </div>
             </div>
             <div className='next-prev-buttons'>

@@ -18,19 +18,27 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    fullName: {
+    profileImage: {
         type: String,
+        default: '',
+    },
+    fullname: {
+        type: String,
+        default: '',
     },
     username: {
         type: String,
         // required: true,
-        unique: true,
+        // unique: true,
+        default: '',
     },
     bio: {
         type: String,
+        default: '',
     },
     phoneNumber: {
-        type: Number,
+        type: String,
+        default: '',
     }
 
 })
