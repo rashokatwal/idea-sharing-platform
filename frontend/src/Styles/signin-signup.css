@@ -49,6 +49,8 @@
     border-radius: 5px;
     background-color: #ECDFDE;
     font-weight: 400;
+    text-align: center;
+    font-family: var(--primary-font);
 }
 
 .password-options {

@@ -117,11 +117,33 @@ userSchema.statics.signin = async function (email, password) {
 
 userSchema.statics.updateDetails = async function (updates, id) {
     const username = updates.username ? updates.username : null;
+    const email = updates.email ? updates.email : null;
+    const phoneNumber = updates.phoneNumber ? updates.phoneNumber : null;
 
     if(username) {
         const exists = await this.findOne({username});
         if(exists && exists._id != id) {
             throw Error("Username already exists!");
+        }
+    }
+
+    if(email) {
+        const exists = await this.findOne({email});
+        if(exists && exists._id != id) {
+            throw Error("Email already in use!");
+        }
+        if (!validator.isEmail(email)) {
+            throw Error("Invalid email address!");
+        }
+    }
+
+    if(phoneNumber) {
+        const exists = await this.findOne({phoneNumber});
+        if(exists && exists._id != id) {
+            throw Error("Phone Number already in use!");
+        }
+        if (!validator.isMobilePhone(phoneNumber)) {
+            throw Error("Invalid Phone Number!");
         }
     }
 

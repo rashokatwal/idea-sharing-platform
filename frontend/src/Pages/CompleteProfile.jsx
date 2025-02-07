@@ -64,7 +64,7 @@ const CompleteProfile = () => {
                         <p className="header-subtitle">
                             Please complete your profile information to start using the platform.
                         </p>
-                        <p style={{fontSize: '15px', opacity: '0.5'}}>(Following information will be shown in your profile.)</p>
+                        <p style={{fontSize: '15px', opacity: '0.5'}}>(Following information will be shown on your profile.)</p>
                     </div>
                     <div className="header-button" onClick={() => handleSignout()}>
                         <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" size='lg'/>
@@ -109,6 +109,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     const imageInputRef = useRef(null);
     const { dispatch } = useAuthContext();
     const [ image, setImage ] = useState('');
+    const [ error, setError ] = useState('');
     const [ fullname, setFullname ] = useState({
         value: userDetails.fullname,
         valid:  userDetails.fullname.trim().length > 0,
@@ -230,7 +231,8 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                 setStep(2);
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error.response.data);
+                setError(error.response.data);
                 loadingBarRef.current.complete();
             });
         } 
@@ -287,6 +289,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                     <input className='user-fullname' value={fullname.value} type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
                     <input className='user-username' value={username.value} type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
+                    <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
                     <textarea className='user-bio' value={bio} placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
                 </div>
             </div>
@@ -297,20 +300,17 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     )
 }
 
-const StepTwo = ({ setStep }) => {
+const StepTwo = ({ setStep, sessionUserDetails }) => {
     const userStatus = useAuthContext();
     const userDetails = userStatus.user;
     const loadingBarRef = useLoadingBar();
     const { dispatch } = useAuthContext();
-    const [ email, setEmail ] = useState({
-        value: userDetails.email,
-        valid: userDetails.email? true : false,
-        outline: userDetails.email? "none" : "red solid 2px",
-    });
+    const [ email, setEmail ] = useState(userDetails.email);
     const [ phoneNumber, setPhoneNumber ] = useState(userDetails.phoneNumber);
     const [ dob, setDob ] = useState(userDetails.dob);
     const [ address, setAddress ] = useState(userDetails.address);
     const [ portfolio, setPortfolio ] = useState(userDetails.portfolio);
+    const [ error, setError ] = useState("");
 
     const handleFormChange = (field, value) => {
         switch (field) {
@@ -346,17 +346,16 @@ const StepTwo = ({ setStep }) => {
             )
             .then((response) => {
                 sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
-                // console.log(response.data.updatedUserDetails);
                 localStorage.setItem("user", JSON.stringify(sessionUserDetails));
                 dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
-                // navigate('/ideaeditor/p/2');
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
                 }, 1000);
                 setStep(3);
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
+                setError(error.response.data);
                 loadingBarRef.current.complete();
             });
         } 
@@ -414,6 +413,7 @@ const StepTwo = ({ setStep }) => {
                             <input className='user-website' value={portfolio} type='text' onChange={(e) => handleFormChange("portfolio", e.target.value)}/>
                         </div>
                     </div>
+                    <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
                 </div>
                 </div>
             </div>
