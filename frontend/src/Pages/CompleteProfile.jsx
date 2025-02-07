@@ -7,6 +7,7 @@ import { AuthContext } from '../Contexts/AuthContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import api from '../Helpers/api';
+import { useSignout } from '../Hooks/useSignout';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -16,25 +17,26 @@ const CompleteProfile = () => {
     const references = [stepOneRef, stepTwoRef, stepThreeRef]
     // console.log(references[1]);
     const nodeRef = references[step - 1];
-    let email = useContext(AuthContext).user.email;
-    const [ userDetails, setUserDetails ] = useState({
-        profilePhoto: '',
-        fullname: '',
-        username: '',
-        bio: '',
-        email: email,
-        phoneNumber: '',
-        dob: '',
-        address: '',
-        portfolio: '',
-        socialLinks: {
-            instagram: '',
-            twitter: '',
-            linkedin: '',
-            github: ''
-        }
-    });
-    const sessionUserDetails = JSON.parse(sessionStorage.getItem("sessionUserDetails")) || null;
+    const {signout} = useSignout();
+    // let email = useContext(AuthContext).user.email;
+    // const [ userDetails, setUserDetails ] = useState({
+    //     profilePhoto: '',
+    //     fullname: '',
+    //     username: '',
+    //     bio: '',
+    //     email: email,
+    //     phoneNumber: '',
+    //     dob: '',
+    //     address: '',
+    //     portfolio: '',
+    //     socialLinks: {
+    //         instagram: '',
+    //         twitter: '',
+    //         linkedin: '',
+    //         github: ''
+    //     }
+    // });
+    const sessionUserDetails = JSON.parse(localStorage.getItem("user")) || null;
     const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} />]
     // const [ slideDirection, setSlideDirection ] = useState("slide");
 
@@ -48,11 +50,24 @@ const CompleteProfile = () => {
     //     setStep(step);
     // };
 
+    const handleSignout = async () => {
+        signout();
+        window.location.href = '/';
+    }
+
     return (
         <div className="complete-profile-outer">
             <div className="complete-profile-inner">
-                <h1 className="header-title">Complete Your Profile</h1>
-                <p className="header-subtitle">Please complete your profile information to start using the platform.</p>
+                <div className="header">
+                    <div className="header-texts">
+                        <h1 className="header-title">Complete Your Profile</h1>
+                        <p className="header-subtitle">Please complete your profile information to start using the platform.</p>
+                    </div>
+                    <div className="header-button" onClick={() => handleSignout()}>
+                        <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" size='lg'/>
+                        <span>Sign Out</span>
+                    </div>
+                </div>
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         key={step}
@@ -85,25 +100,29 @@ const CompleteProfile = () => {
 
 const StepOne = ({ setStep, sessionUserDetails }) => {
     const userStatus = useAuthContext();
+    const userDetails = userStatus.user;
+    console.log(userDetails);
     const loadingBarRef = useLoadingBar();
     const imageInputRef = useRef(null);
+    const { dispatch } = useAuthContext();
     const [ image, setImage ] = useState('');
     const [ fullname, setFullname ] = useState({
-        value: sessionUserDetails ? sessionUserDetails.fullname : "",
-        valid: sessionUserDetails ? sessionUserDetails.fullname.trim().length > 0 : false,
+        value: userDetails.fullname,
+        valid:  userDetails.fullname.trim().length > 0,
         outline: "solid 2px rgba(0, 0, 0, 0.2)",
     })
     const [ username, setUsername ] = useState({
-        value: sessionUserDetails ? sessionUserDetails.username : "",
-        valid: sessionUserDetails ? sessionUserDetails.username.trim().length > 0 : false,
+        value:  userDetails.username,
+        valid: userDetails.username.trim().length > 0,
         outline: "solid 2px rgba(0, 0, 0, 0.2)",
     })
-    const [ bio, setBio ] = useState({
-        value: sessionUserDetails ? sessionUserDetails.bio : "",
-        valid: sessionUserDetails ? sessionUserDetails.bio.trim().length > 0 : false,
-        outline: "none",
-    })
-    const [ valid, setValid ] = useState(fullname.valid && username.valid && bio.valid);
+    // const [ bio, setBio ] = useState({
+    //     value: sessionUserDetails ? sessionUserDetails.bio : "",
+    //     valid: sessionUserDetails ? sessionUserDetails.bio.trim().length > 0 : false,
+    //     outline: "none",
+    // })
+    const [ bio, setBio ] = useState(userDetails.bio);
+    const [ valid, setValid ] = useState(fullname.valid && username.valid);
 
     const handleFullname = (value) => {
         // const updatedDetails = { ...ideaDetails, title: value };
@@ -115,7 +134,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
             outline: isFullnameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px",
         });
 
-        const isValid = isFullnameValid && username.valid && bio.valid;
+        const isValid = isFullnameValid && username.valid;
         setValid(isValid);
     };
 
@@ -129,22 +148,23 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
             outline: isUsernameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px",
         });
 
-        const isValid = isUsernameValid && fullname.valid && bio.valid;
+        const isValid = isUsernameValid && fullname.valid;
         setValid(isValid);
     };
 
     const handleBio = (value) => {
         // const updatedDetails = { ...ideaDetails, title: value };
         // setIdeaDetails(updatedDetails);
-        const isBioValid = value.trim().length > 0;
-        setBio({
-            value: value,
-            valid: isBioValid,
-            outline: isBioValid ? "none" : "red solid 2px",
-        });
+        // const isBioValid = value.trim().length > 0;
+        // setBio({
+        //     value: value,
+        //     valid: isBioValid,
+        //     outline: isBioValid ? "none" : "red solid 2px",
+        // });
+        setBio(value);
 
-        const isValid = isBioValid && fullname.valid && username.valid;
-        setValid(isValid);
+        // const isValid = isBioValid && fullname.valid && username.valid;
+        // setValid(isValid);
     };
 
     const handleDivClick = () => {
@@ -179,12 +199,12 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
         console.log("clidked");
         const isFullnameValid = fullname.value.trim().length > 0;
         const isUsernameValid = (username.value.trim().length > 0);
-        const isBioValid = bio.value.trim().length > 0;
+        // const isBioValid = bio.value.trim().length > 0;
 
         setFullname({...fullname, valid: isFullnameValid, outline: isFullnameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px" });
         setUsername({...username, valid: isUsernameValid, outline: isUsernameValid ? "solid 2px rgba(0, 0, 0, 0.2)" : "red solid 2px" });
-        setBio({...bio, valid: isBioValid, outline: isBioValid ? "none" : "red solid 2px" });
-        setValid(isFullnameValid && isUsernameValid && isBioValid);
+        // setBio({...bio, valid: isBioValid, outline: isBioValid ? "none" : "red solid 2px" });
+        setValid(isFullnameValid && isUsernameValid);
         valid ? await saveData() : null;
     }
 
@@ -192,17 +212,21 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
         // console.log("saved")
         loadingBarRef.current.continuousStart();
         // if(sessionUserDetails == null) {
-            await api.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
+            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 {profileImage: image, fullname: fullname.value, username: username.value, bio: bio.value }
             )
             .then((response) => {
-                let userDetails = response.data;
-                sessionStorage.setItem("sessionUserDetails", JSON.stringify(userDetails));
+                sessionUserDetails = {...sessionUserDetails, ...JSON.stringify(response.data)};
+                localStorage.setItem("user", sessionUserDetails);
+                dispatch({type: "UPDATE_USER", payload: response.data});
                 // navigate('/ideaeditor/p/2');
                 setStep(2);
                 loadingBarRef.current.complete();
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+                loadingBarRef.current.complete();
+            });
         // } 
         // else {
             // if(checkForChanges()) {
@@ -253,7 +277,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                     <input className='user-fullname' value={fullname.value} type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
                     <input className='user-username' value={username.value} type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
-                    <textarea className='user-bio' value={bio.value} placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
+                    <textarea className='user-bio' value={bio} placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
                 </div>
             </div>
             <div className='next-prev-buttons'>

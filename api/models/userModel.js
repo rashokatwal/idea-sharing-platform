@@ -39,8 +39,28 @@ const userSchema = new Schema({
     phoneNumber: {
         type: String,
         default: '',
+    },
+    dob: {
+        type: Date,
+        default: new Date(),
+    },
+    address: {
+        type: String,
+        default: '',
+    },
+    portfolio: {
+        type: String,
+        default: '',
+    },
+    socialLinks: {
+        type: Object,
+        default: {
+            instagram: '',
+            twitter: '',
+            linkedin: '',
+            github: ''
+        }
     }
-
 })
 
 userSchema.statics.signup = async function (email, password) {

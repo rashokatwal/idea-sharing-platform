@@ -14,8 +14,21 @@
     font-family: var(--accent-font);
 }
 
+.complete-profile-inner .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .complete-profile-inner .header-title {
     color: var(--accent-color);
+}
+
+.complete-profile-inner .header-button {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .complete-profile-inner .steps {

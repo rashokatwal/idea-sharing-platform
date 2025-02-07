@@ -15,9 +15,13 @@ const signinUser = async (req, res) => {
 
         const token = createToken(userId);
 
-        const profileCompleted = user.profileCompleted;
+        const updatedUserDetails = user.toObject();
 
-        res.status(200).json({email, token, userId, profileCompleted});
+        delete updatedUserDetails.password;
+        
+        updatedUserDetails.token = token;
+
+        res.status(200).json(updatedUserDetails);
     }
     catch(error) {
         res.status(400).json(error.message);
@@ -33,9 +37,15 @@ const signupUser = async (req, res) => {
 
         const token = createToken(userId);
 
-        const profileCompleted = user.profileCompleted;
+        // const profileCompleted = user.profileCompleted;
 
-        res.status(200).json({email, token, userId, profileCompleted});
+        const updatedUserDetails = user.toObject();
+
+        delete updatedUserDetails.password;
+
+        updatedUserDetails.token = token;
+
+        res.status(200).json(updatedUserDetails);
     }
     catch(error) {
         res.status(400).json(error.message);
@@ -48,7 +58,10 @@ const updateUserDetails = async (req, res) => {
     try {
         const user = await User.updateDetails(updates, req.params.id);
 
-        res.status(200).json(user);
+        const updatedUserDetails = user.toObject();
+        delete updatedUserDetails.password;
+
+        res.status(200).json({updatedUserDetails});
     }
     catch(error) {
         res.status(400).json(error.message);
