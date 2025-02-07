@@ -101,7 +101,7 @@ const CompleteProfile = () => {
 const StepOne = ({ setStep, sessionUserDetails }) => {
     const userStatus = useAuthContext();
     const userDetails = userStatus.user;
-    console.log(userDetails);
+    // console.log(userDetails);
     const loadingBarRef = useLoadingBar();
     const imageInputRef = useRef(null);
     const { dispatch } = useAuthContext();
@@ -191,9 +191,9 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     //     setValid(isValid);
     // };
 
-    // const checkForChanges = () => {
-    //     return fullname.value == sessionUserDetails.fullname && username.value == sessionUserDetails.username && bio.value == sessionUserDetails.bio ? false : true;
-    // }
+    const checkForChanges = () => {
+        return image == userDetails.profileImage && fullname.value == userDetails.fullname && username.value == userDetails.username && bio == userDetails.bio ? false : true;
+    }
 
     const handleStepOneSubmission = async() => {
         console.log("clidked");
@@ -211,23 +211,30 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     const saveData = async() => {
         // console.log("saved")
         loadingBarRef.current.continuousStart();
-        // if(sessionUserDetails == null) {
+        if(checkForChanges()) {
             await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 {profileImage: image, fullname: fullname.value, username: username.value, bio: bio.value }
             )
             .then((response) => {
-                sessionUserDetails = {...sessionUserDetails, ...JSON.stringify(response.data)};
-                localStorage.setItem("user", sessionUserDetails);
-                dispatch({type: "UPDATE_USER", payload: response.data});
+                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
+                // console.log(response.data.updatedUserDetails);
+                localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+                dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
                 // navigate('/ideaeditor/p/2');
+                setTimeout(() =>{
+                    loadingBarRef.current.complete();
+                }, 1000);
                 setStep(2);
-                loadingBarRef.current.complete();
             })
             .catch((error) => {
                 console.log(error);
                 loadingBarRef.current.complete();
             });
-        // } 
+        } 
+        else {
+            loadingBarRef.current.complete();
+            setStep(2);
+        }
         // else {
             // if(checkForChanges()) {
             //     await api.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,

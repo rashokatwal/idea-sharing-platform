@@ -120,7 +120,7 @@ userSchema.statics.updateDetails = async function (updates, id) {
 
     if(username) {
         const exists = await this.findOne({username});
-        if(exists) {
+        if(exists && exists._id != id) {
             throw Error("Username already exists!");
         }
     }
