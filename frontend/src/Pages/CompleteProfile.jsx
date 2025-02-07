@@ -61,7 +61,10 @@ const CompleteProfile = () => {
                 <div className="header">
                     <div className="header-texts">
                         <h1 className="header-title">Complete Your Profile</h1>
-                        <p className="header-subtitle">Please complete your profile information to start using the platform.</p>
+                        <p className="header-subtitle">
+                            Please complete your profile information to start using the platform.
+                        </p>
+                        <p style={{fontSize: '15px', opacity: '0.5'}}>(Following information will be shown in your profile.)</p>
                     </div>
                     <div className="header-button" onClick={() => handleSignout()}>
                         <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" size='lg'/>
@@ -295,6 +298,74 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
 }
 
 const StepTwo = ({ setStep }) => {
+    const userStatus = useAuthContext();
+    const userDetails = userStatus.user;
+    const loadingBarRef = useLoadingBar();
+    const { dispatch } = useAuthContext();
+    const [ email, setEmail ] = useState({
+        value: userDetails.email,
+        valid: userDetails.email? true : false,
+        outline: userDetails.email? "none" : "red solid 2px",
+    });
+    const [ phoneNumber, setPhoneNumber ] = useState(userDetails.phoneNumber);
+    const [ dob, setDob ] = useState(userDetails.dob);
+    const [ address, setAddress ] = useState(userDetails.address);
+    const [ portfolio, setPortfolio ] = useState(userDetails.portfolio);
+
+    const handleFormChange = (field, value) => {
+        switch (field) {
+            case "email":
+                setEmail(value);
+                break;
+            case "phoneNumber":
+                setPhoneNumber(value);
+                break;
+            case "dob":
+                setDob(value);
+                break;
+            case "address":
+                setAddress(value);
+                break;
+            case "portfolio":
+                setPortfolio(value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    const checkForChanges = () => {
+        return email == userDetails.email && phoneNumber == userDetails.phoneNumber && dob == userDetails.dob && address == userDetails.address && portfolio == userDetails.portfolio ? false : true;
+    }
+
+    const handleStepTwoSubmission = async () => {
+        loadingBarRef.current.continuousStart();
+        if(checkForChanges()) {
+            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+                {email: email, phoneNumber: phoneNumber, dob: dob, address: address, portfolio: portfolio}
+            )
+            .then((response) => {
+                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
+                // console.log(response.data.updatedUserDetails);
+                localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+                dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
+                // navigate('/ideaeditor/p/2');
+                setTimeout(() =>{
+                    loadingBarRef.current.complete();
+                }, 1000);
+                setStep(3);
+            })
+            .catch((error) => {
+                console.log(error);
+                loadingBarRef.current.complete();
+            });
+        } 
+        else {
+            loadingBarRef.current.complete();
+            setStep(3);
+        }
+    }
+
     return (
         <div className="step-two steps">
             <h3 className='step-header'>
@@ -310,7 +381,7 @@ const StepTwo = ({ setStep }) => {
                         <label>Email</label>
                         <div className='user-email-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-envelope" />
-                            <input className='user-email' type='text'/>
+                            <input className='user-email' value={email} type='email' onChange={(e) => handleFormChange("email", e.target.value)}/>
                         </div>
                     </div>
                     <div className='phone-number-dob'>
@@ -318,14 +389,14 @@ const StepTwo = ({ setStep }) => {
                             <label>Phone Number</label>
                             <div className='user-phone-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-solid fa-phone" />
-                                <input className='user-phone' type='text'/>
+                                <input className='user-phone' value={phoneNumber} type='number' onChange={(e) => handleFormChange("phoneNumber", e.target.value)}/>
                             </div>
                         </div>
                         <div className='dob'>
                             <label>Date of Birth</label>
                             <div className='user-dob-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-regular fa-calendar-days" />
-                                <input className='user-dob' type='text'/>
+                                <input className='user-dob' value={dob} type='date' onChange={(e) => handleFormChange("dob", e.target.value)}/>
                             </div>
                         </div>
                     </div>
@@ -333,14 +404,14 @@ const StepTwo = ({ setStep }) => {
                         <label>Address</label>
                         <div className='user-address-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-location-dot" />
-                            <input className='user-address' type='text'/>
+                            <input className='user-address' value={address} type='text' onChange={(e) => handleFormChange("address", e.target.value)}/>
                         </div>
                     </div>
                     <div className="website">
                         <label>Portfolio or Website</label>
                         <div className='user-website-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-globe" />
-                            <input className='user-website' type='text'/>
+                            <input className='user-website' value={portfolio} type='text' onChange={(e) => handleFormChange("portfolio", e.target.value)}/>
                         </div>
                     </div>
                 </div>
@@ -352,7 +423,7 @@ const StepTwo = ({ setStep }) => {
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(1)}>Go Back</button>
                 <div>
-                    <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
+                    <button className='primary-button' style={{fontSize: '16px'}} onClick={() => handleStepTwoSubmission()}>Continue</button>
                     <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>
                 </div>
             </div>
