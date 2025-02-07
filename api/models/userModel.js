@@ -147,6 +147,8 @@ userSchema.statics.updateDetails = async function (updates, id) {
         }
     }
 
+    console.log(updates);
+
     const user = await this.findByIdAndUpdate(id, updates, {new: true});
 
     return user;

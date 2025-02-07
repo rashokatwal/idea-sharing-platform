@@ -301,48 +301,60 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
 }
 
 const StepTwo = ({ setStep, sessionUserDetails }) => {
-    const userStatus = useAuthContext();
-    const userDetails = userStatus.user;
+    const userDetails = useAuthContext().user;
+    // const userDetails = userStatus.user;
     const loadingBarRef = useLoadingBar();
     const { dispatch } = useAuthContext();
-    const [ email, setEmail ] = useState(userDetails.email);
-    const [ phoneNumber, setPhoneNumber ] = useState(userDetails.phoneNumber);
-    const [ dob, setDob ] = useState(userDetails.dob);
-    const [ address, setAddress ] = useState(userDetails.address);
-    const [ portfolio, setPortfolio ] = useState(userDetails.portfolio);
+    // const [ email, setEmail ] = useState(userDetails.email);
+    // const [ phoneNumber, setPhoneNumber ] = useState(userDetails.phoneNumber);
+    // const [ dob, setDob ] = useState(userDetails.dob);
+    // const [ address, setAddress ] = useState(userDetails.address);
+    // const [ portfolio, setPortfolio ] = useState(userDetails.portfolio);
     const [ error, setError ] = useState("");
+    const date = new Date(userDetails.dob);
+    const dob = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    console.log(dob);
+    const [ userFormData, setUserFormData ] = useState({
+        email: userDetails.email,
+        phoneNumber: userDetails.phoneNumber,
+        dob: dob,
+        address: userDetails.address,
+        portfolio: userDetails.portfolio,
+    })
 
     const handleFormChange = (field, value) => {
-        switch (field) {
-            case "email":
-                setEmail(value);
-                break;
-            case "phoneNumber":
-                setPhoneNumber(value);
-                break;
-            case "dob":
-                setDob(value);
-                break;
-            case "address":
-                setAddress(value);
-                break;
-            case "portfolio":
-                setPortfolio(value);
-                break;
-            default:
-                break;
-        }
+        // switch (field) {
+        //     case "email":
+        //         setEmail(value);
+        //         break;
+        //     case "phoneNumber":
+        //         setPhoneNumber(value);
+        //         break;
+        //     case "dob":
+        //         setDob(value);
+        //         break;
+        //     case "address":
+        //         setAddress(value);
+        //         break;
+        //     case "portfolio":
+        //         setPortfolio(value);
+        //         break;
+        //     default:
+        //         break;
+        // }
+        setUserFormData({...userFormData, [field]: value });
     }
 
     const checkForChanges = () => {
-        return email == userDetails.email && phoneNumber == userDetails.phoneNumber && dob == userDetails.dob && address == userDetails.address && portfolio == userDetails.portfolio ? false : true;
+        console.log(userFormData.dob);
+        return userFormData.email == userDetails.email && userFormData.phoneNumber == userDetails.phoneNumber && userFormData.dob == dob && userFormData.address == userDetails.address && userFormData.portfolio == userDetails.portfolio ? false : true;
     }
 
     const handleStepTwoSubmission = async () => {
         loadingBarRef.current.continuousStart();
         if(checkForChanges()) {
             await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
-                {email: email, phoneNumber: phoneNumber, dob: dob, address: address, portfolio: portfolio}
+                userFormData
             )
             .then((response) => {
                 sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
@@ -380,7 +392,7 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
                         <label>Email</label>
                         <div className='user-email-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-envelope" />
-                            <input className='user-email' value={email} type='email' onChange={(e) => handleFormChange("email", e.target.value)}/>
+                            <input className='user-email' value={userFormData.email} type='email' onChange={(e) => handleFormChange("email", e.target.value)}/>
                         </div>
                     </div>
                     <div className='phone-number-dob'>
@@ -388,14 +400,14 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
                             <label>Phone Number</label>
                             <div className='user-phone-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-solid fa-phone" />
-                                <input className='user-phone' value={phoneNumber} type='number' onChange={(e) => handleFormChange("phoneNumber", e.target.value)}/>
+                                <input className='user-phone' value={userFormData.phoneNumber} type='number' onChange={(e) => handleFormChange("phoneNumber", e.target.value)}/>
                             </div>
                         </div>
                         <div className='dob'>
                             <label>Date of Birth</label>
                             <div className='user-dob-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-regular fa-calendar-days" />
-                                <input className='user-dob' value={dob} type='date' onChange={(e) => handleFormChange("dob", e.target.value)}/>
+                                <input className='user-dob' value={userFormData.dob} type='date' onChange={(e) => handleFormChange("dob", e.target.value)}/>
                             </div>
                         </div>
                     </div>
@@ -403,14 +415,14 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
                         <label>Address</label>
                         <div className='user-address-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-location-dot" />
-                            <input className='user-address' value={address} type='text' onChange={(e) => handleFormChange("address", e.target.value)}/>
+                            <input className='user-address' value={userFormData.address} type='text' onChange={(e) => handleFormChange("address", e.target.value)}/>
                         </div>
                     </div>
                     <div className="website">
                         <label>Portfolio or Website</label>
                         <div className='user-website-outer input-wrapper'>
                             <FontAwesomeIcon icon="fa-solid fa-globe" />
-                            <input className='user-website' value={portfolio} type='text' onChange={(e) => handleFormChange("portfolio", e.target.value)}/>
+                            <input className='user-website' value={userFormData.portfolio} type='text' onChange={(e) => handleFormChange("portfolio", e.target.value)}/>
                         </div>
                     </div>
                     <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
@@ -431,7 +443,53 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
     )
 }
 
-const StepThree = ({ setStep }) => {
+const StepThree = ({ setStep, sessionUserDetails }) => {
+    const userDetails = useAuthContext().user;
+    const loadingBarRef = useLoadingBar();
+    const { dispatch } = useAuthContext();
+    const [ socialLinks, setSocialLinks ] = useState({
+        instagram: userDetails.socialLinks.instagram,
+        linkedin: userDetails.socialLinks.linkedin,
+        twitter: userDetails.socialLinks.twitter,
+        github: userDetails.socialLinks.github,
+    });
+
+    const handleSocialLinksChange = (platform, value) => {
+        setSocialLinks({...socialLinks, [platform]: value });
+    }
+
+    const checkForChanges = () => {
+        // console.log(socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter)
+        return socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter ? false : true;
+    }
+
+    const handleStepThreeSubmission = async () => {
+        loadingBarRef.current.continuousStart();
+        if(checkForChanges()) {
+            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+                {socialLinks: socialLinks}
+            )
+            .then((response) => {
+                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
+                localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+                dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
+                setTimeout(() =>{
+                    loadingBarRef.current.complete();
+                }, 1000);
+                // setStep(3);
+            })
+            .catch((error) => {
+                // console.log(error);
+                console.log(error);
+                loadingBarRef.current.complete();
+            });
+        } 
+        else {
+            loadingBarRef.current.complete();
+            // setStep(3);
+        }
+    }
+
     return (
         <div className="step-two steps">
             <h3 className='step-header'>
@@ -447,28 +505,28 @@ const StepThree = ({ setStep }) => {
                             <label>Instagram</label>
                             <div className='user-instagram-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-brands fa-instagram" />
-                                <input className='user-instagram' type='text'/>
+                                <input className='user-instagram' value={socialLinks.instagram} onChange={(e) => handleSocialLinksChange("instagram", e.target.value)} type='text'/>
                             </div>
                         </div>
                         <div className='linkedin'>
                             <label>LinkedIn</label>
                             <div className='user-linkedin-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-brands fa-linkedin" />
-                                <input className='user-linkedin' type='text'/>
+                                <input className='user-linkedin' value={socialLinks.linkedin} onChange={(e) => handleSocialLinksChange("linkedin", e.target.value)} type='text'/>
                             </div>
                         </div>
                         <div className="twitter">
                             <label>X (Twitter)</label>
                             <div className='user-twitter-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-brands fa-x-twitter" />
-                                <input className='user-twitter' type='text'/>
+                                <input className='user-twitter' value={socialLinks.twitter} onChange={(e) => handleSocialLinksChange("twitter", e.target.value)} type='text'/>
                             </div>
                         </div>
                         <div className="github">
                             <label>Github</label>
                             <div className='user-github-outer input-wrapper'>
                                 <FontAwesomeIcon icon="fa-brands fa-github" />
-                                <input className='user-github' type='text'/>
+                                <input className='user-github' value={socialLinks.github} onChange={(e) => handleSocialLinksChange("github", e.target.value)} type='text'/>
                             </div>
                         </div>
                     </div>
@@ -478,7 +536,7 @@ const StepThree = ({ setStep }) => {
             <div className='next-prev-buttons'>
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Go Back</button>
                 <div>
-                    <button className='primary-button' style={{fontSize: '16px'}} onClick={() => setStep(3)}>Continue</button>
+                    <button className='primary-button' style={{fontSize: '16px'}} onClick={() => handleStepThreeSubmission()}>Continue</button>
                     <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>
                 </div>
             </div>
