@@ -14,7 +14,8 @@ const CompleteProfile = () => {
     const stepOneRef = useRef(null);
     const stepTwoRef = useRef(null);
     const stepThreeRef = useRef(null);
-    const references = [stepOneRef, stepTwoRef, stepThreeRef]
+    // const completionMessageRef = useRef(null);
+    const references = [stepOneRef, stepTwoRef, stepThreeRef];
     // console.log(references[1]);
     const nodeRef = references[step - 1];
     const {signout} = useSignout();
@@ -37,7 +38,7 @@ const CompleteProfile = () => {
     //     }
     // });
     const sessionUserDetails = JSON.parse(localStorage.getItem("user")) || null;
-    const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} />]
+    const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} />];
     // const [ slideDirection, setSlideDirection ] = useState("slide");
 
     // const nextStep = (step) => {
@@ -467,16 +468,17 @@ const StepThree = ({ setStep, sessionUserDetails }) => {
         loadingBarRef.current.continuousStart();
         if(checkForChanges()) {
             await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
-                {socialLinks: socialLinks}
+                {socialLinks: socialLinks, profileCompleted: true}
             )
             .then((response) => {
-                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails};
+                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails, profileCompleted: true};
                 localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+                response.data.updatedUserDetails = {...response.data.updatedUserDetails, profileCompleted: true};
                 dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
                 }, 1000);
-                // setStep(3);
+                // setStep(4);
             })
             .catch((error) => {
                 // console.log(error);
@@ -488,6 +490,26 @@ const StepThree = ({ setStep, sessionUserDetails }) => {
             loadingBarRef.current.complete();
             // setStep(3);
         }
+    }
+
+    const handleSkip = async () => {
+        await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+            {socialLinks: socialLinks, profileCompleted: true}
+        )
+        .then(() => {
+            sessionUserDetails = {...sessionUserDetails, profileCompleted: true};
+            localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+            dispatch({type: "UPDATE_USER", payload: {profileCompleted: true}});
+            setTimeout(() =>{
+                loadingBarRef.current.complete();
+            }, 1000);
+            // setStep(4);
+        })
+        .catch((error) => {
+            // console.log(error);
+            console.log(error);
+            loadingBarRef.current.complete();
+        });
     }
 
     return (
@@ -537,7 +559,7 @@ const StepThree = ({ setStep, sessionUserDetails }) => {
                 <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => setStep(2)}>Go Back</button>
                 <div>
                     <button className='primary-button' style={{fontSize: '16px'}} onClick={() => handleStepThreeSubmission()}>Continue</button>
-                    <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => setStep(3)}>Skip</button>
+                    <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => handleSkip()}>Skip</button>
                 </div>
             </div>
         </div>
