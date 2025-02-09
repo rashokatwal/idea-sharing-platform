@@ -8,6 +8,7 @@ import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import api from '../Helpers/api';
 import { useSignout } from '../Hooks/useSignout';
+import CompletionMessage from '../Components/CompletionMessage';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -18,6 +19,7 @@ const CompleteProfile = () => {
     const references = [stepOneRef, stepTwoRef, stepThreeRef];
     // console.log(references[1]);
     const nodeRef = references[step - 1];
+    const [ isProfileCompleted, setIsProfileCompleted ] = useState(false);
     const {signout} = useSignout();
     // let email = useContext(AuthContext).user.email;
     // const [ userDetails, setUserDetails ] = useState({
@@ -38,7 +40,7 @@ const CompleteProfile = () => {
     //     }
     // });
     const sessionUserDetails = JSON.parse(localStorage.getItem("user")) || null;
-    const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} />];
+    const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} setIsProfileCompleted={setIsProfileCompleted}/>];
     // const [ slideDirection, setSlideDirection ] = useState("slide");
 
     // const nextStep = (step) => {
@@ -58,7 +60,7 @@ const CompleteProfile = () => {
 
     return (
         <div className="complete-profile-outer">
-            <div className="complete-profile-inner">
+            {!isProfileCompleted && <div className="complete-profile-inner">
                 <div className="header">
                     <div className="header-texts">
                         <h1 className="header-title">Complete Your Profile</h1>
@@ -83,21 +85,12 @@ const CompleteProfile = () => {
                         classNames="slide"
                     >
                         <div ref={nodeRef}>
-                            {/* {step === 1 && <StepOne setStep={setStep}/>}
-                            {step === 2 && <StepTwo setStep={setStep} />}
-                            {step === 3 && <StepThree setStep={setStep} />} */}
                             {steps[step - 1]}
                         </div>
                     </CSSTransition>
                 </SwitchTransition>
-                {/* <div className='next-prev-buttons'>
-                    <button className='primary-button' style={{marginLeft: '-20px', fontSize: '16px'}} onClick={() => prevStep()}>Go Back</button>
-                    <div>
-                        <button className='primary-button' style={{fontSize: '16px'}} onClick={() => nextStep()}>Continue</button>
-                        <button className='secondary-button' style={{marginLeft: '10px', fontSize: '16px'}} onClick={() => nextStep()}>Skip</button>
-                    </div>
-                </div> */}
-            </div>
+            </div>}
+            {isProfileCompleted && <CompletionMessage />}
         </div>
     )
 }
@@ -444,7 +437,7 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
     )
 }
 
-const StepThree = ({ setStep, sessionUserDetails }) => {
+const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
     const userDetails = useAuthContext().user;
     const loadingBarRef = useLoadingBar();
     const { dispatch } = useAuthContext();
@@ -477,6 +470,7 @@ const StepThree = ({ setStep, sessionUserDetails }) => {
                 dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
+                    setIsProfileCompleted(true);
                 }, 1000);
                 // setStep(4);
             })
@@ -502,6 +496,7 @@ const StepThree = ({ setStep, sessionUserDetails }) => {
             dispatch({type: "UPDATE_USER", payload: {profileCompleted: true}});
             setTimeout(() =>{
                 loadingBarRef.current.complete();
+                setIsProfileCompleted(true);
             }, 1000);
             // setStep(4);
         })

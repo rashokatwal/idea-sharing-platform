@@ -18,7 +18,7 @@ import { useLoadingBar } from './Hooks/useLoadingBar';
 import { AuthContextProvider } from './Contexts/AuthContext';
 import { useAuthContext } from './Hooks/useAuthContext';
 import CompleteProfile from './Pages/CompleteProfile';
-import CompletionMessage from './Pages/CompletionMessage';
+import CompletionMessage from './Components/CompletionMessage';
 
 const App = () => {
 
@@ -66,7 +66,7 @@ const AppContent = () => {
         <Route element={userStatus.isAuthenticated ? userStatus.user.profileCompleted ? <Outlet /> : <Navigate to="/completeprofile" replace/> : <Outlet />}>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/explore" element={<Explore />} />
-          <Route exact path="/completion" element={<CompletionMessage />} />
+          {/* <Route exact path="/completion" element={<CompletionMessage />} /> */}
           <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
           <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
           {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
