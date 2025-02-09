@@ -9,6 +9,7 @@ import { useAuthContext } from '../Hooks/useAuthContext';
 import api from '../Helpers/api';
 import { useSignout } from '../Hooks/useSignout';
 import CompletionMessage from '../Components/CompletionMessage';
+import ConfettiEffect from '../Components/ConfettiEffect';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -60,6 +61,7 @@ const CompleteProfile = () => {
 
     return (
         <div className="complete-profile-outer">
+            {/* {isProfileCompleted && <ConfettiEffect />} */}
             {!isProfileCompleted && <div className="complete-profile-inner">
                 <div className="header">
                     <div className="header-texts">
@@ -452,43 +454,37 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
         setSocialLinks({...socialLinks, [platform]: value });
     }
 
-    const checkForChanges = () => {
-        // console.log(socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter)
-        return socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter ? false : true;
-    }
+    // const checkForChanges = () => {
+    //     // console.log(socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter)
+    //     return socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter ? false : true;
+    // }
 
     const handleStepThreeSubmission = async () => {
         loadingBarRef.current.continuousStart();
-        if(checkForChanges()) {
-            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
-                {socialLinks: socialLinks, profileCompleted: true}
-            )
-            .then((response) => {
-                sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails, profileCompleted: true};
-                localStorage.setItem("user", JSON.stringify(sessionUserDetails));
-                response.data.updatedUserDetails = {...response.data.updatedUserDetails, profileCompleted: true};
-                dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
-                setTimeout(() =>{
-                    loadingBarRef.current.complete();
-                    setIsProfileCompleted(true);
-                }, 1000);
-                // setStep(4);
-            })
-            .catch((error) => {
-                // console.log(error);
-                console.log(error);
+        await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+            {socialLinks: socialLinks, profileCompleted: true}
+        )
+        .then((response) => {
+            sessionUserDetails = {...sessionUserDetails, ...response.data.updatedUserDetails, profileCompleted: true};
+            localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+            response.data.updatedUserDetails = {...response.data.updatedUserDetails, profileCompleted: true};
+            dispatch({type: "UPDATE_USER", payload: response.data.updatedUserDetails});
+            setTimeout(() =>{
                 loadingBarRef.current.complete();
-            });
-        } 
-        else {
+            }, 1000);
+            setIsProfileCompleted(true);
+            // setStep(4);
+        })
+        .catch((error) => {
+            // console.log(error);
+            console.log(error);
             loadingBarRef.current.complete();
-            // setStep(3);
-        }
+        });
     }
 
     const handleSkip = async () => {
         await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
-            {socialLinks: socialLinks, profileCompleted: true}
+            {profileCompleted: true}
         )
         .then(() => {
             sessionUserDetails = {...sessionUserDetails, profileCompleted: true};
@@ -496,8 +492,8 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
             dispatch({type: "UPDATE_USER", payload: {profileCompleted: true}});
             setTimeout(() =>{
                 loadingBarRef.current.complete();
-                setIsProfileCompleted(true);
             }, 1000);
+            setIsProfileCompleted(true);
             // setStep(4);
         })
         .catch((error) => {

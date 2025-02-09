@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ConfettiEffect from "./ConfettiEffect";
 import '../Styles/completionmessage.css';
 import { Link } from "react-router-dom";
 
 const CompletionMessage = () => {
-
+    useEffect(() => {
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 5000)
+    }, [])
     return (
         <div className="completion-message-wrapper" style={{ }}>
             <ConfettiEffect />
@@ -13,7 +17,7 @@ const CompletionMessage = () => {
                 <div>
                     <h1>Profile Completed!</h1>
                     <p style={{color: '#555'}}>Your profile is now complete. Start exploring the platform</p>
-                    <button className="primary-button">
+                    <button className="primary-button" onClick={() => window.location.href = "/explore"}>
                         Explore
                     </button>
                 </div>

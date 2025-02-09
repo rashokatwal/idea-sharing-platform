@@ -125,7 +125,7 @@ const PageOne = ({ changePages }) => {
             else{
                 // navigate('/ideaeditor/p/2');
                 // loadingBarRef.current.continuousStart();
-                changePages(1);
+                changePages(2);
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
                 }, 500)
