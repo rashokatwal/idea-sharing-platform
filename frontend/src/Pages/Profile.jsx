@@ -8,14 +8,11 @@ const Profile = () => {
     return (
         <div className="profile-outer">
             <div className="profile-inner">
-                <div className="left-section">
-                    <img className="profile-image" src={user ? user.profileImage : './src/Assets/default_user.png'} alt="Profile Picture" />
-                    <div className="user-basic-details">
-                        
-                    </div>
-                </div>
-                <div className="right-section">
-                    
+                <img className="profile-image" src={user.profileImage || './src/Assets/default_user.png'} alt="Profile Picture" />
+                <div className="user-basic-details">
+                    <h2 className="user-fullname">{user.fullname}</h2>
+                    <p className="user-username">@{user.username}</p>
+                    <p className="user-bio">{user.bio}</p>
                 </div>
             </div>
         </div>
