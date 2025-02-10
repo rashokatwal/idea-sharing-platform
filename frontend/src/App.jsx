@@ -67,10 +67,11 @@ const AppContent = () => {
         <Route element={userStatus.isAuthenticated ? userStatus.user.profileCompleted ? <Outlet /> : <Navigate to="/completeprofile" replace/> : <Outlet />}>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/explore" element={<Explore />} />
+          <Route exact path="/profile" element={<Profile />} />
           {/* <Route exact path="/completion" element={<CompletionMessage />} /> */}
           <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
           <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
-          <Route exact path="/profile" element={userStatus.isAuthenticated ? <Profile /> : <Navigate to="/signin"/>} />
+          {/* <Route exact path="/profile" element={userStatus.isAuthenticated ? <Profile /> : <Navigate to="/signin"/>} /> */}
           {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
           {location.pathname.includes("ideaeditor") && <Route path="*" element={userStatus.isAuthenticated ? <IdeaEditor /> : <Navigate to="/signin" />} />}
         </Route>

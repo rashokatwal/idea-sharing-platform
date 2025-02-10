@@ -1,0 +1,56 @@
+.profile-section-outer {
+    min-width: 100%;
+    position: relative;
+}
+
+.profile-section-inner {
+    margin: 10px auto 30px auto;
+    width: 1080px;
+    position: relative;
+    text-align: center;
+    display: flex;
+}
+
+.profile-section-inner .left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.profile-section-inner .left-section .profile-image {
+    height: 170px;
+    border-radius: 50%;
+    margin: 20px 0px;
+}
+
+.profile-section-inner .left-section .user-previous-works, .user-skills {
+    width: 100%;
+}
+
+.profile-section-inner .left-section .section-header {
+    color: black;
+    opacity: 0.5;
+    font-weight: 500;
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    width: 100%;
+}
+
+.profile-section-inner .left-section .header-text {
+    font-size: 12px;
+}
+
+.profile-section-inner .left-section .header-horizontal-line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: black;
+    opacity: 0.3;
+    margin-bottom: 3px;
+}
+
+.previous-works-list, .skills-list {
+    min-height: 200px;
+    max-height: 200px;
+}
