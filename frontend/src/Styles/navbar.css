@@ -67,6 +67,7 @@
     text-decoration: none;
     color: var(--text-color);
     cursor: pointer;
+    font-weight: 500;
 }
 
 .navLinks li a:hover {
@@ -76,10 +77,10 @@
 
 .navLinks .author-avatar {
     display: inline-block;
-    height: 27px;
-    width: 27px;
-    border: solid 2px rgba(0, 0, 0, 0.5);
-    /* outline: solid 3px var(--accent-color); */
+    height: 35px;
+    width: 35px;
+    /* outline: solid 2px rgba(0, 0, 0, 0.2);
+    border: solid 3px transparent; */
     border-radius: 50%;
     cursor: pointer;
 }

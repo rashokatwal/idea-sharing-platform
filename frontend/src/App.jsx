@@ -18,7 +18,8 @@ import { useLoadingBar } from './Hooks/useLoadingBar';
 import { AuthContextProvider } from './Contexts/AuthContext';
 import { useAuthContext } from './Hooks/useAuthContext';
 import CompleteProfile from './Pages/CompleteProfile';
-import CompletionMessage from './Components/CompletionMessage';
+import Profile from './Pages/Profile';
+// import CompletionMessage from './Components/CompletionMessage';
 
 const App = () => {
 
@@ -69,11 +70,12 @@ const AppContent = () => {
           {/* <Route exact path="/completion" element={<CompletionMessage />} /> */}
           <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
           <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
+          <Route exact path="/profile" element={userStatus.isAuthenticated ? <Profile /> : <Navigate to="/signin"/>} />
           {location.pathname.includes("idea/") && <Route path="*" element={<Idea />} />}
           {location.pathname.includes("ideaeditor") && <Route path="*" element={userStatus.isAuthenticated ? <IdeaEditor /> : <Navigate to="/signin" />} />}
         </Route>
       </Routes>
-      {shouldShowNavAndFooter && <Footer />}
+      {shouldShowNavAndFooter && !location.pathname.includes("/profile") && <Footer />}
     </div>
   );
 };

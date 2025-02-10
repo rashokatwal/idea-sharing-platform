@@ -65,13 +65,15 @@ const Navbar = () => {
                             <li style={{marginLeft: '20px', position: 'relative'}}>
                                 <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} onClick={() => setIsDropdownOpen(true)}/>
                                 <div className="dropdown-navbar" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>    
-                                    <div className='user-details'>
-                                        <img className="author-avatar" src='/src/Assets/default_user.png' style={{height: '40px', width: '40px'}}/>
-                                        <div style={{marginLeft: '10px'}}>
-                                            <p style={{margin: '0', fontWeight: '600'}}>{userStatus.user.fullname}</p>
-                                            <p style={{margin: '0', fontSize: '13px'}}>@{userStatus.user.username}</p>
-                                        </div>
-                                    </div>     
+                                    <Link to='/profile'>
+                                        <div className='user-details'>
+                                            <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} style={{height: '50px', width: '50px'}}/>
+                                            <div style={{marginLeft: '10px'}}>
+                                                <p style={{margin: '0', fontWeight: '600'}}>{userStatus.user.fullname}</p>
+                                                <p style={{margin: '0', fontSize: '13px'}}>@{userStatus.user.username}</p>
+                                            </div>
+                                        </div>  
+                                    </Link>   
                                     <ul className="dropdown-list">
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-lightbulb" className='icon'/><span className='text'>My Ideas</span></li>
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-bookmark" className='icon'/><span className='text'>Saved Ideas</span></li>
