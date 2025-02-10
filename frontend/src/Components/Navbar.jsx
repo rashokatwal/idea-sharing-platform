@@ -63,13 +63,13 @@ const Navbar = () => {
                                 <FontAwesomeIcon icon="fa-regular fa-bell" />
                             </li>
                             <li style={{marginLeft: '20px', position: 'relative'}}>
-                                <img className="author-avatar" src='/src/Assets/default_user.png' onClick={() => setIsDropdownOpen(true)}/>
+                                <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} onClick={() => setIsDropdownOpen(true)}/>
                                 <div className="dropdown-navbar" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>    
                                     <div className='user-details'>
                                         <img className="author-avatar" src='/src/Assets/default_user.png' style={{height: '40px', width: '40px'}}/>
                                         <div style={{marginLeft: '10px'}}>
-                                            <p style={{margin: '0', fontWeight: '600'}}>Rashok Katwal</p>
-                                            <p style={{margin: '0', fontSize: '13px'}}>@rashokatwal</p>
+                                            <p style={{margin: '0', fontWeight: '600'}}>{userStatus.user.fullname}</p>
+                                            <p style={{margin: '0', fontSize: '13px'}}>@{userStatus.user.username}</p>
                                         </div>
                                     </div>     
                                     <ul className="dropdown-list">
