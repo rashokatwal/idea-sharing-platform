@@ -34,6 +34,15 @@ const Profile = () => {
                     <p className="username">{user.username}</p>
                     <p className="bio">{user.bio}</p>
                     <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
+                    <div className="profile-tabs">
+                        <div className="tabs-header">
+                            <span className="header-elements"><FontAwesomeIcon icon="fa-solid fa-user" /> About</span>
+                            <span className="header-elements"><FontAwesomeIcon icon="fa-solid fa-lightbulb" /> Ideas</span>
+                        </div>
+                        <span className="header-horizontal-line">
+                            <span className="tab-indicator"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
