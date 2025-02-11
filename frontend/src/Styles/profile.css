@@ -121,7 +121,7 @@
     font-weight: 500;
 }
 
-.tab-indicator {
+.profile-tabs .tab-indicator {
     position: absolute;
     display: block;
     height: 3px;
@@ -129,4 +129,35 @@
     bottom: -1.5px;
     width: 70px;
     background: var(--accent-color);
+}
+
+.profile-tabs .tabs-body {
+    margin: 30px 0px;
+}
+
+.profile-tabs .about-tab .section-header {
+    margin: 35px 0px;
+}
+
+.profile-tabs .about-tab .about-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 30px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.profile-tabs .about-tab .about-content > * {
+    display: block;
+    text-align: left;
+}
+
+.profile-tabs .about-tab .about-content .field {
+    width: 100px;
+}
+
+.profile-tabs .about-tab .about-content .value {
+    width: 50%;
 }

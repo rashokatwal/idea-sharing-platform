@@ -45,7 +45,37 @@ const Profile = () => {
                         <div className="tabs-body">
                             <div className="about-tab">
                                 <div className="section-header">
+                                    <span className="header-text">CONTACT INFORMATION</span>
+                                </div>
+                                <div className="about-content">
+                                    <span className="field">Email:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user.email}</span>
+                                </div>
+                                {user.address == "" ? 
+                                    null : 
+                                    <div className="about-content">
+                                        <span className="field">Address:</span><span className="value">{user.address}</span>
+                                    </div>
+                                }
+                                {user.phoneNumber == "" ? 
+                                    null : 
+                                    <div className="about-content">
+                                        <span className="field">Phone:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user.phoneNumber}</span>
+                                    </div>
+                                }
+                                {user.portfolio == "" ? 
+                                    null : 
+                                    <div className="about-content">
+                                        <span className="field">Website:</span><a href={user.portfolio} target="_blank" className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user.portfolio}</a>
+                                    </div>
+                                }
+                                <div className="section-header">
                                     <span className="header-text">BASIC INFORMATION</span>
+                                </div>
+                                <div className="about-content">
+                                    <span className="field">Birthday:</span><span className="value">{new Date(user.dob).toDateString()}</span>
+                                </div>
+                                <div className="section-header">
+                                    <span className="header-text">SOCIAL LINKS</span>
                                 </div>
                                 <div className="about-content">
                                     <p>Date of Birth: {new Date(user.dob).toDateString()}</p>
