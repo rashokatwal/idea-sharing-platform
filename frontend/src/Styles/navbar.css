@@ -27,8 +27,8 @@
 }
 
 .searchBar {
-    padding: 10px 15px;
-    border: solid 2px rgba(0, 0, 0, 0.5);
+    padding: 12px 20px;
+    border: solid 2px rgba(0, 0, 0, 0.1);
     border-radius: 50px;
     min-width: 300px;
     font-size: 15px;
@@ -68,6 +68,10 @@
     color: var(--text-color);
     cursor: pointer;
     font-weight: 500;
+}
+
+.navLinks li .notification-icon:hover {
+    color: var(--accent-color);
 }
 
 .navLinks li a:hover {

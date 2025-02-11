@@ -4,11 +4,12 @@
 }
 
 .profile-section-inner {
-    margin: 10px auto 30px auto;
+    margin: 30px auto;
     width: 1080px;
     position: relative;
     text-align: center;
     display: flex;
+    gap: 70px;
 }
 
 .profile-section-inner .left-section {
@@ -18,9 +19,9 @@
 }
 
 .profile-section-inner .left-section .profile-image {
-    height: 170px;
-    border-radius: 50%;
-    margin: 20px 0px;
+    height: 200px;
+    /* border-radius: 50%; */
+    margin-bottom: 20px;
 }
 
 .profile-section-inner .left-section .user-previous-works, .user-skills {
@@ -53,4 +54,46 @@
 .previous-works-list, .skills-list {
     min-height: 200px;
     max-height: 200px;
+}
+
+.profile-section-inner .right-section .fullname {
+    font-family: var(--accent-font);
+    margin: 5px 0;
+    opacity: 0.8;
+    width: fit-content;
+    text-align: left;
+}
+
+.profile-section-inner .right-section .username {
+    font-family: var(--accent-font);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    margin: 5px 0px;
+    opacity: 1;
+    width: fit-content;
+    color: var(--accent-color);
+}
+
+.profile-section-inner .right-section .bio {
+    font-family: var(--accent-font);
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0.6px;
+    font-weight: 500;
+    text-align: left;
+    margin: 20px 0px;
+    opacity: 0.8;
+    width: 60%;
+}
+
+.profile-section-inner .right-section .state-country {
+    display: block;
+    text-align: left;
+    width: fit-content;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.5;
 }

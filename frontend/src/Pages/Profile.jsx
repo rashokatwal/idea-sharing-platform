@@ -1,5 +1,6 @@
 import { useAuthContext } from "../Hooks/useAuthContext";
 import "../Styles/profile.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Profile = () => {
     const userStatus = useAuthContext();
@@ -29,8 +30,10 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="right-section">
-                    <h2 className="user-fullname">{user.fullname}</h2>
-                    <p className="user-username">{user.username}</p>
+                    <h2 className="fullname">{user.fullname}</h2>
+                    <p className="username">{user.username}</p>
+                    <p className="bio">{user.bio}</p>
+                    <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
                 </div>
             </div>
         </div>

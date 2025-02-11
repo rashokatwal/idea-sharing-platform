@@ -34,7 +34,7 @@ const Navbar = () => {
                 <div className="searchBar-outer">
                     <input type="text" className="searchBar" placeholder="Search for Ideas"/>
                     <button className="searchButton">
-                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" size="lg"/>
+                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" size="lg" style={{opacity: 0.5}}/>
                     </button>
                 </div>
                 <ul className="navLinks">
@@ -60,7 +60,7 @@ const Navbar = () => {
                     {userStatus.isAuthenticated && (
                         <div style={{display: 'flex'}}>
                             <li style={{cursor: 'pointer'}}>
-                                <FontAwesomeIcon icon="fa-regular fa-bell" />
+                                <FontAwesomeIcon icon="fa-regular fa-bell" className='notification-icon'/>
                             </li>
                             <li style={{marginLeft: '20px', position: 'relative'}}>
                                 <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} onClick={() => setIsDropdownOpen(true)}/>
