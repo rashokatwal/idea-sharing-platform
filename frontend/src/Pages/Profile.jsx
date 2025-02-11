@@ -13,7 +13,7 @@ const Profile = () => {
                     <img className="profile-image" src={user.profileImage || './src/Assets/default_user.png'} alt="Profile Picture" />
                     <div className="user-previous-works">
                         <div className="section-header">
-                            <span className="header-text">Works</span><span className="header-horizontal-line"></span>
+                            <span className="header-text">WORK</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="previous-works-list">
 
@@ -22,7 +22,7 @@ const Profile = () => {
 
                     <div className="user-skills">
                         <div className="section-header">
-                            <span className="header-text">Skills</span><span className="header-horizontal-line"></span>
+                            <span className="header-text">SKILLS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="skills-list">
                             
@@ -42,6 +42,17 @@ const Profile = () => {
                         <span className="header-horizontal-line">
                             <span className="tab-indicator"></span>
                         </span>
+                        <div className="tabs-body">
+                            <div className="about-tab">
+                                <div className="section-header">
+                                    <span className="header-text">BASIC INFORMATION</span>
+                                </div>
+                                <div className="about-content">
+                                    <p>Date of Birth: {new Date(user.dob).toDateString()}</p>
+                                </div>
+                            </div>
+                            <div className="ideas-tab"></div>
+                        </div>
                     </div>
                 </div>
             </div>

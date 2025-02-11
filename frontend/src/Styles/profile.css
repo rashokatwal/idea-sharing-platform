@@ -28,7 +28,7 @@
     width: 100%;
 }
 
-.profile-section-inner .left-section .section-header {
+.profile-section-inner .section-header {
     color: black;
     opacity: 0.5;
     font-weight: 500;
@@ -38,7 +38,7 @@
     width: 100%;
 }
 
-.profile-section-inner .left-section .header-text {
+.profile-section-inner .header-text {
     font-size: 12px;
 }
 
@@ -93,7 +93,7 @@
     display: block;
     text-align: left;
     width: fit-content;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     opacity: 0.5;
 }
