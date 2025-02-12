@@ -161,3 +161,13 @@
 .profile-tabs .about-tab .about-content .value {
     width: 50%;
 }
+
+.profile-tabs .about-tab .about-content .social-link-icon {
+    margin-right: 15px;
+    color: black;
+    transition: 0.2s;
+}
+
+.profile-tabs .about-tab .about-content .social-link-icon:hover {
+    color: var(--accent-color);
+}

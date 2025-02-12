@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Autocomplete from '../Components/Autocomplete';
-import { categories } from '../Helpers/FilterElements';
+import { categories } from '../Helpers/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Hooks/useLoadingBar';

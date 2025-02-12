@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Autocomplete from './Autocomplete';
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { categories, status, timePeriod, sortBy } from '../Helpers/FilterElements';
+import { categories, status, timePeriod, sortBy } from '../Helpers/constants';
 import '../Styles/filter.css';
 
 const Filter = ({ parentCallback }) => {

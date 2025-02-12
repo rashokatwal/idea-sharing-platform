@@ -1,6 +1,6 @@
 import '../Styles/cards.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { categoryColors } from '../Helpers/FilterElements';
+import { categoryColors } from '../Helpers/constants';
 import { dateTimeConverter } from '../Helpers/dateUtil';
 
 const CardComponent = ({ idea }) => {

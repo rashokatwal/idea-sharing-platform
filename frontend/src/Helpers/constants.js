@@ -135,6 +135,16 @@ const categoryColors = {
     "Cultural Exploration": "#E09F3E", // Tawny
 };
 
+const socialMediaIcons = {
+    facebook: "fa-facebook",
+    instagram: "fa-instagram",
+    linkedin: "fa-linkedin",
+    github: "fa-github",
+    discord: "fa-discord",
+    youtube: "fa-youtube",
+    twitter: "fa-x-twitter"
+}
+
 // const popularity = ["Most Liked", "Most Commented", "Trending"];
 
 const status = ["Open for Collaboration", "In Progress", "Completed"];
@@ -143,4 +153,4 @@ const timePeriod = ["Today", "Last 7 Days", "Last 30 Days"];
 
 const sortBy = ["Most Liked", "Most Commented", "Trending", "Recently Posted", "Recently Updated"]
   
-export { categories, categoryColors, status, timePeriod, sortBy }
+export { categories, categoryColors, status, timePeriod, sortBy, socialMediaIcons }

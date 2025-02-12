@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { categoryColors } from "../Helpers/FilterElements";
+import { categoryColors } from "../Helpers/constants";
 import { dateTimeConverter } from '../Helpers/dateUtil';
 import api from '../Helpers/api';
 
