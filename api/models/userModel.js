@@ -154,4 +154,12 @@ userSchema.statics.updateDetails = async function (updates, id) {
     return user;
 }
 
+userSchema.statics.getDetails = async function (username) {
+    const user = await this.findOne({username});
+    const updatedUserDetails = user.toObject();
+    delete updatedUserDetails.password;
+
+    return updatedUserDetails;
+}
+
 module.exports = mongoose.model('User', userSchema);

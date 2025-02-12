@@ -5,17 +5,39 @@ import { socialMediaIcons } from "../Helpers/constants";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from "react-router-dom";
+import api from "../Helpers/api";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
     const location = useLocation();
     const username = location.pathname.split('/').pop();
+    const userStatus = useAuthContext();
+    const [ user, setUser ] = useState(null);
+    const [ editable, setEditable ] = useState(null);
 
-    const fetchUserDetails = (username) => {
+    const fetchUserDetails = async () => {
         console.log(username);
+        await api
+         .get(`/user/${username}`)
+         .then((response) => {
+            console.log(response.data);
+            setUser(response.data);
+         })
+         .catch((error) => console.log(error));
     }
 
-    const userStatus = useAuthContext();
-    const user = username == userStatus.user?.username ? userStatus.user : fetchUserDetails(username);
+    useEffect(() => {
+        if (userStatus.user != null) {
+            if (username === userStatus.user?.username) {
+                setUser(userStatus.user);
+                setEditable(true);
+            }
+            else {
+                fetchUserDetails();
+                setEditable(false);
+            }
+        }
+    }, [userStatus]);
 
     return (
         <div className="profile-section-outer">
@@ -43,7 +65,7 @@ const Profile = () => {
                 <div className="right-section">
                     <h2 className="fullname">{user?.fullname || <Skeleton width={"200px"}/>}</h2> 
                     <p className="username">{user?.username || <Skeleton width={"100px"}/>}</p>
-                    <p className="bio">{user?.bio || <Skeleton count={3} width={"500px"}/>}</p>
+                    <p className="bio">{user?.bio != "" ? user?.bio || <Skeleton count={3} width={"500px"} /> : ""}</p>
                     <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
                     <div className="profile-tabs">
                         <div className="tabs-header">
