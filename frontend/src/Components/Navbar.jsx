@@ -65,7 +65,7 @@ const Navbar = () => {
                             <li style={{marginLeft: '20px', position: 'relative'}}>
                                 <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} onClick={() => setIsDropdownOpen(true)}/>
                                 <div className="dropdown-navbar" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>    
-                                    <Link to='/profile'>
+                                    <Link to={`/profile/${userStatus.user.username}`}>
                                         <div className='user-details'>
                                             <img className="author-avatar" src={userStatus.user.profileImage == "" ? '/src/Assets/default_user.png' : userStatus.user.profileImage} style={{height: '50px', width: '50px'}}/>
                                             <div style={{marginLeft: '10px'}}>

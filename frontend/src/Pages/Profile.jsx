@@ -4,16 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { socialMediaIcons } from "../Helpers/constants";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useLocation } from "react-router-dom";
 
 const Profile = () => {
+    const location = useLocation();
+    const username = location.pathname.split('/').pop();
+
+    const fetchUserDetails = (username) => {
+        console.log(username);
+    }
+
     const userStatus = useAuthContext();
-    const user = userStatus.user;
+    const user = username == userStatus.user?.username ? userStatus.user : fetchUserDetails(username);
 
     return (
         <div className="profile-section-outer">
             <div className="profile-section-inner">
                 <div className="left-section">
-                    <img className="profile-image" src={ user ? user.profileImage : './src/Assets/default_user.png'} alt="Profile Picture" />
+                    <img className="profile-image" src={ user?.profileImage || '../src/Assets/default_user.png'} alt="Profile Picture" />
                     <div className="user-previous-works">
                         <div className="section-header">
                             <span className="header-text">WORK</span><span className="header-horizontal-line"></span>
@@ -33,9 +41,9 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="right-section">
-                    <h2 className="fullname">{user ? user.fullname : <Skeleton />}</h2> 
-                    <p className="username">{user ? user.username : <Skeleton />}</p>
-                    <p className="bio">{user ? user.bio : <Skeleton count={3}/>}</p>
+                    <h2 className="fullname">{user?.fullname || <Skeleton width={"200px"}/>}</h2> 
+                    <p className="username">{user?.username || <Skeleton width={"100px"}/>}</p>
+                    <p className="bio">{user?.bio || <Skeleton count={3} width={"500px"}/>}</p>
                     <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
                     <div className="profile-tabs">
                         <div className="tabs-header">
@@ -51,34 +59,34 @@ const Profile = () => {
                                     <span className="header-text">CONTACT INFORMATION</span>
                                 </div>
                                 <div className="about-content">
-                                    <span className="field">Email:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user ? user.email : <Skeleton />}</span>
+                                    <span className="field">Email:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user?.email || <Skeleton />}</span>
                                 </div>
-                                {user ? user.address == "" ? 
+                                {user?.address == "" ? 
                                     null : 
                                     <div className="about-content">
-                                        <span className="field">Address:</span><span className="value">{user ? user.address : <Skeleton />}</span>
+                                        <span className="field">Address:</span><span className="value">{user?.address || <Skeleton />}</span>
                                     </div>
-                                    : <Skeleton count={2} inline={true} width={"100px"}/>
+                                    || <Skeleton width={"100px"}/>
                                 }
-                                {user ? user.phoneNumber == "" ? 
+                                {user?.phoneNumber == "" ? 
                                     null : 
                                     <div className="about-content">
-                                        <span className="field">Phone:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user ? user.phoneNumber : <Skeleton />}</span>
+                                        <span className="field">Phone:</span><span className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user?.phoneNumber || <Skeleton />}</span>
                                     </div>
-                                    : <Skeleton count={2} inline={true} width={"100px"}/>
+                                    || <Skeleton width={"100px"}/>
                                 }
-                                {user ? user.portfolio == "" ? 
+                                {user?.portfolio == "" ? 
                                     null : 
                                     <div className="about-content">
-                                        <span className="field">Website:</span><a href={user.portfolio} target="_blank" className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user ? user.portfolio : <Skeleton />}</a>
+                                        <span className="field">Website:</span><a href={user?.portfolio} target="_blank" className="value" style={{cursor: "pointer", color: "var(--accent-color)"}}>{user?.portfolio || <Skeleton />}</a>
                                     </div>
-                                    : <Skeleton count={2} inline={true} width={"100px"}/>
+                                    || <Skeleton width={"100px"}/>
                                 }
                                 <div className="section-header">
                                     <span className="header-text">BASIC INFORMATION</span>
                                 </div>
                                 <div className="about-content">
-                                    <span className="field">Birthday:</span><span className="value">{user ? new Date(user.dob).toDateString() : <Skeleton />}</span>
+                                    <span className="field">Birthday:</span><span className="value">{new Date(user?.dob).toDateString() || <Skeleton />}</span>
                                 </div>
                                 <div className="section-header">
                                     <span className="header-text">SOCIAL LINKS</span>
@@ -94,7 +102,7 @@ const Profile = () => {
                                                 </a>
                                             </div>
                                     })
-                                : <Skeleton count={5} height={"15px" }width={"15px"} inline={true}/>}
+                                : <Skeleton count={4} height={"25px" }width={"25px"} inline={true} style={{marginRight: "15px"}}/>}
                                 </div>
                             </div>
                             <div className="ideas-tab"></div>

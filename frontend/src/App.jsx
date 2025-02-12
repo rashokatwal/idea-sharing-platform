@@ -67,7 +67,7 @@ const AppContent = () => {
         <Route element={userStatus.isAuthenticated ? userStatus.user.profileCompleted ? <Outlet /> : <Navigate to="/completeprofile" replace/> : <Outlet />}>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/explore" element={<Explore />} />
-          <Route exact path="/profile" element={<Profile />} />
+          {location.pathname.includes("profile/") && <Route path="*" element={<Profile />} />}
           {/* <Route exact path="/completion" element={<CompletionMessage />} /> */}
           <Route exact path="/signin" element={!userStatus.isAuthenticated ? <SignIn /> : <Navigate to="/"/>} />
           <Route exact path="/signup" element={!userStatus.isAuthenticated ? <SignUp /> : <Navigate to="/"/>} />
