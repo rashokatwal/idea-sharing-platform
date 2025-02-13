@@ -55,10 +55,6 @@ const userSchema = new Schema({
     socialLinks: {
         type: Object,
         default: {
-            instagram: '',
-            twitter: '',
-            linkedin: '',
-            github: ''
         }
     }
 })

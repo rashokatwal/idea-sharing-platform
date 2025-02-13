@@ -74,6 +74,10 @@ const Navbar = () => {
                                             </div>
                                         </div>  
                                     </Link>   
+                                    <Link to="/ideaeditor">
+                                        <button className="primary-button" style={{width: "100%", margin: "10px 0px", fontSize: "16px"}}>Post an Idea</button>
+                                    </Link>
+                                    
                                     <ul className="dropdown-list">
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-lightbulb" className='icon'/><span className='text'>My Ideas</span></li>
                                         <li className="dropdown-item"><FontAwesomeIcon icon="fa-regular fa-bookmark" className='icon'/><span className='text'>Saved Ideas</span></li>
@@ -83,11 +87,11 @@ const Navbar = () => {
                                     </ul>
                                 </div>
                             </li>
-                            <li style={{marginLeft: '10px'}}>
+                            {/* <li style={{marginLeft: '10px'}}>
                                 <Link to="/ideaeditor">
                                     <button className="primary-button">Post Idea</button>
                                 </Link>
-                            </li>
+                            </li> */}
                         </div>)}
                 </ul>
             </div>
