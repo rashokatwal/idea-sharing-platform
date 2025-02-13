@@ -14,6 +14,7 @@ const Profile = () => {
     const userStatus = useAuthContext();
     const [ user, setUser ] = useState(null);
     const [ editable, setEditable ] = useState(null);
+    const [ activeTab, setActiveTab ] = useState("about");
 
     const fetchUserDetails = async () => {
         console.log(username);
@@ -44,6 +45,11 @@ const Profile = () => {
         }
     }, [userStatus, location.pathname]);
 
+    const handleTabSelection = (tab) => {
+        console.log("tab");
+        setActiveTab(tab);
+    }
+
     return (
         <div className="profile-section-outer">
             <div className="profile-section-inner">
@@ -54,7 +60,7 @@ const Profile = () => {
                             <span className="header-text">WORKS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="previous-works-list">
-                            <span className="empty-message">Works Not Listed</span>
+                            {editable ? <button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Works</button> : <span className="empty-message">Works Not Listed</span>}
                         </div>
                     </div>
 
@@ -63,23 +69,23 @@ const Profile = () => {
                             <span className="header-text">SKILLS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="skills-list">
-                            <span className="empty-message">Skills Not Listed</span>
+                            {editable ? <button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Skills</button> : <span className="empty-message">Skills Not Listed</span>}
                         </div>
                     </div>
                 </div>
                 <div className="right-section">
-                    <h2 className="fullname">{user?.fullname || <Skeleton width={"200px"}/>}</h2> 
+                    <h2 className="fullname">{user?.fullname || <Skeleton width={"200px"}/>}</h2>
                     <p className="username">{user?.username || <Skeleton width={"100px"}/>}</p>
                     <p className="bio">{user?.bio != "" ? user?.bio || <Skeleton count={3} width={"500px"} /> : ""}</p>
                     <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
                     <button className="primary-button send-message-button"><FontAwesomeIcon icon="fa-solid fa-message" /> Send Message</button>
                     <div className="profile-tabs">
                         <div className="tabs-header">
-                            <span className="header-elements"><FontAwesomeIcon icon="fa-solid fa-user" /> About</span>
-                            <span className="header-elements"><FontAwesomeIcon icon="fa-solid fa-lightbulb" /> Ideas</span>
+                            <div className={`header-elements ${activeTab == "about" ? "active" : ""}`} onClick={() => handleTabSelection("about")}><FontAwesomeIcon icon="fa-solid fa-user" /> About</div>
+                            <div className={`header-elements ${activeTab == "ideas" ? "active" : ""}`} onClick={() => handleTabSelection("ideas")}><FontAwesomeIcon icon="fa-solid fa-lightbulb" /> Ideas</div>
                         </div>
                         <span className="header-horizontal-line">
-                            <span className="tab-indicator"></span>
+                            <span className="tab-indicator" style={{transform: activeTab == "about" ? "" : "translateX(150%)"}}></span>
                         </span>
                         <div className="tabs-body">
                             <div className="about-tab">

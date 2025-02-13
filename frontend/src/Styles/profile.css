@@ -140,6 +140,11 @@
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
+    opacity: 0.6;
+}
+
+.profile-tabs .tabs-header .active {
+    opacity: 1;
 }
 
 .profile-tabs .tab-indicator {
@@ -150,6 +155,7 @@
     bottom: -1.5px;
     width: 70px;
     background: var(--accent-color);
+    transition: 0.5s;
 }
 
 .profile-tabs .tabs-body {

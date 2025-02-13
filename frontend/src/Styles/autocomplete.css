@@ -51,6 +51,6 @@
   }
   
   .autocomplete-suggestion:hover {
-    background-color: var(--accent-color);
-    color: #fff
+    background-color: #E3F2FD;
+    color: var(--accent-color);
   }
