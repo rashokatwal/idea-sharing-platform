@@ -16,6 +16,8 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+    background-color: var(--background-color);
+    z-index: 99;
 }
 
 .profile-section-inner .left-section .profile-image {
@@ -141,6 +143,7 @@
     font-size: 15px;
     font-weight: 500;
     opacity: 0.6;
+    transition: 0.3s;
 }
 
 .profile-tabs .tabs-header .active {
@@ -155,15 +158,22 @@
     bottom: -1.5px;
     width: 70px;
     background: var(--accent-color);
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .profile-tabs .tabs-body {
     margin: 30px 0px;
     width: 100%;
+    position: relative;
 }
 
-.profile-tabs .about-tab .section-header {
+.profile-tabs .about-tab, .ideas-tab {
+    transition: 0.2s opacity;
+    position: absolute;
+    min-height: 500px;
+}
+
+.profile-tabs .section-header {
     margin: 35px 0px;
 }
 
