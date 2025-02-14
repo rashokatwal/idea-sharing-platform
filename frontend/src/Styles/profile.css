@@ -5,7 +5,7 @@
 
 .profile-section-inner {
     margin: 30px auto;
-    width: 1080px;
+    max-width: 1080px;
     position: relative;
     text-align: center;
     display: flex;
@@ -114,6 +114,45 @@
     opacity: 0.5;
 }
 
+.profile-section-inner .right-section .profile-options {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.profile-section-inner .right-section .profile-options .dropdown {
+    right: 20%;
+    /* position: absolute; */
+    background-color: var(--background-color);
+    padding: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.profile-section-inner .right-section .profile-options .dropdown .dropdown-list {
+    position: relative;
+    width: fit-content;
+    box-shadow: none;
+    z-index: 0;
+}
+
+.profile-section-inner .right-section .profile-options .dropdown .dropdown-list li {
+    min-width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.profile-section-inner .right-section .profile-options .dropdown .report:hover {
+    background-color: #ECDFDE;
+    color: rgb(219, 6, 6);
+}
+
 .profile-section-inner .right-section .send-message-button {
     display: flex;
     align-items: center;
@@ -168,8 +207,8 @@
 }
 
 .profile-tabs .about-tab, .ideas-tab {
-    transition: 0.2s opacity;
-    position: absolute;
+    transition: 0.2s;
+    /* position: absolute; */
     min-height: 500px;
 }
 

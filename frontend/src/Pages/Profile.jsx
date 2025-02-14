@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from "react-router-dom";
 import api from "../Helpers/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const Profile = () => {
     const location = useLocation();
@@ -15,6 +15,9 @@ const Profile = () => {
     const [ user, setUser ] = useState(null);
     const [ editable, setEditable ] = useState(null);
     const [ activeTab, setActiveTab ] = useState("about");
+    const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
+    
+    const dropdownRef = useRef(null);
 
     const fetchUserDetails = async () => {
         console.log(username);
@@ -45,6 +48,17 @@ const Profile = () => {
         }
     }, [userStatus, location.pathname]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [])
+
     const handleTabSelection = (tab) => {
         console.log("tab");
         setActiveTab(tab);
@@ -74,6 +88,16 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="right-section">
+                    <div className="profile-options">
+                        <FontAwesomeIcon icon="fa-solid fa-ellipsis" size="lg" onClick={() => setIsDropdownOpen(true)}/>
+                        <div className="dropdown" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>
+                            <ul className="dropdown-list">
+                                <li className="dropdown-item">Edit Profile</li>
+                                <li className="dropdown-item">Copy Profile Link</li>
+                                <li className="dropdown-item report">Report User</li>
+                            </ul>
+                        </div>
+                    </div>
                     <h2 className="fullname">{user?.fullname || <Skeleton width={"200px"}/>}</h2>
                     <p className="username">{user?.username || <Skeleton width={"100px"}/>}</p>
                     <p className="bio">{user?.bio != "" ? user?.bio || <Skeleton count={3} width={"500px"} /> : ""}</p>
@@ -88,7 +112,7 @@ const Profile = () => {
                             <span className="tab-indicator" style={{transform: activeTab == "about" ? "" : "translateX(150%)"}}></span>
                         </span>
                         {/* <div className="tabs-body"> */}
-                            <div className="about-tab" style={{opacity: activeTab == "about" ? "1" : "0", zIndex: activeTab == "about" ? "99" : "-99"}}>
+                            <div className="about-tab" style={{opacity: activeTab == "about" ? "1" : "0", zIndex: activeTab == "about" ? "99" : "-99", position: activeTab == "about" ? "relative" : "absolute"}}>
                                 <div className="section-header">
                                     <span className="header-text">CONTACT INFORMATION</span>
                                 </div>
@@ -143,7 +167,7 @@ const Profile = () => {
                                     }
                                 </div>
                             </div>
-                            <div className="ideas-tab" style={{opacity: activeTab == "ideas" ? "1" : "0", zIndex: activeTab == "ideas" ? "99" : "-99"}}>
+                            <div className="ideas-tab" style={{opacity: activeTab == "ideas" ? "1" : "0", zIndex: activeTab == "ideas" ? "99" : "-99", position: activeTab == "ideas" ? "relative" : "absolute"}}>
                                 <div className="section-header">
                                     <span className="header-text">IDEAS</span>
                                 </div>
