@@ -112,7 +112,7 @@ const Profile = () => {
                             <span className="tab-indicator" style={{transform: activeTab == "about" ? "" : "translateX(150%)"}}></span>
                         </span>
                         {/* <div className="tabs-body"> */}
-                            <div className="about-tab" style={{opacity: activeTab == "about" ? "1" : "0", zIndex: activeTab == "about" ? "99" : "-99", position: activeTab == "about" ? "relative" : "absolute"}}>
+                            <div className="about-tab" style={{display: activeTab == "about" ? "block" : "none"}}>
                                 <div className="section-header">
                                     <span className="header-text">CONTACT INFORMATION</span>
                                 </div>
@@ -167,7 +167,7 @@ const Profile = () => {
                                     }
                                 </div>
                             </div>
-                            <div className="ideas-tab" style={{opacity: activeTab == "ideas" ? "1" : "0", zIndex: activeTab == "ideas" ? "99" : "-99", position: activeTab == "ideas" ? "relative" : "absolute"}}>
+                            <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
                                 <div className="section-header">
                                     <span className="header-text">IDEAS</span>
                                 </div>
