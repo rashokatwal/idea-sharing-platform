@@ -94,7 +94,7 @@ const Profile = () => {
                         <div className="dropdown" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>
                             <ul className="dropdown-list">
                                 {/* <li className="dropdown-item">Edit Profile</li> */}
-                                <EditProfile />
+                                <EditProfile userDetails={user}/>
                                 <li className="dropdown-item">Copy Profile Link</li>
                                 <li className="dropdown-item report">Report User</li>
                             </ul>
@@ -184,7 +184,7 @@ const Profile = () => {
 
 export default Profile;
 
-const EditProfile = () => {
+const EditProfile = ({userDetails}) => {
 
     return (
         <Popup trigger={<li className="dropdown-item">Edit Profile</li>}
@@ -194,11 +194,11 @@ const EditProfile = () => {
             <h3 className="header">Edit Profile</h3>
             <div className="edit-profile">
                 <p>Full Name</p>
-                <input type="text" placeholder="Full Name" />
+                <input value={userDetails.fullname} type="text" placeholder="Full Name" />
                 <p>Email</p>
                 <input type="email" placeholder="Email" />
                 <p>Bio</p>
-                <textarea></textarea>
+                <textarea style={{height: "150px", marginBottom: "10px"}}></textarea>
                 <p>Phone Number</p>
                 <input type="number" placeholder="Phone Number" />
                 <p>Address</p>
@@ -207,7 +207,8 @@ const EditProfile = () => {
                 <input type="text" placeholder="Portfolio" />
             </div>
             <div className="bottom-buttons">
-                <button className="primary-button ">Save</button>
+                <button className="primary-button">Save</button>
+                <button className="secondary-button" style={{border: "none"}}>Close</button>
             </div>
         </Popup>
     )
