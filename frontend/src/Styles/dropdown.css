@@ -9,13 +9,15 @@
 
 .dropdown-input {
     padding: 10px 0px 10px 20px;
-    border: none;
+    border: none !important;
     border-radius: 50px;
     color: #000;
     font-size: 15px;
     outline: none;
     letter-spacing: 0.5px;
     cursor: pointer;
+    max-width: 97%;
+    margin: 0 !important;
 }
 
 .dropdown-list {

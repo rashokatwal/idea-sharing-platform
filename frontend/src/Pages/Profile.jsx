@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from "react";
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler'
 import { useLoadingBar } from "../Hooks/useLoadingBar";
+import Dropdown from "../Components/Dropdown";
 
 const Profile = () => {
     const location = useLocation();
@@ -78,7 +79,7 @@ const Profile = () => {
                             <span className="header-text">WORKS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="previous-works-list">
-                            {editable ? <button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Works</button> : <span className="empty-message">Works Not Listed</span>}
+                            {editable ? <AddWork /> : <span className="empty-message">Works Not Listed</span>}
                         </div>
                     </div>
 
@@ -87,7 +88,7 @@ const Profile = () => {
                             <span className="header-text">SKILLS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="skills-list">
-                            {editable ? <button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Skills</button> : <span className="empty-message">Skills Not Listed</span>}
+                            {editable ? <AddSkill /> : <span className="empty-message">Skills Not Listed</span>}
                         </div>
                     </div>
                 </div>
@@ -107,7 +108,7 @@ const Profile = () => {
                     <p className="username">{user?.username || <Skeleton width={"100px"}/>}</p>
                     <p className="bio">{user?.bio != "" ? user?.bio || <Skeleton count={3} width={"500px"} /> : ""}</p>
                     <span className="state-country"><FontAwesomeIcon icon="fa-solid fa-location-dot" /> Kathmandu, Nepal</span>
-                    <button className="primary-button send-message-button"><FontAwesomeIcon icon="fa-solid fa-message" /> Send Message</button>
+                    {!editable && <button className="primary-button send-message-button"><FontAwesomeIcon icon="fa-solid fa-message" /> Send Message</button>}
                     <div className="profile-tabs">
                         <div className="tabs-header">
                             <div className={`header-elements ${activeTab == "about" ? "active" : ""}`} onClick={() => handleTabSelection("about")}><FontAwesomeIcon icon="fa-solid fa-user" /> About</div>
@@ -154,7 +155,7 @@ const Profile = () => {
                                 <div className="section-header">
                                     <span className="header-text">SOCIAL LINKS</span>
                                 </div>
-                                <div className="about-content">
+                                <div className="about-content" style={{alignItems: "center"}}>
                                     {user ? 
                                         user.socialLinks != null ?
                                             Object.keys(user.socialLinks).map((platform, index) => {
@@ -167,9 +168,10 @@ const Profile = () => {
                                                         </a>
                                                     </div>
                                             })
-                                            : <span className="empty-message">No Social Links</span>
+                                            : editable ? <AddSocialLink /> : <span className="empty-message">No Social Links</span>
                                         : <Skeleton count={4} height={"25px" }width={"25px"} inline={true} style={{marginRight: "15px"}}/>
                                     }
+                                    {editable && <AddSocialLink />}
                                 </div>
                             </div>
                             <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
@@ -197,13 +199,17 @@ const EditProfile = ({user, loadingBar}) => {
         portfolio: user?.portfolio || "",
     })
 
+    const [ emailError, setEmailError ] = useState("");
+
+    const [ phoneError, setPhoneError ] = useState("");
+
     const {dispatch} = useAuthContext();
 
     const handleChanges = (field, value) => {
         setUserDetails({...userDetails, [field]: value });
     }
 
-    const updateUserDetails = async () => {
+    const updateUserDetails = async (close) => {
         loadingBar.current.continuousStart();
         await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
                         userDetails
@@ -212,38 +218,48 @@ const EditProfile = ({user, loadingBar}) => {
                         let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
                         localStorage.setItem("user", JSON.stringify(updatedUserDetails));
                         dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+                        setEmailError("");
+                        setPhoneError("");
                         loadingBar.current.complete();
+                        close();
                     })
                     .catch((error) => {
-                        console.log(error);
+                        if (error.response.data.includes('email')) {
+                            setEmailError(error.response.data);
+                        }
+                        else if (error.response.data.includes('phone')) {
+                            setPhoneError(error.response.data);
+                        }
                         loadingBar.current.complete();
                     });
     }
 
     return (
-        <Popup trigger={<li className="dropdown-item">Edit Profile</li>}
+        <Popup trigger={<li className="dropdown-item" onClick={() => {setEmailError("");setPhoneError("");}}>Edit Profile</li>}
             modal 
             contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
         >
             {(close) => (
                 <div>
                     <h3 className="header">Edit Profile</h3>
-                    <div className="edit-profile">
+                    <div className="edit-profile popup-form">
                         <p>Full Name</p>
                         <input value={userDetails?.fullname} type="text" placeholder="Full Name" onChange={(e) => handleChanges("fullname", e.target.value)}/>
                         <p>Email</p>
                         <input value={userDetails?.email} type="email" placeholder="Email" onChange={(e) => handleChanges("email", e.target.value)}/>
+                        <p className="error" style={{padding: emailError ? '10px' : '0px'}}>{emailError}</p>
                         <p>Bio</p>
                         <textarea value={userDetails?.bio} style={{height: "150px", marginBottom: "10px"}} onChange={(e) => handleChanges("bio", e.target.value)}></textarea>
                         <p>Phone Number</p>
                         <input value={userDetails?.phoneNumber} type="number" placeholder="Phone Number" onChange={(e) => handleChanges("phoneNumber", e.target.value)}/>
+                        <p className="error" style={{padding: phoneError ? '10px' : '0px'}}>{phoneError}</p>
                         <p>Address</p>
                         <input value={userDetails?.address} type="text" placeholder="Address" onChange={(e) => handleChanges("address", e.target.value)}/>
                         <p>Portfolio</p>
                         <input value={userDetails?.portfolio} type="text" placeholder="Portfolio" onChange={(e) => handleChanges("portfolio", e.target.value)}/>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" onClick={updateUserDetails}>Save</button>
+                        <button className="primary-button" onClick={() => updateUserDetails(close)}>Save</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
@@ -251,3 +267,82 @@ const EditProfile = ({user, loadingBar}) => {
         </Popup>
     )
 };
+
+const AddWork = () => {
+    return (
+        <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Work</button>}
+            modal
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            {(close) => (
+                <div>
+                    <h3 className="header">Add Work</h3>
+                    <div className="add-work popup-form">
+                        <p>Title</p>
+                        <input type="text" placeholder="e.g. My AI Chatbot Project"/>
+                        <p>Description (One Short Line)</p>
+                        <input type="text" placeholder="e.g. Built an AI-powered chatbot using GPT-4"/>
+                        <p>Link (If any)</p>
+                        <input type="text" placeholder="e.g. https://github.com/myproject"/>
+                    </div>
+                    <div className="bottom-buttons">
+                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
+                    </div>
+                </div>
+            )}
+        </Popup>
+    )
+}
+
+
+const AddSkill = () => {
+    return (
+        <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Skill</button>}
+            modal
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            {(close) => (
+                <div>
+                    <h3 className="header">Add Skill</h3>
+                    <div className="add-work popup-form">
+                        <p>Skill Name</p>
+                        <input type="text" placeholder="e.g. Python"/>
+                        <p>Experience</p>
+                        <input type="text" placeholder="e.g. 3+ Years"/>
+                    </div>
+                    <div className="bottom-buttons">
+                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
+                    </div>
+                </div>
+            )}
+        </Popup>
+    )
+}
+
+const AddSocialLink = () => {
+    const handleChange = () => {}
+    return (
+        <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Link</button>}
+            modal
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            {(close) => (
+                <div>
+                    <h3 className="header">Add Social Link</h3>
+                    <div className="add-work popup-form">
+                        <p>PlatForm</p>
+                        <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. LinkedIn" } suggestions={ ["Facebook", "Instagram", "Linkedin", "Github", "Discord", "Youtube", "Twitter"] } onChange={handleChange} clearButton={false}/>
+                        <p>Link</p>
+                        <input type="text" placeholder="e.g. https://www.linkedin.com/in/"/>
+                    </div>
+                    <div className="bottom-buttons">
+                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
+                    </div>
+                </div>
+            )}
+        </Popup>
+    )
+}

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../Styles/dropdown.css';
 
-const Dropdown = ({ suggestions, placeholder, onChange }) => {
+const Dropdown = ({ suggestions, placeholder, onChange, clearButton, listStyle }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -42,9 +42,9 @@ const Dropdown = ({ suggestions, placeholder, onChange }) => {
                  readOnly= { true }
                 />
                 <FontAwesomeIcon icon="fa-solid fa-sort-down" style={{marginBottom: "3px"}}/>
-                <FontAwesomeIcon icon="fa-solid fa-xmark" style={{ marginLeft: "10px", opacity: '0.6'}} size='xs' onClick={() => handleSelect("")}/>
+                {clearButton && <FontAwesomeIcon icon="fa-solid fa-xmark" style={{ marginLeft: "10px", opacity: '0.6'}} size='xs' onClick={() => handleSelect("")}/>}
             </div>
-            <ul className="dropdown-list">
+            <ul className="dropdown-list" style={listStyle}>
                 {filteredSuggestions.map((suggestion, index) => (
                 <li key={index} className="dropdown-item" onClick={() => handleSelect(suggestion)}>
                     {suggestion}

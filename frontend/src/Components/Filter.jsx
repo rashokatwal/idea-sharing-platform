@@ -54,9 +54,9 @@ const Filter = ({ parentCallback }) => {
         <div className="filter-outer">
             <div className="filter-inner">
                 <Autocomplete suggestions={ categories } placeholder={ "Categories" } onChange={handleCategory} value={""}/>
-                <Dropdown placeholder={ "Status" } suggestions={ status } onChange={handleStatus}/>
-                <Dropdown placeholder={ "Time Period" } suggestions={ timePeriod } onChange={handleTimePeriod}/>
-                <Dropdown placeholder={ "Sort By" } suggestions={ sortBy } onChange={handleSort}/>
+                <Dropdown placeholder={ "Status" } suggestions={ status } onChange={handleStatus} clearButton={true}/>
+                <Dropdown placeholder={ "Time Period" } suggestions={ timePeriod } onChange={handleTimePeriod} clearButton={true}/>
+                <Dropdown placeholder={ "Sort By" } suggestions={ sortBy } onChange={handleSort} clearButton={true}/>
                 <div className="view-type">
                     <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "grid"})}/>
                     <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "list"})}/>

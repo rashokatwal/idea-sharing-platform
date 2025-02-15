@@ -213,6 +213,7 @@
     transition: 0.2s;
     position: absolute;
     min-height: 500px;
+    width: 100%;
 }
 
 .profile-tabs .section-header {
@@ -300,21 +301,22 @@
     gap: 10px;
 }
 
-.edit-profile {
-    margin: 0px 35px
+.popup-form {
+    margin: 0px 35px;
+    position: relative;
 }
 
 .popup-content::-webkit-scrollbar {
     display: none;
 }
 
-.edit-profile p {
+.popup-form p {
     font-size: 13px;
     opacity: 0.8;
     margin-bottom: 10px
 }
 
-.edit-profile input, textarea {
+.popup-form input, textarea {
     width: 100%;
     padding: 10px 15px;
     border: 2px solid rgba(0, 0, 0, 0.2);
@@ -329,6 +331,6 @@
     margin-bottom: 10px;
 }
 
-.edit-profile input:focus {
+.popup-from input:focus {
     outline: solid 3px var(--accent-color) !important;
 }
