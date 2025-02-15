@@ -252,3 +252,72 @@
 .profile-tabs .about-tab .about-content .social-link-icon:hover {
     color: var(--accent-color);
 }
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.popup-content {
+    background-color: var(--background-color);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    min-width: 40vw;
+    max-height: 80vh;
+    overflow-y: scroll;
+    border-radius: 10px;
+    transition: 0.5s;
+    /* animation: fadeIn 0s ease-in-out; */
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+.popup-content .header {
+    color: var(--accent-color);
+    font-family: var(--accent-font);
+    position: sticky;
+    top: 0px;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px 20px
+}
+
+.popup-content .bottom-buttons {
+    position: sticky;
+    bottom: 0px;
+    background-color: var(--background-color);
+    padding: 20px 20px
+}
+
+.edit-profile {
+    margin: 0px 30px
+}
+
+.edit-profile p {
+    font-size: 15px;
+}
+
+.edit-profile input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px !important;
+    font-size: 13px; 
+    outline: none;
+    letter-spacing: 0.5px;
+    font-family: 'arial';
+    resize: none;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.edit-profile input:focus {
+    outline: solid 3px var(--accent-color) !important;
+}

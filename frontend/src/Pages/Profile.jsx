@@ -7,6 +7,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from "react-router-dom";
 import api from "../Helpers/api";
 import { useEffect, useState, useRef } from "react";
+import Popup from 'reactjs-popup';
 
 const Profile = () => {
     const location = useLocation();
@@ -92,7 +93,8 @@ const Profile = () => {
                         <FontAwesomeIcon icon="fa-solid fa-ellipsis" size="lg" onClick={() => setIsDropdownOpen(true)}/>
                         <div className="dropdown" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>
                             <ul className="dropdown-list">
-                                <li className="dropdown-item">Edit Profile</li>
+                                {/* <li className="dropdown-item">Edit Profile</li> */}
+                                <EditProfile />
                                 <li className="dropdown-item">Copy Profile Link</li>
                                 <li className="dropdown-item report">Report User</li>
                             </ul>
@@ -181,3 +183,32 @@ const Profile = () => {
 }
 
 export default Profile;
+
+const EditProfile = () => {
+
+    return (
+        <Popup trigger={<li className="dropdown-item">Edit Profile</li>}
+            modal 
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            <h3 className="header">Edit Profile</h3>
+            <div className="edit-profile">
+                <p>Full Name</p>
+                <input type="text" placeholder="Full Name" />
+                <p>Email</p>
+                <input type="email" placeholder="Email" />
+                <p>Bio</p>
+                <textarea></textarea>
+                <p>Phone Number</p>
+                <input type="number" placeholder="Phone Number" />
+                <p>Address</p>
+                <input type="text" placeholder="Address" />
+                <p>Portfolio</p>
+                <input type="text" placeholder="Portfolio" />
+            </div>
+            <div className="bottom-buttons">
+                <button className="primary-button ">Save</button>
+            </div>
+        </Popup>
+    )
+};
