@@ -196,15 +196,15 @@ const EditProfile = ({userDetails}) => {
                 <p>Full Name</p>
                 <input value={userDetails.fullname} type="text" placeholder="Full Name" />
                 <p>Email</p>
-                <input type="email" placeholder="Email" />
+                <input value={userDetails.email} type="email" placeholder="Email" />
                 <p>Bio</p>
-                <textarea style={{height: "150px", marginBottom: "10px"}}></textarea>
+                <textarea value={userDetails.bio} style={{height: "150px", marginBottom: "10px"}}></textarea>
                 <p>Phone Number</p>
-                <input type="number" placeholder="Phone Number" />
+                <input value={userDetails.phoneNumber} type="number" placeholder="Phone Number" />
                 <p>Address</p>
-                <input type="text" placeholder="Address" />
+                <input value={userDetails.address} type="text" placeholder="Address" />
                 <p>Portfolio</p>
-                <input type="text" placeholder="Portfolio" />
+                <input value={userDetails.portfolio} type="text" placeholder="Portfolio" />
             </div>
             <div className="bottom-buttons">
                 <button className="primary-button">Save</button>

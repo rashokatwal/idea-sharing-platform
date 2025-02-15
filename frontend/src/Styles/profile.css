@@ -286,7 +286,9 @@
     top: 0px;
     background-color: var(--background-color);
     margin: 0;
-    padding: 20px 20px
+    padding: 20px 20px;
+    font-size: 22px;
+    z-index: 99;
 }
 
 .popup-content .bottom-buttons {
@@ -307,10 +309,12 @@
 }
 
 .edit-profile p {
-    font-size: 15px;
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 10px
 }
 
-.edit-profile input {
+.edit-profile input, textarea {
     width: 100%;
     padding: 10px 15px;
     border: 2px solid rgba(0, 0, 0, 0.2);
@@ -318,7 +322,8 @@
     font-size: 13px; 
     outline: none;
     letter-spacing: 0.5px;
-    font-family: 'arial';
+    line-height: 20px;
+    font-family: var(--accent-font);
     resize: none;
     font-weight: 500;
     margin-bottom: 10px;
