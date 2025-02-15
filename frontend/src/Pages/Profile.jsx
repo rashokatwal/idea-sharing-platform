@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import api from "../Helpers/api";
 import { useEffect, useState, useRef } from "react";
 import Popup from 'reactjs-popup';
+import authUserRequest from '../Helpers/authRequestHandler'
+import { useLoadingBar } from "../Hooks/useLoadingBar";
 
 const Profile = () => {
     const location = useLocation();
@@ -17,6 +19,7 @@ const Profile = () => {
     const [ editable, setEditable ] = useState(null);
     const [ activeTab, setActiveTab ] = useState("about");
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
+    const loadingBarRef = useLoadingBar();
     
     const dropdownRef = useRef(null);
 
@@ -94,7 +97,7 @@ const Profile = () => {
                         <div className="dropdown" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>
                             <ul className="dropdown-list">
                                 {/* <li className="dropdown-item">Edit Profile</li> */}
-                                <EditProfile userDetails={user}/>
+                                {editable && <EditProfile user={user} loadingBar={loadingBarRef}/>}
                                 <li className="dropdown-item">Copy Profile Link</li>
                                 <li className="dropdown-item report">Report User</li>
                             </ul>
@@ -184,32 +187,67 @@ const Profile = () => {
 
 export default Profile;
 
-const EditProfile = ({userDetails}) => {
+const EditProfile = ({user, loadingBar}) => {
+    const [ userDetails, setUserDetails ] = useState({
+        fullname: user?.fullname || "",
+        email: user?.email || "",
+        bio: user?.bio || "",
+        phoneNumber: user?.phoneNumber || "",
+        address: user?.address || "",
+        portfolio: user?.portfolio || "",
+    })
+
+    const {dispatch} = useAuthContext();
+
+    const handleChanges = (field, value) => {
+        setUserDetails({...userDetails, [field]: value });
+    }
+
+    const updateUserDetails = async () => {
+        loadingBar.current.continuousStart();
+        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
+                        userDetails
+                    )
+                    .then((response) => {
+                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+                        loadingBar.current.complete();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        loadingBar.current.complete();
+                    });
+    }
 
     return (
         <Popup trigger={<li className="dropdown-item">Edit Profile</li>}
             modal 
             contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
         >
-            <h3 className="header">Edit Profile</h3>
-            <div className="edit-profile">
-                <p>Full Name</p>
-                <input value={userDetails.fullname} type="text" placeholder="Full Name" />
-                <p>Email</p>
-                <input value={userDetails.email} type="email" placeholder="Email" />
-                <p>Bio</p>
-                <textarea value={userDetails.bio} style={{height: "150px", marginBottom: "10px"}}></textarea>
-                <p>Phone Number</p>
-                <input value={userDetails.phoneNumber} type="number" placeholder="Phone Number" />
-                <p>Address</p>
-                <input value={userDetails.address} type="text" placeholder="Address" />
-                <p>Portfolio</p>
-                <input value={userDetails.portfolio} type="text" placeholder="Portfolio" />
-            </div>
-            <div className="bottom-buttons">
-                <button className="primary-button">Save</button>
-                <button className="secondary-button" style={{border: "none"}}>Close</button>
-            </div>
+            {(close) => (
+                <div>
+                    <h3 className="header">Edit Profile</h3>
+                    <div className="edit-profile">
+                        <p>Full Name</p>
+                        <input value={userDetails?.fullname} type="text" placeholder="Full Name" onChange={(e) => handleChanges("fullname", e.target.value)}/>
+                        <p>Email</p>
+                        <input value={userDetails?.email} type="email" placeholder="Email" onChange={(e) => handleChanges("email", e.target.value)}/>
+                        <p>Bio</p>
+                        <textarea value={userDetails?.bio} style={{height: "150px", marginBottom: "10px"}} onChange={(e) => handleChanges("bio", e.target.value)}></textarea>
+                        <p>Phone Number</p>
+                        <input value={userDetails?.phoneNumber} type="number" placeholder="Phone Number" onChange={(e) => handleChanges("phoneNumber", e.target.value)}/>
+                        <p>Address</p>
+                        <input value={userDetails?.address} type="text" placeholder="Address" onChange={(e) => handleChanges("address", e.target.value)}/>
+                        <p>Portfolio</p>
+                        <input value={userDetails?.portfolio} type="text" placeholder="Portfolio" onChange={(e) => handleChanges("portfolio", e.target.value)}/>
+                    </div>
+                    <div className="bottom-buttons">
+                        <button className="primary-button" onClick={updateUserDetails}>Save</button>
+                        <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
+                    </div>
+                </div>
+            )}
         </Popup>
     )
 };
