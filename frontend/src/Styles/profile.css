@@ -38,6 +38,7 @@
     align-items: end;
     gap: 10px;
     width: 100%;
+    margin: 20px 0px;
 }
 
 .profile-section-inner .header-text {
@@ -62,9 +63,47 @@
 .previous-works-list, .skills-list {
     min-height: 100px;
     max-height: 200px;
-    display: flex;
+    /* display: flex; */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: scroll;
+}
+
+.previous-works-list::-webkit-scrollbar, .skills-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.previous-works-list .work-item, .skills-list .skill-item {
+    width: 100%;
+    text-align: left;
+    background: var(--background-color);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.previous-works-list .work-item .title, .skills-list .skill-item .name {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+
+.previous-works-list .work-item .description, .skills-list .skill-item .experience {
+    margin: 0;
+    margin-bottom: 8px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.previous-works-list .work-item .link {
+    margin: 0;
+    /* margin-bottom: 8px; */
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-color)
 }
 
 .profile-section-inner .right-section {
@@ -307,7 +346,7 @@
 }
 
 .popup-content::-webkit-scrollbar {
-    display: none;
+    width: 3px;
 }
 
 .popup-form p {

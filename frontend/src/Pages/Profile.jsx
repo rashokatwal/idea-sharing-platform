@@ -78,8 +78,22 @@ const Profile = () => {
                         <div className="section-header">
                             <span className="header-text">WORKS</span><span className="header-horizontal-line"></span>
                         </div>
-                        <div className="previous-works-list">
-                            {editable ? <AddWork user={user}/> : <span className="empty-message">Works Not Listed</span>}
+                        <div className="previous-works-list" style={{display: user?.works.length == 0 ? "flex" : "block"}}>
+                            {user?.works.length > 0 ? 
+                                    user?.works.map((work, index) => (
+                                        <div key={index} className="work-item">
+                                            <h4 className="title">{work.title}</h4>
+                                            <p className="description">{work.description}</p>
+                                            <a className="link" href={work.link}>{work.link}</a>
+                                        </div>
+                                    )) :
+                                    editable ? 
+                                        <AddWork user={user} /> :
+                                        <span className="empty-message">Works Not Listed</span>
+                            }
+                            {editable && user?.works.length > 0 && <div style={{position: "sticky", bottom: "0px", width: "100%", background: "var(--background-color)", paddingTop: "10px"}}>
+                               <AddWork user={user}/>
+                            </div>}
                         </div>
                     </div>
 
@@ -87,8 +101,21 @@ const Profile = () => {
                         <div className="section-header">
                             <span className="header-text">SKILLS</span><span className="header-horizontal-line"></span>
                         </div>
-                        <div className="skills-list">
-                            {editable ? <AddSkill user={user}/> : <span className="empty-message">Skills Not Listed</span>}
+                        <div className="skills-list" style={{display: user?.skills.length > 0 ? "block" : "flex"}}>
+                            {user?.skills.length > 0 ? 
+                                        user?.skills.map((skill, index) => (
+                                            <div key={index} className="skill-item">
+                                                <h4 className="name">{skill.name}</h4>
+                                                <p className="experience">{skill.experience}</p>
+                                            </div>
+                                        )) :
+                                        editable ? 
+                                            <AddSkill user={user} /> :
+                                            <span className="empty-message">Skills Not Listed</span>
+                                }
+                            {editable && user?.skills.length > 0 && <div style={{position: "sticky", bottom: "0px", width: "100%", background: "var(--background-color)", paddingTop: "10px"}}>
+                                <AddSkill user={user}/>
+                            </div>}
                         </div>
                     </div>
                 </div>
@@ -299,7 +326,7 @@ const AddWork = ({user}) => {
                 setIsButtonDisabled(true);
             }
         }
-        else {
+        else if(field != "link" && value == "") {
             setIsButtonDisabled(true);
         }
     }
@@ -427,23 +454,33 @@ const AddSocialLink = ({user}) => {
     const {dispatch} = useAuthContext();
     let userSocialLinks = user.socialLinks;
     const [ socialLink, setSocialLink ] = useState({platform: "", link: ""});
-    const handleChange = (value) => {
-        setSocialLink({...socialLink, platform: value});
-    }
-
+    const [ isButtonDisabled, setIsButtonDisabled ] = useState(socialLink.platform.trim().length == 0 && socialLink.link.trim().length == 0)
     const dropdownPlatfroms = ["Facebook", "Instagram", "Linkedin", "Github", "Discord", "Youtube", "Twitter"];
 
+    const handleLink = (value) => {
+        setSocialLink({...socialLink, link: value});
+        if(value.trim().length > 0 && socialLink.platform.trim().length > 0) {
+            setIsButtonDisabled(false);
+        }
+        else {
+            setIsButtonDisabled(true);
+        }
+    }
+
+    const handleChange = (value) => {
+        setSocialLink({...socialLink, platform: value});
+        if(value.trim().length > 0 && socialLink.link.trim().length > 0) {
+            setIsButtonDisabled(false);
+        }
+        else {
+            setIsButtonDisabled(true);
+        }
+    }
     const filteredDropdownPlatforms = dropdownPlatfroms.filter((platform) => {
         if (userSocialLinks[platform.toLowerCase()] == undefined) {
             return platform
         }
     })
-
-    console.log(filteredDropdownPlatforms);
-
-    const handleLink = (value) => {
-        setSocialLink({...socialLink, link: value});
-    }
 
     const addSocialLink = async (close) => {
         userSocialLinks = {...userSocialLinks, [socialLink.platform.toLowerCase()]: socialLink.link}
@@ -478,7 +515,7 @@ const AddSocialLink = ({user}) => {
                         <input type="text" value={socialLink.link} placeholder="e.g. https://www.linkedin.com/in/" onChange={(e) => handleLink(e.target.value)}/>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" onClick={() => addSocialLink(close)}>Add</button>
+                        <button className="primary-button" onClick={() => addSocialLink(close)} disabled={isButtonDisabled}>Add</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
