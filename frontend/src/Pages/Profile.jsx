@@ -6,6 +6,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from "react-router-dom";
 import api from "../Helpers/api";
+import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler'
@@ -21,8 +22,11 @@ const Profile = () => {
     const [ activeTab, setActiveTab ] = useState("about");
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
     const loadingBarRef = useLoadingBar();
+    const {dispatch} = useAuthContext();
     
     const dropdownRef = useRef(null);
+
+    const changeImageRef = useRef(null);
 
     const fetchUserDetails = async () => {
         console.log(username);
@@ -44,7 +48,6 @@ const Profile = () => {
             if (username === userStatus.user?.username) {
                 setUser(userStatus.user);
                 setEditable(true);
-                console.log(userStatus.user);
             }
             else {
                 fetchUserDetails();
@@ -69,11 +72,48 @@ const Profile = () => {
         setActiveTab(tab);
     }
 
+    const handleDivClick = () => {
+        changeImageRef.current.click();
+    }
+
+    const handleImageUpload = async (file) => {
+        // console.log(file);
+        const data = new FormData();
+        data.append("file", file);
+        data.append("cloud_name", "dviyjm1af")
+        data.append("upload_preset", "mindhop");
+
+        loadingBarRef.current.continuousStart();
+        const res = await axios.post(
+            `https://api.cloudinary.com/v1_1/dviyjm1af/image/upload`,
+            data
+        );
+        // console.log(res);
+        // const img = await res.json();
+        // const objectUrl = URL.createObjectURL(img);
+        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
+            {profileImage: res.data.secure_url}
+        )
+        .then((response) => {
+            let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+            localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+            dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+            // setEmailError("");
+            // setPhoneError("");
+            loadingBarRef.current.complete();
+            close();
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="profile-section-outer">
             <div className="profile-section-inner">
                 <div className="left-section">
                     <img className="profile-image" src={ user?.profileImage || '../src/Assets/default_user.png'} alt="Profile Picture" />
+                    {editable && <div className="secondary-button" style={{border: "none", margin: "auto"}} onClick={handleDivClick}><FontAwesomeIcon icon="fa-regular fa-image"/> {user?.profileImage ? "Change" : "Upload"} Image <input ref={changeImageRef} type="file" style={{display: "none"}} onChange={(e) => handleImageUpload(e.target.files[0])}/></div>}
                     <div className="user-previous-works">
                         <div className="section-header">
                             <span className="header-text">WORKS</span><span className="header-horizontal-line"></span>
