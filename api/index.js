@@ -7,6 +7,7 @@ const ideaRoutes = require('./routes/ideaRoute');
 const userRoutes = require('./routes/userRoute');
 const mongoose = require('mongoose');
 const { generateApiKey } = require('./controllers/apiKeyController');
+const { generateSignature } = require('./controllers/signatureController');
 
 //init app and middleware
 const app = express();
@@ -35,10 +36,14 @@ mongoose.connect('mongodb://localhost:27017/mindhop')
                 });
                 app.use('/', ideaRoutes);
                 app.use('/', userRoutes);
+                app.get('/generateSignature', async (req, res) => {
+                    generateSignature(req, res);
+                    // console.log(req.query.userId);
+                });
             })
             .catch((error) => {
                 console.log(error)
-                return cb(error)
+                return (error)
             })
 
 // app.get('/ideas', (req, res) => {

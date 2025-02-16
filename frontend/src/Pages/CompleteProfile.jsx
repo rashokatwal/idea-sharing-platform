@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useSignout } from '../Hooks/useSignout';
 import CompletionMessage from '../Components/CompletionMessage';
 import ConfettiEffect from '../Components/ConfettiEffect';
+import { useImageUpload } from '../Hooks/useImageUpload';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -103,6 +104,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     const userDetails = userStatus.user;
     // console.log(userDetails);
     const loadingBarRef = useLoadingBar();
+    const {uploadImage} = useImageUpload()
     const imageInputRef = useRef(null);
     const { dispatch } = useAuthContext();
     const [ image, setImage ] = useState(userDetails.profileImage);
@@ -173,16 +175,8 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     }
 
     const handlePictureUpload = async (file) => {
-        console.log(file);
-        const data = new FormData();
-        data.append("file", file);
-        data.append("cloud_name", "dviyjm1af")
-        data.append("upload_preset", "mindhop");
 
-        const res = await axios.post(
-            `https://api.cloudinary.com/v1_1/dviyjm1af/image/upload`,
-            data
-        );
+        const res = await uploadImage(file, userDetails._id);
         // console.log(res);
         // const img = await res.json();
         // const objectUrl = URL.createObjectURL(img);

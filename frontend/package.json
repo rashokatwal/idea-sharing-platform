@@ -17,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
+    "cloudinary": "^2.5.1",
     "dotenv": "^16.4.7",
     "html-react-parser": "^5.2.2",
     "lottie-react": "^2.4.1",

@@ -23,7 +23,7 @@
 .profile-section-inner .left-section .profile-image {
     height: 250px;
     width: 250px;
-    /* border-radius: 50%; */
+    border-radius: 50%;
     margin-bottom: 20px;
 }
 

@@ -12,6 +12,7 @@ import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler'
 import { useLoadingBar } from "../Hooks/useLoadingBar";
 import Dropdown from "../Components/Dropdown";
+import { useImageUpload } from "../Hooks/useImageUpload";
 
 const Profile = () => {
     const location = useLocation();
@@ -23,6 +24,7 @@ const Profile = () => {
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
     const loadingBarRef = useLoadingBar();
     const {dispatch} = useAuthContext();
+    const {uploadImage} = useImageUpload();
     
     const dropdownRef = useRef(null);
 
@@ -78,16 +80,18 @@ const Profile = () => {
 
     const handleImageUpload = async (file) => {
         // console.log(file);
-        const data = new FormData();
-        data.append("file", file);
-        data.append("cloud_name", "dviyjm1af")
-        data.append("upload_preset", "mindhop");
+        // const data = new FormData();
+        // data.append("file", file);
+        // data.append("cloud_name", "dviyjm1af")
+        // data.append("upload_preset", "mindhop");
 
+        // loadingBarRef.current.continuousStart();
+        // const res = await axios.post(
+        //     `https://api.cloudinary.com/v1_1/dviyjm1af/image/upload`,
+        //     data
+        // );
         loadingBarRef.current.continuousStart();
-        const res = await axios.post(
-            `https://api.cloudinary.com/v1_1/dviyjm1af/image/upload`,
-            data
-        );
+        const res = await uploadImage(file, user._id);
         // console.log(res);
         // const img = await res.json();
         // const objectUrl = URL.createObjectURL(img);
@@ -101,7 +105,6 @@ const Profile = () => {
             // setEmailError("");
             // setPhoneError("");
             loadingBarRef.current.complete();
-            close();
         })
         .catch((error) => {
             console.log(error);
