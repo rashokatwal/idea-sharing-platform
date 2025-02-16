@@ -40,6 +40,15 @@ body {
   text-decoration: none;
 }
 
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary-button:disabled:hover {
+  opacity: 0.5;
+}
+
 .primary-button:hover {
   opacity: 0.8;
 }

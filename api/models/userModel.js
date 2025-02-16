@@ -4,6 +4,32 @@ const validator = require('validator');
 
 const Schema = mongoose.Schema;
 
+const worksSchema = new Schema({
+    title: {
+        type: String,
+        default: ''
+    },
+    description: {
+        type: String,
+        default: ''
+    },
+    link: {
+        type: String,
+        default: ''
+    }
+})
+
+const skillsSchema = new Schema({
+    name: {
+        type: String,
+        default: ''
+    },
+    experience: {
+        type: String,
+        default: ''
+    }
+})
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -56,6 +82,12 @@ const userSchema = new Schema({
         type: Object,
         default: {
         }
+    },
+    works: {
+        type: [worksSchema],
+    },
+    skills: {
+        type: [skillsSchema],
     }
 })
 

@@ -328,7 +328,7 @@
     font-family: var(--accent-font);
     resize: none;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .popup-from input:focus {

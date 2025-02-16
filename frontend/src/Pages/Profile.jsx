@@ -79,7 +79,7 @@ const Profile = () => {
                             <span className="header-text">WORKS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="previous-works-list">
-                            {editable ? <AddWork /> : <span className="empty-message">Works Not Listed</span>}
+                            {editable ? <AddWork user={user}/> : <span className="empty-message">Works Not Listed</span>}
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@ const Profile = () => {
                             <span className="header-text">SKILLS</span><span className="header-horizontal-line"></span>
                         </div>
                         <div className="skills-list">
-                            {editable ? <AddSkill /> : <span className="empty-message">Skills Not Listed</span>}
+                            {editable ? <AddSkill user={user}/> : <span className="empty-message">Skills Not Listed</span>}
                         </div>
                     </div>
                 </div>
@@ -168,10 +168,10 @@ const Profile = () => {
                                                         </a>
                                                     </div>
                                             })
-                                            : editable ? <AddSocialLink /> : <span className="empty-message">No Social Links</span>
+                                            : editable ? <AddSocialLink user={user}/> : <span className="empty-message">No Social Links</span>
                                         : <Skeleton count={4} height={"25px" }width={"25px"} inline={true} style={{marginRight: "15px"}}/>
                                     }
-                                    {editable && <AddSocialLink />}
+                                    {editable && <AddSocialLink user={user}/>}
                                 </div>
                             </div>
                             <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
@@ -268,7 +268,60 @@ const EditProfile = ({user, loadingBar}) => {
     )
 };
 
-const AddWork = () => {
+const AddWork = ({user}) => {
+    const [ work, setWork ] = useState({
+        title: '',
+        description: '',
+        link: ''
+    })
+
+    const [ isButtonDisabled, setIsButtonDisabled ] = useState(true);
+
+    let userWorks = user.works;
+
+    const {dispatch} = useAuthContext();
+
+    const handleWorkChange = (field, value) => {
+        setWork({...work, [field]: value });
+        if(field == "title" && value != "") {
+            if(work.description.trim().length > 0) {
+                setIsButtonDisabled(false);
+            }
+            else {
+                setIsButtonDisabled(true);
+            }
+        }
+        else if(field == "description" && value != "") {
+            if(work.title.trim().length > 0) {
+                setIsButtonDisabled(false);
+            }
+            else {
+                setIsButtonDisabled(true);
+            }
+        }
+        else {
+            setIsButtonDisabled(true);
+        }
+    }
+
+    const addWork = async (close) => {
+        userWorks.push(work);
+        // console.log(userSocialLinks);
+        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+            {works: userWorks}
+        )
+                   .then((response) => {
+                        setWork({title: "", description: "", link: ""});
+                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+                        close();
+                    })
+                   .catch((error) => {
+                        console.log(error);
+                    });
+    }
+
     return (
         <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Work</button>}
             modal
@@ -279,14 +332,14 @@ const AddWork = () => {
                     <h3 className="header">Add Work</h3>
                     <div className="add-work popup-form">
                         <p>Title</p>
-                        <input type="text" placeholder="e.g. My AI Chatbot Project"/>
+                        <input type="text" value={work.title} placeholder="e.g. My AI Chatbot Project" onChange={(e) => handleWorkChange("title", e.target.value)}/>
                         <p>Description (One Short Line)</p>
-                        <input type="text" placeholder="e.g. Built an AI-powered chatbot using GPT-4"/>
+                        <input type="text" value={work.description} placeholder="e.g. Built an AI-powered chatbot using GPT-4" onChange={(e) => handleWorkChange("description", e.target.value)}/>
                         <p>Link (If any)</p>
-                        <input type="text" placeholder="e.g. https://github.com/myproject"/>
+                        <input type="text" value={work.link} placeholder="e.g. https://github.com/myproject" onChange={(e) => handleWorkChange("link", e.target.value)}/>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="primary-button" onClick={() => addWork(close)} disabled={isButtonDisabled}>Add</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
@@ -296,7 +349,56 @@ const AddWork = () => {
 }
 
 
-const AddSkill = () => {
+const AddSkill = ({user}) => {
+    let userSkills = user.skills;
+    const [ skill, setSkill ] = useState({
+        name: '',
+        experience: ''
+    })
+    const [ isButtonDisabled, setIsButtonDisabled ] = useState(true);
+
+    const {dispatch} = useAuthContext();
+
+    const handleSkillChange = (field, value) => {
+        setSkill({...skill, [field]: value });
+        if(field == "name" && value != "") {
+            if(skill.experience.trim().length > 0) {
+                setIsButtonDisabled(false);
+            }
+            else {
+                setIsButtonDisabled(true);
+            }
+        }
+        else if(field == "experience" && value != "") {
+            if(skill.name.trim().length > 0) {
+                setIsButtonDisabled(false);
+            }
+            else {
+                setIsButtonDisabled(true);
+            }
+        }
+        else {
+            setIsButtonDisabled(true);
+        }
+    }
+
+    const addSkill = async (close) => {
+        userSkills.push(skill);
+        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+            {skills: userSkills}
+        )
+                   .then((response) => {
+                        setSkill({name: "", experience: ""});
+                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+                        close();
+                    })
+                   .catch((error) => {
+                        console.log(error);
+                    });
+    }
+
     return (
         <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Skill</button>}
             modal
@@ -307,12 +409,12 @@ const AddSkill = () => {
                     <h3 className="header">Add Skill</h3>
                     <div className="add-work popup-form">
                         <p>Skill Name</p>
-                        <input type="text" placeholder="e.g. Python"/>
+                        <input type="text" value={skill.name} placeholder="e.g. Python" onChange={(e) => handleSkillChange("name", e.target.value)}/>
                         <p>Experience</p>
-                        <input type="text" placeholder="e.g. 3+ Years"/>
+                        <input type="text" value={skill.experience} placeholder="e.g. 3+ Years" onChange={(e) => handleSkillChange("experience", e.target.value)}/>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="primary-button" onClick={() => addSkill(close)} disabled={isButtonDisabled}>Add</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
@@ -321,8 +423,46 @@ const AddSkill = () => {
     )
 }
 
-const AddSocialLink = () => {
-    const handleChange = () => {}
+const AddSocialLink = ({user}) => {
+    const {dispatch} = useAuthContext();
+    let userSocialLinks = user.socialLinks;
+    const [ socialLink, setSocialLink ] = useState({platform: "", link: ""});
+    const handleChange = (value) => {
+        setSocialLink({...socialLink, platform: value});
+    }
+
+    const dropdownPlatfroms = ["Facebook", "Instagram", "Linkedin", "Github", "Discord", "Youtube", "Twitter"];
+
+    const filteredDropdownPlatforms = dropdownPlatfroms.filter((platform) => {
+        if (userSocialLinks[platform.toLowerCase()] == undefined) {
+            return platform
+        }
+    })
+
+    console.log(filteredDropdownPlatforms);
+
+    const handleLink = (value) => {
+        setSocialLink({...socialLink, link: value});
+    }
+
+    const addSocialLink = async (close) => {
+        userSocialLinks = {...userSocialLinks, [socialLink.platform.toLowerCase()]: socialLink.link}
+        // console.log(userSocialLinks);
+        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+            {socialLinks: userSocialLinks}
+        )
+                   .then((response) => {
+                        setSocialLink({platform: "", link: ""});
+                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+                        close();
+                    })
+                   .catch((error) => {
+                        console.log(error);
+                    });
+    }
+
     return (
         <Popup trigger={<button className="secondary-button" style={{border: "none"}}><FontAwesomeIcon icon="fa-solid fa-plus" /> Add Link</button>}
             modal
@@ -333,12 +473,12 @@ const AddSocialLink = () => {
                     <h3 className="header">Add Social Link</h3>
                     <div className="add-work popup-form">
                         <p>PlatForm</p>
-                        <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. LinkedIn" } suggestions={ ["Facebook", "Instagram", "Linkedin", "Github", "Discord", "Youtube", "Twitter"] } onChange={handleChange} clearButton={false}/>
+                        <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. LinkedIn" } suggestions={ filteredDropdownPlatforms } onChange={handleChange} clearButton={false}/>
                         <p>Link</p>
-                        <input type="text" placeholder="e.g. https://www.linkedin.com/in/"/>
+                        <input type="text" value={socialLink.link} placeholder="e.g. https://www.linkedin.com/in/" onChange={(e) => handleLink(e.target.value)}/>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" onClick={() => close()}>Add</button>
+                        <button className="primary-button" onClick={() => addSocialLink(close)}>Add</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
