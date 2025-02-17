@@ -6,13 +6,13 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useLocation } from "react-router-dom";
 import api from "../Helpers/api";
-import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler'
 import { useLoadingBar } from "../Hooks/useLoadingBar";
 import Dropdown from "../Components/Dropdown";
 import { useImageUpload } from "../Hooks/useImageUpload";
+import { useUpdateUser } from "../Hooks/useUpdateUser";
 
 const Profile = () => {
     const location = useLocation();
@@ -25,6 +25,7 @@ const Profile = () => {
     const loadingBarRef = useLoadingBar();
     const {dispatch} = useAuthContext();
     const {uploadImage} = useImageUpload();
+    const {updateUser} = useUpdateUser()
     
     const dropdownRef = useRef(null);
 
@@ -95,20 +96,71 @@ const Profile = () => {
         // console.log(res);
         // const img = await res.json();
         // const objectUrl = URL.createObjectURL(img);
-        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
-            {profileImage: res.data.secure_url}
-        )
-        .then((response) => {
-            let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
-            localStorage.setItem("user", JSON.stringify(updatedUserDetails));
-            dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
-            // setEmailError("");
-            // setPhoneError("");
-            loadingBarRef.current.complete();
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
+        //     {profileImage: res.data.secure_url}
+        // )
+        // .then((response) => {
+        //     let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //     localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //     dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //     // setEmailError("");
+        //     // setPhoneError("");
+        //     loadingBarRef.current.complete();
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
+        await updateUser("profileImage", res.data.secure_url);
+        loadingBarRef.current.complete();
+    }
+
+    const handleWorkDelete = async (_id) => {
+        loadingBarRef.current.continuousStart();
+        let userWorks = user?.works;
+        let updatedUserWorks = userWorks.filter((work) => {
+            if (work._id != _id) {
+                return work;
+            }
         })
-        .catch((error) => {
-            console.log(error);
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
+        //     {works: updatedUserWorks}
+        // )
+        // .then((response) => {
+        //     let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //     localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //     dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //     loadingBarRef.current.complete();
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
+
+        await updateUser("works", updatedUserWorks);
+        loadingBarRef.current.complete();
+    }
+
+    const handleSkillDelete = async (_id) => {
+        // loadingBarRef.current.continuousStart();
+        let userSkills = user?.skills;
+        let updatedUserSkills = userSkills.filter((skill) => {
+            if (skill._id != _id) {
+                return skill;
+            }
         })
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
+        //     {works: updatedUserSkills}
+        // )
+        // .then((response) => {
+        //     let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //     localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //     dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //     loadingBarRef.current.complete();
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
+        await updateUser("skills", updatedUserSkills);
+        loadingBarRef.current.complete();
     }
 
     return (
@@ -125,9 +177,12 @@ const Profile = () => {
                             {user?.works.length > 0 ? 
                                     user?.works.map((work, index) => (
                                         <div key={index} className="work-item">
-                                            <h4 className="title">{work.title}</h4>
-                                            <p className="description">{work.description}</p>
-                                            <a className="link" href={work.link}>{work.link}</a>
+                                            <div>
+                                                <h4 className="title">{work.title}</h4>
+                                                <p className="description">{work.description}</p>
+                                                <a className="link" href={work.link}>{work.link}</a>
+                                            </div>
+                                            {editable && <FontAwesomeIcon icon="fa-solid fa-trash-can" style={{color: "rgb(248, 82, 82)", cursor: "pointer"}} onClick={() => handleWorkDelete(work._id)}/>}
                                         </div>
                                     )) :
                                     editable ? 
@@ -148,8 +203,11 @@ const Profile = () => {
                             {user?.skills.length > 0 ? 
                                         user?.skills.map((skill, index) => (
                                             <div key={index} className="skill-item">
-                                                <h4 className="name">{skill.name}</h4>
-                                                <p className="experience">{skill.experience}</p>
+                                                <div>
+                                                    <h4 className="name">{skill.name}</h4>
+                                                    <p className="experience">{skill.experience}</p>
+                                                </div>
+                                                {editable && <FontAwesomeIcon icon="fa-solid fa-trash-can" style={{color: "rgb(248, 82, 82)", cursor: "pointer"}} onClick={() => handleSkillDelete(skill._id)}/>}
                                             </div>
                                         )) :
                                         editable ? 
@@ -349,7 +407,8 @@ const AddWork = ({user}) => {
 
     let userWorks = user.works;
 
-    const {dispatch} = useAuthContext();
+    // const {dispatch} = useAuthContext();
+    const {updateUser} = useUpdateUser();
 
     const handleWorkChange = (field, value) => {
         setWork({...work, [field]: value });
@@ -377,19 +436,22 @@ const AddWork = ({user}) => {
     const addWork = async (close) => {
         userWorks.push(work);
         // console.log(userSocialLinks);
-        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
-            {works: userWorks}
-        )
-                   .then((response) => {
-                        setWork({title: "", description: "", link: ""});
-                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
-                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
-                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
-                        close();
-                    })
-                   .catch((error) => {
-                        console.log(error);
-                    });
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+        //     {works: userWorks}
+        // )
+        //            .then((response) => {
+        //                 setWork({title: "", description: "", link: ""});
+        //                 let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //                 localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //                 dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //                 close();
+        //             })
+        //            .catch((error) => {
+        //                 console.log(error);
+        //             });
+        await updateUser("works", userWorks);
+        setWork({title: "", description: "", link: ""});
+        close();
     }
 
     return (
@@ -427,7 +489,8 @@ const AddSkill = ({user}) => {
     })
     const [ isButtonDisabled, setIsButtonDisabled ] = useState(true);
 
-    const {dispatch} = useAuthContext();
+    // const {dispatch} = useAuthContext();
+    const {updateUser} = useUpdateUser();
 
     const handleSkillChange = (field, value) => {
         setSkill({...skill, [field]: value });
@@ -454,19 +517,23 @@ const AddSkill = ({user}) => {
 
     const addSkill = async (close) => {
         userSkills.push(skill);
-        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
-            {skills: userSkills}
-        )
-                   .then((response) => {
-                        setSkill({name: "", experience: ""});
-                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
-                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
-                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
-                        close();
-                    })
-                   .catch((error) => {
-                        console.log(error);
-                    });
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+        //     {skills: userSkills}
+        // )
+        //            .then((response) => {
+        //                 setSkill({name: "", experience: ""});
+        //                 let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //                 localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //                 dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //                 close();
+        //             })
+        //            .catch((error) => {
+        //                 console.log(error);
+        //             });
+        console.log(userSkills);
+        await updateUser("skills", userSkills);
+        setSkill({name: "", experience: ""});
+        close();
     }
 
     return (
@@ -494,7 +561,8 @@ const AddSkill = ({user}) => {
 }
 
 const AddSocialLink = ({user}) => {
-    const {dispatch} = useAuthContext();
+    // const {dispatch} = useAuthContext();
+    const {updateUser} = useUpdateUser();
     let userSocialLinks = user.socialLinks;
     const [ socialLink, setSocialLink ] = useState({platform: "", link: ""});
     const [ isButtonDisabled, setIsButtonDisabled ] = useState(socialLink.platform.trim().length == 0 && socialLink.link.trim().length == 0)
@@ -528,19 +596,22 @@ const AddSocialLink = ({user}) => {
     const addSocialLink = async (close) => {
         userSocialLinks = {...userSocialLinks, [socialLink.platform.toLowerCase()]: socialLink.link}
         // console.log(userSocialLinks);
-        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
-            {socialLinks: userSocialLinks}
-        )
-                   .then((response) => {
-                        setSocialLink({platform: "", link: ""});
-                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
-                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
-                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
-                        close();
-                    })
-                   .catch((error) => {
-                        console.log(error);
-                    });
+        // await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`, 
+        //     {socialLinks: userSocialLinks}
+        // )
+        //            .then((response) => {
+        //                 setSocialLink({platform: "", link: ""});
+        //                 let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
+        //                 localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+        //                 dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
+        //                 close();
+        //             })
+        //            .catch((error) => {
+        //                 console.log(error);
+        //             });
+        await updateUser("socialLinks", userSocialLinks);
+        setSocialLink({platform: "", link: ""});
+        close();
     }
 
     return (
