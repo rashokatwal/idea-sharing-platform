@@ -288,6 +288,21 @@
     width: 50%;
 }
 
+.profile-tabs .about-tab .about-content .social-link {
+    position: relative;
+}
+
+.profile-tabs .about-tab .about-content .social-link:hover .remove-link-button {
+    display: block;
+}
+
+.profile-tabs .about-tab .about-content .social-link .remove-link-button {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    display: none;
+}
+
 .profile-tabs .about-tab .about-content .social-link-icon {
     margin-right: 15px;
     color: black;
