@@ -1,5 +1,5 @@
 const express = require('express');
-const { signinUser, signupUser, updateUserDetails, getUserDetails } = require('../controllers/userController');
+const { signinUser, signupUser, updateUserDetails, getUserDetails, getUserLikedPosts } = require('../controllers/userController');
 
 const authenticateUser = require('../middleware/authenticateUser');
 
@@ -14,5 +14,7 @@ router.post('/auth/signup', signupUser);
 router.patch('/auth/updateUserDetails/:id', authenticateUser, updateUserDetails);
 
 router.get('/user/:username', getUserDetails);
+
+router.get('/likedPosts/:username', getUserLikedPosts);
 
 module.exports = router;

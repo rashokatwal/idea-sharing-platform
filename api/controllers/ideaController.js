@@ -2,7 +2,8 @@
 
 // const ObjectId = require('mongodb').ObjectId;
 const Idea = require('../models/ideaModel')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const User = require('../models/userModel');
 
 const getIdeas = async (req, res) => {
 
@@ -10,7 +11,7 @@ const getIdeas = async (req, res) => {
     let sortOptions = {};
     let timePeriodOptions = {};
     let filter = {};
-    console.log(JSON.stringify(req.query))
+    // console.log(JSON.stringify(req.query))
 
     if(JSON.stringify(req.query) != '{}') {
         filterRequest = {
@@ -113,8 +114,8 @@ const updateIdea = async (req, res) => {
     // if (requestType == "updateIdea") {
     //     updates.lastUpdatedOn = date;
     // }
-    console.log(updates);
-    console.log(req.query.requestType);
+    // console.log(updates);
+    // console.log(req.query.requestType);
 
     if (requestType == "postIdea") {
         updates.postedOn = date;
@@ -124,7 +125,7 @@ const updateIdea = async (req, res) => {
         await Idea
             .findOneAndUpdate({_id: req.params.id}, updates)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 res.status(200).json(result);
                 // db.close();
             })
@@ -139,4 +140,44 @@ const updateIdea = async (req, res) => {
     }
 }
 
-module.exports = { getIdeas, getIdea, postIdea, updateIdea, deleteIdea };
+const likeIdea = async (req, res) => {
+    // const db = getDb();
+    const {userId, ideaId} = req.body;
+    // console.log(req.query);
+    if (mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(ideaId)) {
+        const user = await User.findOne({ _id: userId });
+        if(user) {
+            const alreadyLiked = user.likedIdeas.includes(ideaId);
+            await User.updateOne(
+                { _id: userId },
+                alreadyLiked
+                ? { $pull: { likedIdeas: ideaId } } 
+                : { $addToSet: { likedIdeas: ideaId } } 
+            ).then(async (result) => {
+                await Idea.updateOne(
+                    { _id: ideaId },
+                    { $inc: { likes: alreadyLiked? -1 : 1 } }
+                ).then(() => {
+                    res.status(200).json({message: 'Idea liked successfully'});
+                    // db.close();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.status(500).json({error: 'Error updating likes'});
+                    // db.close();
+                })
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).json({error: 'Error updating user'});
+            })
+        }
+        else {
+            res.status(404).json({error: 'User not found'});
+        }
+    }
+    else {
+        res.status(500).json({error: 'Invalid ID'});
+    }
+}
+
+module.exports = { getIdeas, getIdea, postIdea, updateIdea, deleteIdea, likeIdea };

@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryColors } from "../Helpers/constants";
 import { dateTimeConverter } from '../Helpers/dateUtil';
 import api from '../Helpers/api';
+import { useAuthContext } from '../Hooks/useAuthContext';
 
-const IdeaPreview = ({ ideaDetails, previewType }) => {
-    const [ isLiked, setIsLiked ] = useState(false);
+const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
+    const {user} = useAuthContext();
+    const [ isLiked, setIsLiked ] = useState(isIdeaLiked);
     const [ isSaved, setIsSaved ] = useState(false);
     const lastUpdatedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.updatedAt) : null;
     const postedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.postedOn) : null;
@@ -18,15 +20,19 @@ const IdeaPreview = ({ ideaDetails, previewType }) => {
         }
     }, [])
 
-    const updateLike = async () => {
+    const handleLike = async () => {
         await api
-            .patch(`/idea/${ideaDetails._id}`,
-                { "likes" : ideaDetails.likes },
+            .patch(`/likeIdea`,
+                { "userId": user?._id, "ideaId": ideaDetails._id },
             )
             .then((response) => {
-                // console.log(response.data)
+                console.log(response);
+                setIsLiked(!isLiked);
+                isLiked ? ideaDetails.likes-- : ideaDetails.likes++;
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const updateReads = async () => {
@@ -38,12 +44,6 @@ const IdeaPreview = ({ ideaDetails, previewType }) => {
                 // console.log(response.data)
             })
            .catch((error) => console.log(error));
-    }
-
-    const handleLike = async () => {
-        setIsLiked(!isLiked);
-        isLiked ? ideaDetails.likes-- : ideaDetails.likes++;
-        await updateLike();
     }
 
     const handleSave = () => {

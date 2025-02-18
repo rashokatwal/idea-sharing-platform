@@ -4,7 +4,8 @@ const {
     getIdea,
     postIdea,
     updateIdea,
-    deleteIdea
+    deleteIdea,
+    likeIdea
 } = require('../controllers/ideaController');
 const authenticateAPIKey = require('../middleware/authenticateAPIKey');
 
@@ -21,6 +22,8 @@ router.get('/idea/:id', getIdea);
 router.post('/idea', postIdea);
 
 router.patch('/idea/:id', updateIdea);
+
+router.patch('/likeIdea', likeIdea);
 
 router.delete('/idea/:id', deleteIdea);
 
