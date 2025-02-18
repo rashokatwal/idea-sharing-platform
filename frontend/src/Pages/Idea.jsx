@@ -21,6 +21,7 @@ const Idea = () => {
          .get(`/idea/${ideaId}`)
          .then((response) => {
             setIdeaDetails(response.data);
+            !userStatus.isAuthenticated && setLoading(false);
          })
          .catch((error) => console.log(error));
     }
@@ -29,7 +30,6 @@ const Idea = () => {
         await api
          .get(`/likedPosts/${user.username}`)
          .then((response) => {
-            console.log(response.data);
             setIsLiked(response.data.includes(ideaId));
             setLoading(false);
          })
@@ -42,9 +42,8 @@ const Idea = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            if (!user) return; // Wait for user to be available
-    
             await fetchIdea();
+            if (!user || !userStatus.isAuthenticated) return; // Wait for user to be available
             await checkIsLiked();
         };
     

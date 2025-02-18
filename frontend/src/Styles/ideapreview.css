@@ -77,6 +77,17 @@
     min-width: 75px;
 }
 
+.idea-preview .extra-features .liked-button-animation {
+    color: red;
+    animation: liked ease-out;
+    animation-duration: 0.2s;
+}
+
+@keyframes liked {
+    50%  {transform: scale(1.5)}
+    100% {transform: scale(1)}
+  }
+
 /* .collaborate::after {
     content: "Collaborate with people";
 }
