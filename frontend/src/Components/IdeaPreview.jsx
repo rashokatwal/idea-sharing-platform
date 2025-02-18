@@ -82,7 +82,7 @@ const IdeaPreview = ({ ideaDetails, previewType }) => {
             </div>
             <div className="extra-features">
                 <div className="like-comment-share">
-                    <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} onClick={() => previewType == "user" ? handleLike : null}/> {ideaDetails ? ideaDetails.likes : ""}</span>
+                    <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails ? ideaDetails.likes : ""}</span>
                     <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails ? ideaDetails.comments : ""}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>

@@ -307,6 +307,7 @@
     margin-right: 15px;
     color: black;
     transition: 0.2s;
+    font-size: 22px;
 }
 
 .profile-tabs .about-tab .about-content .social-link-icon:hover {

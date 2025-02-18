@@ -244,7 +244,7 @@ const Profile = () => {
                                                     <div key={index} className="social-link">
                                                         {editable && <FontAwesomeIcon icon="fa-solid fa-circle-xmark" className="remove-link-button" style={{color: "rgb(248, 82, 82)", cursor: "pointer"}} onClick={() => handleSocialLinkDelete(platform)}/>}
                                                         <a href={socialLink} target="_blank" style={{cursor: "pointer", color: "var(--accent-color)"}}>
-                                                            <FontAwesomeIcon  className="social-link-icon" icon={`fa-brands ${socialMediaIcons[platform]}`} size="lg"/>
+                                                            <FontAwesomeIcon  className="social-link-icon" icon={`fa-brands ${socialMediaIcons[platform]}`} />
                                                         </a>
                                                     </div>
                                             })

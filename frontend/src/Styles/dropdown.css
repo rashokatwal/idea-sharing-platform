@@ -35,11 +35,12 @@
     max-height: 250px;
     overflow-y: scroll;
     -ms-overflow-style: none;
-    scrollbar-width: none;
+    scrollbar-width: 3px;
   }
 
   .dropdown-list::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
+    width: 3px;
   }
   
   .dropdown-item {

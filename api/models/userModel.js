@@ -88,6 +88,18 @@ const userSchema = new Schema({
     },
     skills: {
         type: [skillsSchema],
+    },
+    likedIdeas: {
+        type: Array,
+        default: []
+    },
+    commentedIdeas: {
+        type: Array,
+        default: []
+    },
+    savedIdeas: {
+        type: Array,
+        default: []
     }
 })
 
