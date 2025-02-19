@@ -7,6 +7,7 @@ import { dateTimeConverter } from '../Helpers/dateUtil';
 import api from '../Helpers/api';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     const {user} = useAuthContext();
@@ -87,7 +88,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} className={isLiked ? "liked-button-animation" : ""} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails?.likes}</span>
-                    <span className="comments" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-comment" /> {ideaDetails?.comments}</span>
+                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user}/> {ideaDetails?.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
@@ -96,6 +97,31 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
                 </div>
             </div>
         </div>
+    )
+}
+
+const Comments = ({user}) => {
+    return (
+        <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
+            modal 
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            {(close) => (
+                <div>
+                    <h3 className="header">Comments</h3>
+                    <div className="comments-section">
+
+                    </div>
+                    <div className="input-comment">
+                        <img src={user?.profileImage} alt="Profile Image" height="35px" width="35px"/>
+                        <input type="text" placeholder="Write a comment..." />
+                        <button className='primary-button' style={{border: "none", padding: "8px"}} onClick={close}>
+                            <FontAwesomeIcon icon="fa-solid fa-paper-plane" size='lg'/>
+                        </button>
+                    </div>
+                </div>
+            )}
+        </Popup>
     )
 }
 

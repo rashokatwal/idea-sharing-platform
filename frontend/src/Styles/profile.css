@@ -381,8 +381,7 @@
     padding: 10px 15px;
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px !important;
-    font-size: 13px; 
-    outline: none;
+    font-size: 13px;
     letter-spacing: 0.5px;
     line-height: 20px;
     font-family: var(--accent-font);
