@@ -89,8 +89,9 @@
   }
 
   .comments-section {
-    margin: 25px;
+    margin: 0px 25px;
     border: solid;
+    min-height: 40vh;
   }
 
   .input-comment {
