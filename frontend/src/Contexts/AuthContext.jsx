@@ -26,7 +26,7 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
-        isAuthenticated: false,
+        isAuthenticated: null,
         user: null,
     });
 
@@ -34,6 +34,9 @@ export const AuthContextProvider = ({ children }) => {
         const user = JSON.parse(localStorage.getItem('user'));
         if(user) {
             dispatch({type: 'LOGIN', payload: user});
+        }
+        else {
+            dispatch({type: 'LOGOUT'});
         }
     }, [])
 

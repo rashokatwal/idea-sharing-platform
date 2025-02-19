@@ -41,7 +41,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        if (userStatus.user != null) {
+        // if (userStatus.user != null) {
             if (username === userStatus.user?.username) {
                 setUser(userStatus.user);
                 setEditable(true);
@@ -50,7 +50,7 @@ const Profile = () => {
                 fetchUserDetails();
                 setEditable(false);
             }
-        }
+        // }
     }, [userStatus, location.pathname]);
 
     useEffect(() => {

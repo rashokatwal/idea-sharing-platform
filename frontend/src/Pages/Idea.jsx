@@ -17,11 +17,14 @@ const Idea = () => {
     const [ isLiked, setIsLiked ] = useState(null);
 
     const fetchIdea = async () => {
+        console.log("fetching")
         await api
          .get(`/idea/${ideaId}`)
          .then((response) => {
             setIdeaDetails(response.data);
-            !userStatus.isAuthenticated && setLoading(false);
+            // console.log("fetched");
+            console.log(ideaDetails);
+            // console.log(userStatus.isAuthenticated);
          })
          .catch((error) => console.log(error));
     }
@@ -31,24 +34,48 @@ const Idea = () => {
          .get(`/likedPosts/${user.username}`)
          .then((response) => {
             setIsLiked(response.data.includes(ideaId));
-            setLoading(false);
          })
          .catch((error) => console.log(error));
     }
 
     useEffect(() => {
-        setUser(userStatus.user);
-    }, [userStatus.user]); // Ensure user is updated properly
+        setUser(userStatus.user); // Update user state
+    }, [userStatus.user]);
     
     useEffect(() => {
         const fetchData = async () => {
             await fetchIdea();
-            if (!user || !userStatus.isAuthenticated) return; // Wait for user to be available
+    
+            if (userStatus.isAuthenticated == false) {
+                setLoading(false); // Stop loading if user is not logged in
+                return;
+            }
+    
+            if (!user) return; // Ensure user is available
+    
             await checkIsLiked();
+            setLoading(false);
         };
     
         fetchData();
-    }, [user]); 
+    }, [userStatus.isAuthenticated, user]); // Depend on authentication & user
+    
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await fetchIdea();
+    
+    //         if (!userStatus.isAuthenticated) {
+    //             setLoading(false); // Stop loading if user is not logged in
+    //             return;
+    //         }
+    
+    //         await checkIsLiked();
+    //         setLoading(false); // Stop loading after checking likes
+    //     };
+    
+    //     fetchData();
+    // }, [userStatus.isAuthenticated]);
 
     // useEffect(() => {
     //     setUser(userStatus.user);

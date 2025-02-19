@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     const {user} = useAuthContext();
-    const [ isLiked, setIsLiked ] = useState(isIdeaLiked);
+    const [ isLiked, setIsLiked ] = useState(null);
     const [ isSaved, setIsSaved ] = useState(false);
     const lastUpdatedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.updatedAt) : null;
     const postedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.postedOn) : null;
@@ -20,6 +20,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
         if(previewType == "user") {
             updateReads();
         }
+        setIsLiked(isIdeaLiked);
     }, [])
 
     const handleLike = async () => {
