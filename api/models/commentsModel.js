@@ -26,7 +26,7 @@ const commentSchema = new Schema({
 }, { timestamps: true })
 
 commentSchema.statics.addComment = async function(commentDetails) {
-    const {comment, userFullName, username, ideaId} = commentDetails;
+    const {comment, userFullName, userProfileImage, username, ideaId} = commentDetails;
     const response = await this.create({comment, userFullName, username, userProfileImage, ideaId});
 
     return response;

@@ -6,7 +6,7 @@ import { categoryColors } from "../Helpers/constants";
 import { dateTimeConverter } from '../Helpers/dateUtil';
 import api from '../Helpers/api';
 import { useAuthContext } from '../Hooks/useAuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler';
 import Skeleton from 'react-loading-skeleton'
@@ -114,10 +114,30 @@ const Comments = ({user, ideaDetails}) => {
                 console.log(error);
             })
     }
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
-        fetchComments();
+        setTimeout(() =>{
+            fetchComments();
+        }, 10000)
     }, [])
+
+    const handleCommentPost = (close) => {
+        authUserRequest.post(`/comment`, {
+            "ideaId": ideaDetails._id,
+            "comment": comment,
+            "username": user?.username,
+            "userFullName": user?.fullname,
+            "userProfileImage": user?.profileImage,
+        })
+       .then((response) => {
+        console.log(response);
+       })
+       .catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
             modal 
@@ -129,16 +149,20 @@ const Comments = ({user, ideaDetails}) => {
                     <div className="comments-section">
                         {
                             comments.map((comment) => (
-                                <div className="comment">
-                                    
+                                <div className="comment" key={comment._id}>
+                                    <img src={comment.userProfileImage} placeholder="Profile Image" height="35px" width="35px" />
+                                    <div style={{width: "100%"}}>
+                                        <Link to={`/profile/${comment.username}`} className="user-fullname">{comment.userFullName}</Link>
+                                        <p className="comment-content">{comment.comment}</p>
+                                    </div>
                                 </div>
                             ))
                         }
                     </div>
                     <div className="input-comment">
                         <img src={user?.profileImage} alt="Profile Image" height="35px" width="35px"/>
-                        <input type="text" placeholder="Write a comment..." />
-                        <button className='primary-button' style={{border: "none", padding: "8px"}} onClick={close}>
+                        <input type="text" value={comment} placeholder="Write a comment..." onChange={(e) => setComment(e.target.value)} />
+                        <button className='primary-button' style={{border: "none", padding: "8px"}} onClick={() => {handleCommentPost(close)}}>
                             <FontAwesomeIcon icon="fa-solid fa-paper-plane" size='lg'/>
                         </button>
                     </div>
