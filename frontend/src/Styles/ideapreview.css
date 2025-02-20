@@ -93,6 +93,9 @@
     overflow-y: scroll;
     min-height: 40vh;
     padding: 10px 0px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .comment {
@@ -100,7 +103,7 @@
     display: flex;
     align-items: start;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .comment .user-fullname {
@@ -133,6 +136,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    position: sticky;
+    bottom: 0px;
+    background: var(--background-color)
 }
 
 .input-comment input {

@@ -90,7 +90,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} className={isLiked ? "liked-button-animation" : ""} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails?.likes}</span>
-                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails}/> {ideaDetails?.comments}</span>
+                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails} navigate={navigate}/> {ideaDetails?.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
@@ -102,10 +102,11 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     )
 }
 
-const Comments = ({user, ideaDetails}) => {
-    const [comments, setComments] = useState([]);
+const Comments = ({user, ideaDetails, navigate}) => {
+    const [comments, setComments] = useState(null);
     const fetchComments = async () => {
-        await authUserRequest.get(`/comments/${ideaDetails._id}`)
+        if(user) {
+            await authUserRequest.get(`/comments/${ideaDetails._id}`)
             .then((response) => {
                 console.log(response.data);
                 setComments(response.data.comments);
@@ -113,13 +114,17 @@ const Comments = ({user, ideaDetails}) => {
             .catch((error) => {
                 console.log(error);
             })
+        }
+        else {
+            navigate('/signin');
+        }
     }
     const [comment, setComment] = useState("");
 
     useEffect(() => {
-        setTimeout(() =>{
+        // setTimeout(() =>{
             fetchComments();
-        }, 10000)
+        // }, 10000)
     }, [])
 
     const handleCommentPost = (close) => {
@@ -146,17 +151,31 @@ const Comments = ({user, ideaDetails}) => {
             {(close) => (
                 <div>
                     <h3 className="header">Comments</h3>
-                    <div className="comments-section">
+                    <div className="comments-section" style={{display: comments?.length > 0 ? "block" : "flex"}}>
                         {
-                            comments.map((comment) => (
-                                <div className="comment" key={comment._id}>
-                                    <img src={comment.userProfileImage} placeholder="Profile Image" height="35px" width="35px" />
-                                    <div style={{width: "100%"}}>
-                                        <Link to={`/profile/${comment.username}`} className="user-fullname">{comment.userFullName}</Link>
-                                        <p className="comment-content">{comment.comment}</p>
-                                    </div>
-                                </div>
-                            ))
+                            comments?
+                                comments.length > 0 ? 
+                                    comments.map((comment) => (
+                                        <div className="comment" key={comment._id}>
+                                            <img src={comment.userProfileImage} placeholder="Profile Image" height="35px" width="35px" />
+                                            <div style={{width: "100%"}}>
+                                                <Link to={`/profile/${comment.username}`} className="user-fullname">{comment.userFullName}</Link>
+                                                <p className="comment-content">{comment.comment}</p>
+                                            </div>
+                                        </div>
+                                    )) : 
+                                    <h3 style={{fontFamily: "var(--accent-font)"}}>No Comments</h3>
+                                    : Array.from({ length: 10 }).map((_) => (
+                                        <div className="comment" key={comment._id}>
+                                            <Skeleton width={"35px"} height={"35px"} style={{borderRadius: "50%"}}/>
+                                            <div style={{width: "100%"}}>
+                                                <Skeleton width={"100px"}/>
+                                                <Skeleton width={"100%"} count={2}/>
+                                            </div>
+                                        </div>
+                                    )) 
+                                    
+
                         }
                     </div>
                     <div className="input-comment">
