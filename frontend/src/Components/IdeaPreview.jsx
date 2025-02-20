@@ -8,6 +8,8 @@ import api from '../Helpers/api';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import authUserRequest from '../Helpers/authRequestHandler';
+import Skeleton from 'react-loading-skeleton'
 
 const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     const {user} = useAuthContext();
@@ -88,7 +90,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} className={isLiked ? "liked-button-animation" : ""} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails?.likes}</span>
-                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user}/> {ideaDetails?.comments}</span>
+                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails}/> {ideaDetails?.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
@@ -100,7 +102,22 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     )
 }
 
-const Comments = ({user}) => {
+const Comments = ({user, ideaDetails}) => {
+    const [comments, setComments] = useState([]);
+    const fetchComments = async () => {
+        await authUserRequest.get(`/comments/${ideaDetails._id}`)
+            .then((response) => {
+                console.log(response.data);
+                setComments(response.data.comments);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        fetchComments();
+    }, [])
     return (
         <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
             modal 
@@ -110,7 +127,13 @@ const Comments = ({user}) => {
                 <div>
                     <h3 className="header">Comments</h3>
                     <div className="comments-section">
-
+                        {
+                            comments.map((comment) => (
+                                <div className="comment">
+                                    
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="input-comment">
                         <img src={user?.profileImage} alt="Profile Image" height="35px" width="35px"/>

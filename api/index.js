@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors')
 const ideaRoutes = require('./routes/ideaRoute');
 const userRoutes = require('./routes/userRoute');
+const commentRoutes = require('./routes/commentRoute');
 const mongoose = require('mongoose');
 const { generateApiKey } = require('./controllers/apiKeyController');
 const { generateSignature } = require('./controllers/signatureController');
@@ -36,6 +37,7 @@ mongoose.connect('mongodb://localhost:27017/mindhop')
                 });
                 app.use('/', ideaRoutes);
                 app.use('/', userRoutes);
+                app.use('/', commentRoutes);
                 app.get('/generateSignature', async (req, res) => {
                     generateSignature(req, res);
                     // console.log(req.query.userId);
