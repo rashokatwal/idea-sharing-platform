@@ -11,7 +11,7 @@ import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler';
 import Skeleton from 'react-loading-skeleton'
 
-const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
+const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) => {
     const {user} = useAuthContext();
     const [ isLiked, setIsLiked ] = useState(null);
     const [ isSaved, setIsSaved ] = useState(false);
@@ -90,7 +90,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} className={isLiked ? "liked-button-animation" : ""} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails?.likes}</span>
-                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails} navigate={navigate}/> {ideaDetails?.comments}</span>
+                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} navigate={navigate}/> {ideaDetails?.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
@@ -102,14 +102,14 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked }) => {
     )
 }
 
-const Comments = ({user, ideaDetails, navigate}) => {
+const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
     const [comments, setComments] = useState(null);
     const fetchComments = async () => {
         if(user) {
             await authUserRequest.get(`/comments/${ideaDetails._id}`)
             .then((response) => {
-                console.log(response.data);
                 setComments(response.data.comments);
+                // ideaDetails.comments++;
             })
             .catch((error) => {
                 console.log(error);
@@ -122,9 +122,7 @@ const Comments = ({user, ideaDetails, navigate}) => {
     const [comment, setComment] = useState("");
 
     useEffect(() => {
-        // setTimeout(() =>{
-            fetchComments();
-        // }, 10000)
+        fetchComments();
     }, [])
 
     const handleCommentPost = (close) => {
@@ -136,7 +134,11 @@ const Comments = ({user, ideaDetails, navigate}) => {
             "userProfileImage": user?.profileImage,
         })
        .then((response) => {
-        console.log(response);
+        const addedComment = response.data.comment;
+        setComments([...comments, addedComment]);
+        setIdeaDetails({...ideaDetails, comments: comments.length});
+        setComment("");
+        close();
        })
        .catch((error) => {
             console.log(error);
@@ -165,8 +167,8 @@ const Comments = ({user, ideaDetails, navigate}) => {
                                         </div>
                                     )) : 
                                     <h3 style={{fontFamily: "var(--accent-font)"}}>No Comments</h3>
-                                    : Array.from({ length: 10 }).map((_) => (
-                                        <div className="comment" key={comment._id}>
+                                    : Array.from({ length: 10 }).map((_, index) => (
+                                        <div className="comment" key={index}>
                                             <Skeleton width={"35px"} height={"35px"} style={{borderRadius: "50%"}}/>
                                             <div style={{width: "100%"}}>
                                                 <Skeleton width={"100px"}/>

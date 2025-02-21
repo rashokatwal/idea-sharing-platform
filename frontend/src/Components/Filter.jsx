@@ -7,6 +7,7 @@ import '../Styles/filter.css';
 
 const Filter = ({ parentCallback }) => {
     const [typingTimeout, setTypingTimeout] = useState(null);
+    const [ viewType, setViewType ] = useState("grid");
 
     const onTrigger = (changedData) => {
         parentCallback(changedData);
@@ -58,8 +59,8 @@ const Filter = ({ parentCallback }) => {
                 <Dropdown placeholder={ "Time Period" } suggestions={ timePeriod } onChange={handleTimePeriod} clearButton={true}/>
                 <Dropdown placeholder={ "Sort By" } suggestions={ sortBy } onChange={handleSort} clearButton={true}/>
                 <div className="view-type">
-                    <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "grid"})}/>
-                    <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' onClick={() => onTrigger({changedProperty: "view", value: "list"})}/>
+                    <FontAwesomeIcon icon="fa-solid fa-grip" size='lg' style={{transition: "0.2s", color: viewType == "grid" ? "var(--accent-color)" : "var(--text-color)"}} onClick={() => {onTrigger({changedProperty: "view", value: "grid"}); setViewType("grid")}}/>
+                    <FontAwesomeIcon icon="fa-solid fa-list-ul" size='lg' style={{transition: "0.2s", color: viewType == "list" ? "var(--accent-color)" : "var(--text-color)"}} onClick={() => {onTrigger({changedProperty: "view", value: "list"}); setViewType("list")}}/>
                 </div>
             </div>
         </div>

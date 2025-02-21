@@ -1,5 +1,6 @@
 const commentsModel = require('../models/commentsModel');
 const Comment = require('../models/commentsModel');
+const Idea = require('../models/ideaModel');
 
 const postComment = async (req, res) => {
     const commentDetails = req.body;
@@ -7,9 +8,17 @@ const postComment = async (req, res) => {
     try {
         const comment = await Comment.addComment(commentDetails);
 
-        console.log(comment);
-
-        res.status(200).json({comment});
+        await Idea
+                .updateOne({_id: commentDetails.ideaId}, { $inc: {comments: 1} })
+                .then(result => {
+                    // console.log(result);
+                    res.status(200).json({comment});
+                    // db.close();
+                })
+                .catch((err) => {
+                    res.status(500).json({error: 'Error updating data'});
+                    // db.close();
+                })
     }
     catch(error) {
         res.status(400).json(error.message);

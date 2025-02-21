@@ -90,7 +90,7 @@ const Idea = () => {
     return (
         <div className="idea-outer">
             <div className="idea-inner">
-                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails} previewType={"user"} isIdeaLiked={isLiked}/>}
+                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} previewType={"user"} isIdeaLiked={isLiked}/>}
             </div>
         </div>
     )
