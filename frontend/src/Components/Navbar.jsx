@@ -87,11 +87,6 @@ const Navbar = () => {
                                     </ul>
                                 </div>
                             </li>
-                            {/* <li style={{marginLeft: '10px'}}>
-                                <Link to="/ideaeditor">
-                                    <button className="primary-button">Post Idea</button>
-                                </Link>
-                            </li> */}
                         </div>)}
                 </ul>
             </div>

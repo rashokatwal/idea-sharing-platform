@@ -48,7 +48,6 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
                 { "reads" : ideaDetails.reads + 1 },
             )
            .then((response) => {
-                // console.log(response.data)
             })
            .catch((error) => console.log(error));
     }
@@ -109,7 +108,6 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
             await authUserRequest.get(`/comments/${ideaDetails._id}`)
             .then((response) => {
                 setComments(response.data.comments);
-                // ideaDetails.comments++;
             })
             .catch((error) => {
                 console.log(error);

@@ -5,14 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Autocomplete = ({ suggestions, placeholder, value, onChange, outline }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState(value);
-  // const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
     setInputValue(inputValue);
     onChange(inputValue);
 
-    // Filter suggestions based on input value
     const filteredSuggestions = suggestions.filter(suggestion =>
       suggestion.toLowerCase().includes(inputValue.toLowerCase())
     );
