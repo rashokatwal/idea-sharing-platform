@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactQuill from 'react-quill-new';
-// import 'react-quill-new/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
-// import { useNavigate } from 'react-router-dom';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-// import axios from "axios";
 import api from "../Helpers/api";
 
 const PageTwo = ({ changePages }) => {
