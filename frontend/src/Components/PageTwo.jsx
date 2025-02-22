@@ -6,25 +6,14 @@ import { useLoadingBar } from '../Hooks/useLoadingBar';
 import api from "../Helpers/api";
 
 const PageTwo = ({ changePages }) => {
-    // const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
-    // const { summary, tags } = ideaDetails;
     const [ summaryChars, setSummaryChars ] = useState({
-        value: sessionIdea ? sessionIdea.summary : "",
-        // valid: sessionIdea ? sessionIdea.summary.trim().length > 0 : false, 
+        value: sessionIdea ? sessionIdea.summary : "", 
         outline: "none"
     });
     const [ tags, setTags ] = useState(sessionIdea ? sessionIdea.tags : []);
-    // const [ valid, setValid ] = useState(summaryChars.valid);
     const [ newTag, setNewTag ] = useState("");
-
-    // useEffect(() => {
-    //     if (!sessionIdea) {
-    //         navigate(-1);
-    //     }
-    //     // console.log(sessionIdea);
-    // }, [sessionIdea, navigate]);
 
     const modules = {
         toolbar: [
