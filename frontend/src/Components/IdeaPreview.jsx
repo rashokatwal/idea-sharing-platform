@@ -61,9 +61,9 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
             <div className="author-details">
                 <img className="author-avatar" src='/src/Assets/default_user.png' />
                 <div className="author-header">
-                    <span className="author-name">
+                    <Link to={`/profile/${ideaDetails?.author}`} className="author-name">
                         {ideaDetails?.author}
-                    </span>
+                    </Link>
                     <p className="idea-preview-date-time">
                         {ideaDetails ? postedDateTime.date + ", " + postedDateTime.time : ""}
                     </p>
