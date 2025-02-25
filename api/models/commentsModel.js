@@ -35,9 +35,19 @@ commentSchema.statics.addComment = async function(commentDetails) {
 commentSchema.statics.getComments = async function(ideaId) {
     const comments = await this.find({ideaId});
     if(!comments) {
-        return res.status(404).json({message: 'Comments not found.'});
+        throw Error('Comments not found')
     }
     return comments;
 } 
+
+commentSchema.statics.deleteComment = async function(commentId) {
+    const comment = await this.find({_id: commentId});
+    if(!comment) {
+        throw Error('Comment not found');
+    }
+    const response = await this.deleteOne({_id: commentId})
+
+    return response;
+}
 
 module.exports = mongoose.model('Comment', commentSchema);

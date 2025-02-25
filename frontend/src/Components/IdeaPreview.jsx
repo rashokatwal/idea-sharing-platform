@@ -100,7 +100,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
     )
 }
 
-const Comments = ({user, ideaDetails, setIdeaDetails, navigate, previewType}) => {
+const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
     const [comments, setComments] = useState(null);
     const dropdownRefs = useRef([]); // Array of refs for dropdowns
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Track which dropdown is open
@@ -128,8 +128,8 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate, previewType}) =>
         fetchComments();
     }, [])
 
-    const handleCommentPost = (close) => {
-        authUserRequest.post(`/comment`, {
+    const handleCommentPost = async (close) => {
+        await authUserRequest.post(`/comment`, {
             "ideaId": ideaDetails._id,
             "comment": comment,
             "username": user?.username,
@@ -146,6 +146,24 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate, previewType}) =>
        .catch((error) => {
             console.log(error);
         })
+    }
+
+    const deleteComment = async (id) => {
+        console.log(ideaDetails._id);
+        await authUserRequest.delete(`/comment`, 
+            {data: {
+                commentId: id,
+                ideaId: ideaDetails._id
+            }}
+        )
+            .then((response) => {
+                console.log(response);
+                const updatedComments = comments.filter(comment => comment._id !== id);
+                setComments(updatedComments);
+                setIdeaDetails({...ideaDetails, comments: updatedComments.length});
+                setOpenDropdownIndex(null);
+            })
+            .catch(error => console.log(error));
     }
 
     useEffect(() => {
@@ -198,8 +216,8 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate, previewType}) =>
                                                     style={{ display: openDropdownIndex === index ? "block" : "none" }}
                                                 >
                                                     <ul className="dropdown-list">
-                                                    <li className="dropdown-item">Edit</li>
-                                                    <li className="dropdown-item delete">Delete</li>
+                                                        <li className="dropdown-item">Edit</li>
+                                                        <li className="dropdown-item delete" onClick={() => deleteComment(comment._id)}>Delete</li>
                                                     </ul>
                                                 </div>
                                             </div>

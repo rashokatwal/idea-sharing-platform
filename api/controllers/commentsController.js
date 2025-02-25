@@ -40,4 +40,21 @@ const getComments = async (req, res) => {
     }
 }
 
-module.exports = { postComment, getComments }
+const deleteComment = async (req, res) => {
+    const {commentId, ideaId} = req.body;
+    console.log(req.body);
+
+    try {
+        const response = await Comment.deleteComment(commentId);
+
+        // console.log(commentsModel);
+        await Idea.updateOne({_id: ideaId}, { $inc: {comments: -1} });
+
+        res.status(200).json({response});
+    }
+    catch(error) {
+        res.status(400).json(error.message);
+    }
+}
+
+module.exports = { postComment, getComments, deleteComment }
