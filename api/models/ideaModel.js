@@ -16,8 +16,12 @@ const ideaSchema = new Schema({
         default: ""
     },
     author: {
-        type: String,
-        required: true
+        type: Object,
+        default: {
+            fullName: "",
+            username: "",
+            profileImage: ""
+        }
     },
     category: {
         type: String,

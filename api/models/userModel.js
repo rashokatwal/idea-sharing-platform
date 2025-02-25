@@ -80,7 +80,7 @@ const userSchema = new Schema({
     },
     socialLinks: {
         type: Object,
-        default: {
+        default: {    
         }
     },
     works: {

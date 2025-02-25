@@ -10,7 +10,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler';
 import Skeleton from 'react-loading-skeleton'
-
 const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) => {
     const {user} = useAuthContext();
     const [ isLiked, setIsLiked ] = useState(null);
@@ -22,8 +21,8 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
     useEffect(() => {
         if(previewType == "user") {
             updateReads();
+            setIsLiked(isIdeaLiked);
         }
-        setIsLiked(isIdeaLiked);
     }, [])
 
     const handleLike = async () => {
@@ -59,10 +58,10 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
     return (
         <div className="idea-preview">
             <div className="author-details">
-                <img className="author-avatar" src='/src/Assets/default_user.png' />
+                <img className="author-avatar" src={ideaDetails?.author.profileImage} />
                 <div className="author-header">
-                    <Link to={`/profile/${ideaDetails?.author}`} className="author-name">
-                        {ideaDetails?.author}
+                    <Link to={`/profile/${ideaDetails?.author.username}`} className="author-name">
+                        {ideaDetails?.author.fullName}
                     </Link>
                     <p className="idea-preview-date-time">
                         {ideaDetails ? postedDateTime.date + ", " + postedDateTime.time : ""}

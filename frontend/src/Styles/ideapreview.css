@@ -30,6 +30,11 @@
     cursor: pointer;
 }
 
+.idea-preview .author-details .author-header a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
 .idea-preview-details {
     margin: 40px 0px;
 }

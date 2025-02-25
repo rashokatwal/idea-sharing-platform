@@ -1,5 +1,6 @@
 import '../Styles/lists.css';
 import { categoryColors } from '../Helpers/constants';
+import { Link } from 'react-router-dom';
 
 const ListComponent = ({ idea }) => {
     return (
@@ -9,7 +10,7 @@ const ListComponent = ({ idea }) => {
                 <p className="posted-date">{idea.datePosted}</p>
             </div>
             <p className="list-description">{idea.description}</p>
-            <h5 className="author" style={{margin: "0"}}>By <span className="author-name">{idea.author}</span></h5>
+            <h5 className="author" style={{margin: "0"}}>By <Link to={`/profile/${idea.author?.username}`} className="author-name">{idea.author?.fullName}</Link></h5>
             <div className="category-tags">
                 <p className="category" style={{backgroundColor: categoryColors[idea.category], marginBottom: "0"}}>{idea.category}</p>
                 <div className="tags" style={{flexGrow: "1"}}>

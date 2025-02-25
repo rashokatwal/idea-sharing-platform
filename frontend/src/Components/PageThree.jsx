@@ -5,6 +5,7 @@ import IdeaPreview from "./IdeaPreview";
 // import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
+import api from "../Helpers/api";
 
 const PageThree = ({ changePages }) => {
     // const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PageThree = ({ changePages }) => {
 
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
-        await axios.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
+        await api.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
             {"status": "Completed"}
         )
         .then((response) => {
@@ -49,7 +50,7 @@ const PageThree = ({ changePages }) => {
                 <p className="header-subtitle" style={{lineHeight: "25px"}}>
                     Look over your idea, make any changes, and submit to inspire others.
                 </p>
-                <IdeaPreview ideaDetails={sessionIdea} previewType={"author"}/>
+                <IdeaPreview ideaDetails={sessionIdea} previewType={"author"} isIdeaLiked={null} setIdeaDetails={null} />
             </div>
 
             <div className="idea-buttons">

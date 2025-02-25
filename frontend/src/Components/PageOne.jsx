@@ -6,8 +6,10 @@ import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 // import { useNavigate } from 'react-router-dom';
 import api from "../Helpers/api";
+import { useAuthContext } from "../Hooks/useAuthContext";
 
 const PageOne = ({ changePages }) => {
+    const {user} = useAuthContext();
     const loadingBarRef = useLoadingBar();
     // const navigate = useNavigate();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
@@ -91,7 +93,7 @@ const PageOne = ({ changePages }) => {
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null) {
             await api.post('/idea',
-                { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
+                { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: {fullName: user?.fullname, username: user?.username, profileImage: user?.profileImage} }
             )
             .then((response) => {
                 let ideaDetails = response.data;
@@ -108,7 +110,7 @@ const PageOne = ({ changePages }) => {
         else {
             if(checkForChanges()) {
                 await api.patch(`/idea/${sessionIdea._id}`,
-                    { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: "Jon Doe" }
+                    { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value }
                 )
                 .then((response) => {
                     let ideaDetails = response.data;
