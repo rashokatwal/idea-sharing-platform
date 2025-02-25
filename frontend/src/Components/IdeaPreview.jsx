@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import "../Styles/ideapreview.css";
 import parse from 'html-react-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -88,7 +88,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
             <div className="extra-features">
                 <div className="like-comment-share">
                     <span className="likes" style={{cursor: "pointer"}}><FontAwesomeIcon icon={(isLiked ? "fa-solid" : "fa-regular") + " fa-heart"} className={isLiked ? "liked-button-animation" : ""} onClick={() => previewType == "user" ? handleLike() : null}/> {ideaDetails?.likes}</span>
-                    <span className="comments" style={{cursor: "pointer"}}><Comments user={user} ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} navigate={navigate}/> {ideaDetails?.comments}</span>
+                    <span className="comments" style={{cursor: "pointer"}}>{previewType == "user" ? <Comments user={user} ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} navigate={navigate} /> : <FontAwesomeIcon icon="fa-regular fa-comment" />} {ideaDetails?.comments}</span>
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
@@ -100,8 +100,14 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
     )
 }
 
-const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
+const Comments = ({user, ideaDetails, setIdeaDetails, navigate, previewType}) => {
     const [comments, setComments] = useState(null);
+    const dropdownRefs = useRef([]); // Array of refs for dropdowns
+    const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Track which dropdown is open
+
+    const toggleDropdown = (index) => {
+        setOpenDropdownIndex(openDropdownIndex === index ? null : index); // Toggle dropdown visibility
+    };
     const fetchComments = async () => {
         if(user) {
             await authUserRequest.get(`/comments/${ideaDetails._id}`)
@@ -142,6 +148,17 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
         })
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRefs.current[openDropdownIndex] && !dropdownRefs.current[openDropdownIndex].contains(event.target)) {
+                setOpenDropdownIndex(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [openDropdownIndex])
+
     return (
         <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
             modal 
@@ -154,13 +171,39 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
                         {
                             comments?
                                 comments.length > 0 ? 
-                                    comments.map((comment) => (
+                                    comments.map((comment, index) => (
                                         <div className="comment" key={comment._id}>
-                                            <img src={comment.userProfileImage} placeholder="Profile Image" height="35px" width="35px" />
-                                            <div style={{width: "100%"}}>
-                                                <Link to={`/profile/${comment.username}`} className="user-fullname">{comment.userFullName}</Link>
-                                                <p className="comment-content">{comment.comment}</p>
+                                        <img
+                                            src={comment.userProfileImage}
+                                            alt="Profile"
+                                            height="35px"
+                                            width="35px"
+                                        />
+                                        <div style={{ width: "100%" }}>
+                                            <Link to={`/profile/${comment.username}`} className="user-fullname">
+                                            {comment.userFullName}
+                                            </Link>
+                                            <p className="comment-content">{comment.comment}</p>
+                                        </div>
+                                        {comment.username === user.username && (
+                                            <div className="comment-options">
+                                                <FontAwesomeIcon
+                                                    icon="fa-solid fa-ellipsis"
+                                                    size="lg"
+                                                    onClick={() => toggleDropdown(index)}
+                                                />
+                                                <div
+                                                    className="dropdown"
+                                                    ref={(el) => (dropdownRefs.current[index] = el)}
+                                                    style={{ display: openDropdownIndex === index ? "block" : "none" }}
+                                                >
+                                                    <ul className="dropdown-list">
+                                                    <li className="dropdown-item">Edit</li>
+                                                    <li className="dropdown-item delete">Delete</li>
+                                                    </ul>
+                                                </div>
                                             </div>
+                                        )}
                                         </div>
                                     )) : 
                                     <h3 style={{fontFamily: "var(--accent-font)"}}>No Comments</h3>

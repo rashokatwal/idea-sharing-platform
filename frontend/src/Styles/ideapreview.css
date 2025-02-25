@@ -109,6 +109,7 @@
     align-items: start;
     gap: 10px;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .comment .user-fullname {
@@ -159,6 +160,49 @@
 
 .input-comment input:focus {
     outline: solid 3px var(--accent-color);
+}
+
+.comment-options {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.comment-options .dropdown {
+    right: 20%;
+    position: absolute;
+    background-color: var(--background-color);
+    padding: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+.comment-options .dropdown .dropdown-list {
+    position: relative;
+    width: fit-content;
+    box-shadow: none;
+    z-index: 0;
+}
+
+.comment-options .dropdown .dropdown-list li {
+    min-width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.comment-options .dropdown .delete {
+    color: rgb(219, 6, 6);
+}
+
+.comment-options .dropdown .delete:hover {
+    background-color: #ECDFDE;
 }
 
 /* .collaborate::after {
