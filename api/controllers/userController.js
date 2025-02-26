@@ -54,6 +54,7 @@ const signupUser = async (req, res) => {
 
 const updateUserDetails = async (req, res) => {
     const updates = req.body;
+    console.log(req.body);
 
     try {
         const user = await User.updateDetails(updates, req.params.id);

@@ -102,7 +102,8 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
 
 const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
     const [comments, setComments] = useState(null);
-    const dropdownRefs = useRef([]); // Array of refs for dropdowns
+    const dropdownRefs = useRef([]);
+    const textareasRef = useRef([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Track which dropdown is open
 
     const toggleDropdown = (index) => {
@@ -126,6 +127,11 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
 
     useEffect(() => {
         fetchComments();
+        textareasRef.current.forEach((textarea) => {
+            textarea.rows = 1; // Reset to 1 row before calculation
+            const rows = Math.ceil(textarea.scrollHeight / 24); // Approximate row height
+            textarea.rows = rows; 
+        });
     }, [])
 
     const handleCommentPost = async (close) => {
@@ -138,8 +144,10 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
         })
        .then((response) => {
         const addedComment = response.data.comment;
+        let commentsCount = ideaDetails.comments;
+        commentsCount++;
         setComments([...comments, addedComment]);
-        setIdeaDetails({...ideaDetails, comments: comments.length});
+        setIdeaDetails({...ideaDetails, comments: commentsCount});
         setComment("");
         close();
        })
@@ -152,8 +160,8 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
         console.log(ideaDetails._id);
         await authUserRequest.delete(`/comment`, 
             {data: {
-                commentId: id,
-                ideaId: ideaDetails._id
+                "commentId": id,
+                "ideaId": ideaDetails._id
             }}
         )
             .then((response) => {
@@ -176,6 +184,15 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [openDropdownIndex])
+
+    // useEffect(() => {
+    //     textareasRef.current.forEach((textarea) => {
+    //     if (textarea) {
+    //         textarea.style.height = "auto"; // Reset height
+    //         textarea.style.height = textarea.scrollHeight + "px"; // Adjust to fit content
+    //     }
+    //     });
+    // }, []);
 
     return (
         <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
@@ -201,7 +218,8 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
                                             <Link to={`/profile/${comment.username}`} className="user-fullname">
                                             {comment.userFullName}
                                             </Link>
-                                            <p className="comment-content">{comment.comment}</p>
+                                            <br />
+                                            <textarea className="comment-content-disabled"  ref={(el) => (textareasRef.current[index] = el)}  value={comment.comment} disabled={false}/>
                                         </div>
                                         {comment.username === user.username && (
                                             <div className="comment-options">
