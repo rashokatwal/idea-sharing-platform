@@ -122,16 +122,17 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
         else {
             navigate('/signin');
         }
+        textareasRef.current.forEach((textarea) => {
+            if (textarea) {
+              textarea.style.height = "auto"; // Reset height
+              textarea.style.height = textarea.scrollHeight + "px"; // Adjust to fit content
+            }
+        });
     }
     const [comment, setComment] = useState("");
 
     useEffect(() => {
         fetchComments();
-        textareasRef.current.forEach((textarea) => {
-            textarea.rows = 1; // Reset to 1 row before calculation
-            const rows = Math.ceil(textarea.scrollHeight / 24); // Approximate row height
-            textarea.rows = rows; 
-        });
     }, [])
 
     const handleCommentPost = async (close) => {

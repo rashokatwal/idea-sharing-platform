@@ -108,7 +108,7 @@
     display: flex;
     align-items: start;
     gap: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     position: relative;
 }
 
@@ -132,7 +132,12 @@
 .comment .comment-content-disabled {
    padding: 0px;
    border: none;
+   margin: 0px;
 }
+
+.comment .comment-content-disabled:active {
+    outline: none !important;
+ }
 
 .input-comment {
     width: 100%;
