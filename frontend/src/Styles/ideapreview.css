@@ -99,7 +99,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    padding: 15px 0px;
+    flex-direction: column;
+    padding-top: 15px;
 }
 
 .comment {
@@ -111,7 +112,7 @@
     margin-top: 0px;
     position: relative;
     border-radius: 10px;
-    /* box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2); */
+    width: 90%;
     border: solid 2px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
@@ -148,6 +149,7 @@
     font-family: var(--accent-font);
     font-weight: 500;
     min-width: 100%;
+    transition: 0.1s;
     /* padding-right: 23px; */
 }
 
@@ -169,7 +171,8 @@
     gap: 10px;
     position: sticky;
     bottom: 0px;
-    background: var(--background-color)
+    background: var(--background-color);
+    z-index: 9999;
 }
 
 .input-comment input {
@@ -201,18 +204,17 @@
 .comment-options .dropdown {
     right: 20%;
     top: 100%;
-    /* position: absolute; */
     background-color: var(--background-color);
     padding: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    z-index: 1;
 }
 
 .comment-options .dropdown .dropdown-list {
     position: relative;
     width: fit-content;
     box-shadow: none;
-    z-index: 0;
 }
 
 .comment-options .dropdown .dropdown-list li {

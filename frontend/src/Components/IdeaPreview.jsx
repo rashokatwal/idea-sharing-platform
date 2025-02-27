@@ -102,6 +102,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
 
 const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     const [comments, setComments] = useState([]); // Default to empty array
+    const [loading, setLoading] = useState(true);
     const [comment, setComment] = useState("");
     const [editedComment, setEditedComment] = useState(""); // Default to empty array
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
@@ -117,6 +118,7 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                     const response = await api.get(`/comments/${ideaDetails._id}`);
                     setComments(response.data.comments);
                     console.log(response.data.comments);
+                    setLoading(false);
                 } catch (error) {
                     console.log(error);
                 }
@@ -125,7 +127,9 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
             }
         };
 
-        fetchComments();
+        // setTimeout(() => {
+            fetchComments();
+        // }, 5000)
     }, [user, ideaDetails._id, navigate]);
 
     const handleCommentPost = async (close) => {
@@ -221,61 +225,65 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
         >
             {(close) => (
                 <div>
-                    <h3 className="header">Comments</h3>
+                    <h3 className="header" style={{textAlign: "center"}}>Comments</h3>
                     <div className="comments-section" style={{ display: comments.length > 0 ? "block" : "flex" }}>
-                        {comments.length > 0 ? (
-                            comments.map((comment, index) => (
-                                <div className="comment" key={comment._id}>
-                                    <div style={{ display: "flex", alignItems: "start", gap: "10px" }}>
-                                        <img src={comment.userProfileImage} alt="Profile" height="35px" width="35px" />
-                                        <div style={{ width: "100%" }}>
-                                            <Link to={`/profile/${comment.username}`} className="user-fullname">
-                                                {comment.userFullName}
-                                            </Link>
-                                            <p className="comment-date-time">
-                                                {dateTimeConverter(comment.createdAt).date + ", " + dateTimeConverter(comment.createdAt).time}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className={`comment-content ${editableCommentIndex === index ? "editable-comment" : null}`} ref={(el) => (commentRefs.current[index] = el)} contentEditable={editableCommentIndex === index} dangerouslySetInnerHTML={{ __html: comment.comment }} onInput={e => setEditedComment(e.currentTarget.textContent)}></div>
-                                    <button className='primary-button' style={{display: editableCommentIndex === index ? "block" : "none"}} disabled={!editedComment || editedComment == comment.comment} onClick={() => updateComment(comment._id)}>Save</button>
-                                    {comment.username === user.username && (
-                                        <div className="comment-options">
-                                            <FontAwesomeIcon
-                                                icon="fa-solid fa-ellipsis"
-                                                size="lg"
-                                                onClick={() => toggleDropdown(index)}
-                                            />
-                                            <div
-                                                className="dropdown"
-                                                ref={(el) => (dropdownRefs.current[index] = el)}
-                                                style={{ display: openDropdownIndex === index ? "block" : "none" }}
-                                            >
-                                                <ul className="dropdown-list">
-                                                    <li className="dropdown-item" onClick={() => editComment(index)}>Edit</li>
-                                                    <li className="dropdown-item delete" onClick={() => deleteComment(comment._id)}>
-                                                        Delete
-                                                    </li>
-                                                </ul>
+                        {!loading ?
+                            comments.length > 0 ? 
+                                comments.map((comment, index) => (
+                                    <div className="comment" key={comment._id}>
+                                        <div style={{ display: "flex", alignItems: "start", gap: "10px" }}>
+                                            <img src={comment.userProfileImage} alt="Profile" height="35px" width="35px" />
+                                            <div style={{ width: "100%" }}>
+                                                <Link to={`/profile/${comment.username}`} className="user-fullname">
+                                                    {comment.userFullName}
+                                                </Link>
+                                                <p className="comment-date-time">
+                                                    {dateTimeConverter(comment.createdAt).date + ", " + dateTimeConverter(comment.createdAt).time}
+                                                </p>
                                             </div>
                                         </div>
-                                    )}
-                                </div>
-                            ))
-                        ) : (
-                            <h3 style={{ fontFamily: "var(--accent-font)" }}>No Comments</h3>
-                        )}
-
-                        {!comments.length &&
-                            Array.from({ length: 10 }).map((_, index) => (
-                                <div className="comment" key={index}>
-                                    <Skeleton width={"35px"} height={"35px"} style={{ borderRadius: "50%" }} />
-                                    <div style={{ width: "100%" }}>
-                                        <Skeleton width={"100px"} />
-                                        <Skeleton width={"100%"} count={2} />
+                                        <div className={`comment-content ${editableCommentIndex === index ? "editable-comment" : null}`} ref={(el) => (commentRefs.current[index] = el)} contentEditable={editableCommentIndex === index} dangerouslySetInnerHTML={{ __html: comment.comment }} onInput={e => setEditedComment(e.currentTarget.textContent)}></div>
+                                        <button className='primary-button' style={{display: editableCommentIndex === index ? "block" : "none"}} disabled={!editedComment || editedComment == comment.comment} onClick={() => updateComment(comment._id)}>Save</button>
+                                        {comment.username === user.username && (
+                                            <div className="comment-options">
+                                                <FontAwesomeIcon
+                                                    icon="fa-solid fa-ellipsis"
+                                                    size="lg"
+                                                    onClick={() => toggleDropdown(index)}
+                                                />
+                                                <div
+                                                    className="dropdown"
+                                                    ref={(el) => (dropdownRefs.current[index] = el)}
+                                                    style={{ display: openDropdownIndex === index ? "block" : "none" }}
+                                                >
+                                                    <ul className="dropdown-list">
+                                                        <li className="dropdown-item" onClick={() => editComment(index)}>Edit</li>
+                                                        <li className="dropdown-item delete" onClick={() => deleteComment(comment._id)}>
+                                                            Delete
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                            : 
+                                <h3 style={{ fontFamily: "var(--accent-font)" }}>No Comments</h3>
+                            
+                            :
+                                Array.from({ length: 10 }).map((_, index) => (
+                                    <div className="comment" key={index}>
+                                        <div style={{ display: "flex", alignItems: "start", gap: "10px" }}>
+                                            <Skeleton width={"35px"} height={"35px"} style={{ borderRadius: "50%" }} />
+                                            <div style={{ width: "100%" }}>
+                                                <Skeleton width={"100px"} />
+                                                <Skeleton width={"100px"} />
+                                            </div>
+                                        </div>
+                                        <div style={{width: "100%"}}><Skeleton width={"100%"} count={2} /></div>
+                                    </div>
+                                ))
+                        }
                     </div>
                     <div className="input-comment">
                         <img src={user?.profileImage} alt="Profile" height="35px" width="35px" />
