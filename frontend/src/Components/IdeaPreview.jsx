@@ -187,7 +187,7 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
         <Popup
             trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
             modal
-            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out"}}
         >
             {(close) => (
                 <div>
@@ -196,14 +196,18 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                         {comments.length > 0 ? (
                             comments.map((comment, index) => (
                                 <div className="comment" key={comment._id}>
-                                    <img src={comment.userProfileImage} alt="Profile" height="35px" width="35px" />
-                                    <div style={{ width: "100%" }}>
-                                        <Link to={`/profile/${comment.username}`} className="user-fullname">
-                                            {comment.userFullName}
-                                        </Link>
-                                        <br />
-                                        <div className='comment-content' ref={(el) => (commentRefs.current[index] = el)} contentEditable={false}>{comment.comment}</div>
+                                    <div style={{ display: "flex", alignItems: "start", gap: "10px" }}>
+                                        <img src={comment.userProfileImage} alt="Profile" height="35px" width="35px" />
+                                        <div style={{ width: "100%" }}>
+                                            <Link to={`/profile/${comment.username}`} className="user-fullname">
+                                                {comment.userFullName}
+                                            </Link>
+                                            <p className="comment-date-time">
+                                                {dateTimeConverter(comment.createdAt).date + ", " + dateTimeConverter(comment.createdAt).time}
+                                            </p>
+                                        </div>
                                     </div>
+                                    <div className='comment-content' ref={(el) => (commentRefs.current[index] = el)} contentEditable={false}>{comment.comment}</div>
                                     {comment.username === user.username && (
                                         <div className="comment-options">
                                             <FontAwesomeIcon
