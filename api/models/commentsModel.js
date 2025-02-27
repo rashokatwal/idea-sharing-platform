@@ -40,6 +40,16 @@ commentSchema.statics.getComments = async function(ideaId) {
     return comments;
 } 
 
+commentSchema.statics.updateComment = async function(commentId, commentText) {
+    const comment = await this.find({_id: commentId});
+    if(!comment) {
+        throw Error('Comment not found');
+    }
+    const response = await this.findByIdAndUpdate(commentId, {comment: commentText}, {new: true});
+
+    return response;
+} 
+
 commentSchema.statics.deleteComment = async function(commentId) {
     const comment = await this.find({_id: commentId});
     if(!comment) {

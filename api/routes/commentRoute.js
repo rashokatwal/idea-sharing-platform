@@ -1,7 +1,9 @@
 const express = require('express');
-const { postComment, getComments, deleteComment } = require('../controllers/commentsController');
+const { postComment, getComments, deleteComment, updateComment } = require('../controllers/commentsController');
 
 const authenticateUser = require('../middleware/authenticateUser');
+
+const authenticateAPIKey = require('../middleware/authenticateAPIKey');
 
 const router = express.Router();
 
@@ -9,8 +11,10 @@ const router = express.Router();
 
 router.post('/comment', authenticateUser, postComment);
 
-router.get('/comments/:id', getComments);
+router.get('/comments/:id', authenticateAPIKey, getComments);
 
-router.delete('/comment', deleteComment);
+router.patch('/comment', authenticateUser, updateComment);
+
+router.delete('/comment', authenticateUser, deleteComment);
 
 module.exports = router;

@@ -103,7 +103,9 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
 const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     const [comments, setComments] = useState([]); // Default to empty array
     const [comment, setComment] = useState("");
+    const [editedComment, setEditedComment] = useState(""); // Default to empty array
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+    const [editableCommentIndex, setEditableCommentIndex] = useState(null);
     const dropdownRefs = useRef([]);
     const commentRefs = useRef([]);
 
@@ -112,8 +114,9 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
         const fetchComments = async () => {
             if (user) {
                 try {
-                    const response = await authUserRequest.get(`/comments/${ideaDetails._id}`);
+                    const response = await api.get(`/comments/${ideaDetails._id}`);
                     setComments(response.data.comments);
+                    console.log(response.data.comments);
                 } catch (error) {
                     console.log(error);
                 }
@@ -145,6 +148,25 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
         }
     };
 
+    const updateComment = async (id) => {
+        try {
+            const response = await authUserRequest.patch("/comment", 
+                { commentId: id, comment: editedComment },
+            );
+
+            setComments((prevComments) =>
+                prevComments.map((comment) =>
+                    comment._id === id ? { ...comment, comment: editedComment } : comment
+                )
+            );
+            setEditedComment("");
+            setEditableCommentIndex(null);
+            setOpenDropdownIndex(null);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const deleteComment = async (id) => {
         try {
             await authUserRequest.delete("/comment", {
@@ -161,14 +183,16 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     };
 
     const editComment = async (index) => {
-        console.log(index);
-        commentRefs.current[index].contentEditable = true;
-        commentRefs.current[index].style.border = '1px solid';
+        setEditableCommentIndex(index);
         setOpenDropdownIndex(null);
     }
     // Handle dropdown toggle
     const toggleDropdown = (index) => {
         setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+    };
+
+    const toggleEditableComment = (index) => {
+        setEditableCommentIndex(editableCommentIndex === index ? null : index);
     };
 
     // Close dropdown when clicking outside
@@ -177,11 +201,17 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
             if (dropdownRefs.current[openDropdownIndex] && !dropdownRefs.current[openDropdownIndex].contains(event.target)) {
                 setOpenDropdownIndex(null);
             }
+            if (commentRefs.current[editableCommentIndex] && !commentRefs.current[editableCommentIndex].contains(event.target)) {
+                if (event.target.closest(".primary-button")) {
+                    return;
+                }
+                setEditableCommentIndex(null);
+            }
         };
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [openDropdownIndex]);
+    }, [openDropdownIndex, editableCommentIndex]);
 
     return (
         <Popup
@@ -207,7 +237,8 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className='comment-content' ref={(el) => (commentRefs.current[index] = el)} contentEditable={false}>{comment.comment}</div>
+                                    <div className={`comment-content ${editableCommentIndex === index ? "editable-comment" : null}`} ref={(el) => (commentRefs.current[index] = el)} contentEditable={editableCommentIndex === index} dangerouslySetInnerHTML={{ __html: comment.comment }} onInput={e => setEditedComment(e.currentTarget.textContent)}></div>
+                                    <button className='primary-button' style={{display: editableCommentIndex === index ? "block" : "none"}} disabled={!editedComment || editedComment == comment.comment} onClick={() => updateComment(comment._id)}>Save</button>
                                     {comment.username === user.username && (
                                         <div className="comment-options">
                                             <FontAwesomeIcon
@@ -257,6 +288,7 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                         <button
                             className="primary-button"
                             style={{ border: "none", padding: "8px" }}
+                            disabled={!comment}
                             onClick={() => handleCommentPost(close)}
                         >
                             <FontAwesomeIcon icon="fa-solid fa-paper-plane" size="lg" />

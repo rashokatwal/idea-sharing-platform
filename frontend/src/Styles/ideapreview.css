@@ -147,7 +147,18 @@
     line-height: 20px;
     font-family: var(--accent-font);
     font-weight: 500;
+    min-width: 100%;
     /* padding-right: 23px; */
+}
+
+.comment .editable-comment {
+    border: solid 2px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.comment .editable-comment:focus {
+    outline: solid 3px var(--accent-color);
 }
 
 .input-comment {
