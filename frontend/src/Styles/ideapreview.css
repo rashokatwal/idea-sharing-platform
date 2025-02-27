@@ -108,7 +108,7 @@
     display: flex;
     align-items: start;
     gap: 10px;
-    /* margin-bottom: 20px; */
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -129,15 +129,13 @@
     text-decoration: underline;
 }
 
-.comment .comment-content-disabled {
-   padding: 0px;
-   border: none;
-   margin: 0px;
+.comment .comment-content {
+    font-size: 15px;
+    line-height: 20px;
+    font-family: var(--accent-font);
+    font-weight: 500;
+    padding-right: 23px;
 }
-
-.comment .comment-content-disabled:active {
-    outline: none !important;
- }
 
 .input-comment {
     width: 100%;

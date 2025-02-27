@@ -100,81 +100,78 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
     )
 }
 
-const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
-    const [comments, setComments] = useState(null);
-    const dropdownRefs = useRef([]);
-    const textareasRef = useRef([]);
-    const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Track which dropdown is open
-
-    const toggleDropdown = (index) => {
-        setOpenDropdownIndex(openDropdownIndex === index ? null : index); // Toggle dropdown visibility
-    };
-    const fetchComments = async () => {
-        if(user) {
-            await authUserRequest.get(`/comments/${ideaDetails._id}`)
-            .then((response) => {
-                setComments(response.data.comments);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        }
-        else {
-            navigate('/signin');
-        }
-        textareasRef.current.forEach((textarea) => {
-            if (textarea) {
-              textarea.style.height = "auto"; // Reset height
-              textarea.style.height = textarea.scrollHeight + "px"; // Adjust to fit content
-            }
-        });
-    }
+const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
+    const [comments, setComments] = useState([]); // Default to empty array
     const [comment, setComment] = useState("");
+    const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+    const dropdownRefs = useRef([]);
+    const commentRefs = useRef([]);
 
+    // Fetch comments from API
     useEffect(() => {
+        const fetchComments = async () => {
+            if (user) {
+                try {
+                    const response = await authUserRequest.get(`/comments/${ideaDetails._id}`);
+                    setComments(response.data.comments);
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                navigate("/signin");
+            }
+        };
+
         fetchComments();
-    }, [])
+    }, [user, ideaDetails._id, navigate]);
 
     const handleCommentPost = async (close) => {
-        await authUserRequest.post(`/comment`, {
-            "ideaId": ideaDetails._id,
-            "comment": comment,
-            "username": user?.username,
-            "userFullName": user?.fullname,
-            "userProfileImage": user?.profileImage,
-        })
-       .then((response) => {
-        const addedComment = response.data.comment;
-        let commentsCount = ideaDetails.comments;
-        commentsCount++;
-        setComments([...comments, addedComment]);
-        setIdeaDetails({...ideaDetails, comments: commentsCount});
-        setComment("");
-        close();
-       })
-       .catch((error) => {
+        try {
+            const response = await authUserRequest.post("/comment", {
+                ideaId: ideaDetails._id,
+                comment,
+                username: user?.username,
+                userFullName: user?.fullname,
+                userProfileImage: user?.profileImage,
+            });
+
+            const addedComment = response.data.comment;
+            setComments([...comments, addedComment]);
+            setIdeaDetails({ ...ideaDetails, comments: comments.length + 1 });
+            setComment("");
+            close();
+        } catch (error) {
             console.log(error);
-        })
-    }
+        }
+    };
 
     const deleteComment = async (id) => {
-        console.log(ideaDetails._id);
-        await authUserRequest.delete(`/comment`, 
-            {data: {
-                "commentId": id,
-                "ideaId": ideaDetails._id
-            }}
-        )
-            .then((response) => {
-                console.log(response);
-                const updatedComments = comments.filter(comment => comment._id !== id);
-                setComments(updatedComments);
-                setIdeaDetails({...ideaDetails, comments: updatedComments.length});
-                setOpenDropdownIndex(null);
-            })
-            .catch(error => console.log(error));
-    }
+        try {
+            await authUserRequest.delete("/comment", {
+                data: { commentId: id, ideaId: ideaDetails._id },
+            });
 
+            const updatedComments = comments.filter((comment) => comment._id !== id);
+            setComments(updatedComments);
+            setIdeaDetails({ ...ideaDetails, comments: updatedComments.length });
+            setOpenDropdownIndex(null);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const editComment = async (index) => {
+        console.log(index);
+        commentRefs.current[index].contentEditable = true;
+        commentRefs.current[index].style.border = '1px solid';
+        setOpenDropdownIndex(null);
+    }
+    // Handle dropdown toggle
+    const toggleDropdown = (index) => {
+        setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+    };
+
+    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRefs.current[openDropdownIndex] && !dropdownRefs.current[openDropdownIndex].contains(event.target)) {
@@ -182,92 +179,89 @@ const Comments = ({user, ideaDetails, setIdeaDetails, navigate}) => {
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [openDropdownIndex])
-
-    // useEffect(() => {
-    //     textareasRef.current.forEach((textarea) => {
-    //     if (textarea) {
-    //         textarea.style.height = "auto"; // Reset height
-    //         textarea.style.height = textarea.scrollHeight + "px"; // Adjust to fit content
-    //     }
-    //     });
-    // }, []);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [openDropdownIndex]);
 
     return (
-        <Popup trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
-            modal 
+        <Popup
+            trigger={<FontAwesomeIcon icon="fa-regular fa-comment" />}
+            modal
             contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
         >
             {(close) => (
                 <div>
                     <h3 className="header">Comments</h3>
-                    <div className="comments-section" style={{display: comments?.length > 0 ? "block" : "flex"}}>
-                        {
-                            comments?
-                                comments.length > 0 ? 
-                                    comments.map((comment, index) => (
-                                        <div className="comment" key={comment._id}>
-                                        <img
-                                            src={comment.userProfileImage}
-                                            alt="Profile"
-                                            height="35px"
-                                            width="35px"
-                                        />
-                                        <div style={{ width: "100%" }}>
-                                            <Link to={`/profile/${comment.username}`} className="user-fullname">
+                    <div className="comments-section" style={{ display: comments.length > 0 ? "block" : "flex" }}>
+                        {comments.length > 0 ? (
+                            comments.map((comment, index) => (
+                                <div className="comment" key={comment._id}>
+                                    <img src={comment.userProfileImage} alt="Profile" height="35px" width="35px" />
+                                    <div style={{ width: "100%" }}>
+                                        <Link to={`/profile/${comment.username}`} className="user-fullname">
                                             {comment.userFullName}
-                                            </Link>
-                                            <br />
-                                            <textarea className="comment-content-disabled"  ref={(el) => (textareasRef.current[index] = el)}  value={comment.comment} disabled={false}/>
-                                        </div>
-                                        {comment.username === user.username && (
-                                            <div className="comment-options">
-                                                <FontAwesomeIcon
-                                                    icon="fa-solid fa-ellipsis"
-                                                    size="lg"
-                                                    onClick={() => toggleDropdown(index)}
-                                                />
-                                                <div
-                                                    className="dropdown"
-                                                    ref={(el) => (dropdownRefs.current[index] = el)}
-                                                    style={{ display: openDropdownIndex === index ? "block" : "none" }}
-                                                >
-                                                    <ul className="dropdown-list">
-                                                        <li className="dropdown-item">Edit</li>
-                                                        <li className="dropdown-item delete" onClick={() => deleteComment(comment._id)}>Delete</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        )}
-                                        </div>
-                                    )) : 
-                                    <h3 style={{fontFamily: "var(--accent-font)"}}>No Comments</h3>
-                                    : Array.from({ length: 10 }).map((_, index) => (
-                                        <div className="comment" key={index}>
-                                            <Skeleton width={"35px"} height={"35px"} style={{borderRadius: "50%"}}/>
-                                            <div style={{width: "100%"}}>
-                                                <Skeleton width={"100px"}/>
-                                                <Skeleton width={"100%"} count={2}/>
+                                        </Link>
+                                        <br />
+                                        <div className='comment-content' ref={(el) => (commentRefs.current[index] = el)} contentEditable={false}>{comment.comment}</div>
+                                    </div>
+                                    {comment.username === user.username && (
+                                        <div className="comment-options">
+                                            <FontAwesomeIcon
+                                                icon="fa-solid fa-ellipsis"
+                                                size="lg"
+                                                onClick={() => toggleDropdown(index)}
+                                            />
+                                            <div
+                                                className="dropdown"
+                                                ref={(el) => (dropdownRefs.current[index] = el)}
+                                                style={{ display: openDropdownIndex === index ? "block" : "none" }}
+                                            >
+                                                <ul className="dropdown-list">
+                                                    <li className="dropdown-item" onClick={() => editComment(index)}>Edit</li>
+                                                    <li className="dropdown-item delete" onClick={() => deleteComment(comment._id)}>
+                                                        Delete
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
-                                    )) 
-                                    
+                                    )}
+                                </div>
+                            ))
+                        ) : (
+                            <h3 style={{ fontFamily: "var(--accent-font)" }}>No Comments</h3>
+                        )}
 
-                        }
+                        {!comments.length &&
+                            Array.from({ length: 10 }).map((_, index) => (
+                                <div className="comment" key={index}>
+                                    <Skeleton width={"35px"} height={"35px"} style={{ borderRadius: "50%" }} />
+                                    <div style={{ width: "100%" }}>
+                                        <Skeleton width={"100px"} />
+                                        <Skeleton width={"100%"} count={2} />
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                     <div className="input-comment">
-                        <img src={user?.profileImage} alt="Profile Image" height="35px" width="35px"/>
-                        <input type="text" value={comment} placeholder="Write a comment..." onChange={(e) => setComment(e.target.value)} />
-                        <button className='primary-button' style={{border: "none", padding: "8px"}} onClick={() => {handleCommentPost(close)}}>
-                            <FontAwesomeIcon icon="fa-solid fa-paper-plane" size='lg'/>
+                        <img src={user?.profileImage} alt="Profile" height="35px" width="35px" />
+                        <input
+                            type="text"
+                            value={comment}
+                            placeholder="Write a comment..."
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <button
+                            className="primary-button"
+                            style={{ border: "none", padding: "8px" }}
+                            onClick={() => handleCommentPost(close)}
+                        >
+                            <FontAwesomeIcon icon="fa-solid fa-paper-plane" size="lg" />
                         </button>
                     </div>
                 </div>
             )}
         </Popup>
-    )
-}
+    );
+};
 
 export default IdeaPreview;
