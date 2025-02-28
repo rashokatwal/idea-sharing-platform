@@ -325,7 +325,7 @@
     /* max-width: 500px; */
     width: 500px;
     max-height: 80vh;
-    overflow-y: scroll;
+    overflow-y: hidden;
     border-radius: 10px;
     transition: 0.5s;
     /* animation: fadeIn 0s ease-in-out; */
@@ -364,8 +364,10 @@
 }
 
 .popup-form {
-    margin: 0px 35px;
+    padding: 0px 35px;
     position: relative;
+    overflow-y: scroll;
+    max-height: 60vh;
 }
 
 .popup-content::-webkit-scrollbar {

@@ -127,9 +127,9 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
             }
         };
 
-        // setTimeout(() => {
+        setTimeout(() => {
             fetchComments();
-        // }, 5000)
+        }, 5000)
     }, [user, ideaDetails._id, navigate]);
 
     const handleCommentPost = async (close) => {
@@ -209,7 +209,9 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                 if (event.target.closest(".primary-button")) {
                     return;
                 }
-                setEditableCommentIndex(null);
+
+                commentRefs.current[editableCommentIndex].innerHTML = comments[editableCommentIndex].comment;
+                setEditableCommentIndex(null);  
             }
         };
 
@@ -272,7 +274,7 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                             
                             :
                                 Array.from({ length: 10 }).map((_, index) => (
-                                    <div className="comment" key={index}>
+                                    <div className="comment" style={{width: "90%"}} key={index}>
                                         <div style={{ display: "flex", alignItems: "start", gap: "10px" }}>
                                             <Skeleton width={"35px"} height={"35px"} style={{ borderRadius: "50%" }} />
                                             <div style={{ width: "100%" }}>
