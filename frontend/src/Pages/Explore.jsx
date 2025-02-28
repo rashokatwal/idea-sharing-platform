@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Filter from "../Components/Filter";
 import ListComponent from "../Components/ListComponent";
 import '../Styles/explore.css';
@@ -17,6 +17,9 @@ const Explore = () => {
     const [ filterStatus, setFilterStatus ] = useState("");
     const [ filterSortBy, setFilterSortBy ] = useState("");
     const [ typingStatus, setTypingStatus ] = useState("");
+    const divRef = useRef(null);
+    const [isBottom, setIsBottom] = useState(false);
+    // const bottomRef = useRef(null);
     let errorCode = null;
 
     const handleCallback = (childData) => {
@@ -64,6 +67,25 @@ const Explore = () => {
     //     }, 2000),
     //     [] // Ensures the throttle function doesn't get recreated on re-renders
     // );
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!divRef.current) return;
+
+            const rect = divRef.current.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            // Check if the bottom of the div is within the viewport
+            if (rect.bottom <= windowHeight) {
+                console.log("bottom reached");
+                setIsBottom(true);
+                // window.removeEventListener("scroll", handleScroll); // Remove event listener after detection
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [isBottom]);
     
     useEffect(() => {
         setLoading(true);
@@ -85,7 +107,7 @@ const Explore = () => {
         <div className="Explore">
             <Filter parentCallback={ handleCallback }/>
             <div className="ideas-section-outer">
-                <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"}>
+                <div className={viewType === "grid" ? "ideas-section-inner card-grid" : "ideas-section-inner list-view"} ref={divRef}>
                     {
                         loading ? Array.from({ length: 9 }).map((_, index) => (
                             <IdeasSkeleton key={index} viewType={viewType}/>
@@ -98,6 +120,10 @@ const Explore = () => {
                                     <h3>No sparks here!</h3><span>Try searching something else.</span>
                             </div>
                     }
+                    {isBottom && ideas.length > 0 && Array.from({ length: 3 }).map((_, index) => (
+                            <IdeasSkeleton key={index} viewType={viewType}/>
+                          )) }
+                    {/* <span ref={bottomRef} style={{ height: "0px", width: "0px"}}></span> */}
                 </div>
             </div>
         </div>

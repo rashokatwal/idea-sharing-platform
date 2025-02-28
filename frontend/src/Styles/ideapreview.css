@@ -104,6 +104,10 @@
     max-height: 60vh;
 }
 
+.comments-section::-webkit-scrollbar {
+    width: 3px;
+}
+
 .comment {
     display: flex;
     flex-direction: column;
