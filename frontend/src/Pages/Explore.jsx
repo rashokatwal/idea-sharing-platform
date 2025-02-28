@@ -11,14 +11,17 @@ import api from '../Helpers/api';
 
 const Explore = () => {
     const [ loading, setLoading ] = useState(true);
+    const [ ideas, setIdeas ] = useState([]);
     const [ viewType, setViewType ] = useState("grid");
     const [ filterCategory, setFilterCategory ] = useState("");
     const [ filterTimePeriod, setTimePeriod ] = useState("");
     const [ filterStatus, setFilterStatus ] = useState("");
     const [ filterSortBy, setFilterSortBy ] = useState("");
     const [ typingStatus, setTypingStatus ] = useState("");
+    const [ page, setPage ] = useState(0);    
     const divRef = useRef(null);
     const [isBottom, setIsBottom] = useState(false);
+    const [allFilesFetched, setAllFilesFetched] = useState(false);
     // const bottomRef = useRef(null);
     let errorCode = null;
 
@@ -42,15 +45,20 @@ const Explore = () => {
                 break;
         }
     };
-    const [ ideas, setIdeas ] = useState([]);
 
-    const fetchIdeas = async () => {
+    const fetchIdeas = async (fetchType, newPage) => {
         await api
-            .get(`/ideas?category=${filterCategory}&timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}`)
+            .get(`/ideas?category=${filterCategory}&timePeriod=${filterTimePeriod}&status=${filterStatus}&time=${filterSortBy}&page=${newPage}`)
             .then((response) => {
-                setIdeas(response.data);
+                const fetchedIdeas = response.data.ideas;
+                if(fetchType === "normal") {
+                    setIdeas(fetchedIdeas);
+                } else {
+                    const updatedIdeas = ideas.concat(fetchedIdeas);
+                    setIdeas(updatedIdeas);
+                }
+                setAllFilesFetched(response.data.allFilesFetched);
                 setLoading(false);
-                console.log("fetched")
             })
             .catch((error) => {
                 setLoading(false);
@@ -75,22 +83,33 @@ const Explore = () => {
             const rect = divRef.current.getBoundingClientRect();
             const windowHeight = window.innerHeight;
 
-            // Check if the bottom of the div is within the viewport
-            if (rect.bottom <= windowHeight) {
-                console.log("bottom reached");
+            if (rect.bottom <= windowHeight && !isBottom) {
                 setIsBottom(true);
-                // window.removeEventListener("scroll", handleScroll); // Remove event listener after detection
+                setPage(prevPage => {
+                    const newPage = prevPage + 1;
+                    setTimeout(() => {
+                        fetchIdeas("scroll", newPage).finally(() => {
+                            setIsBottom(false);
+                        });
+                    }, 1000)
+                    return newPage; // Ensure the state is updated
+                });
+            }
+            if (allFilesFetched) {
+                window.removeEventListener("scroll", handleScroll);
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        if (!loading) {
+            window.addEventListener("scroll", handleScroll);
+        }
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [isBottom]);
+    }, [fetchIdeas, isBottom]);
     
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
-            fetchIdeas();
+            fetchIdeas("normal", 0);
         }, 1000)
     }, [filterTimePeriod, filterStatus, filterSortBy])
 
@@ -99,7 +118,7 @@ const Explore = () => {
             setLoading(true);
         }
         if(typingStatus == "stopped") {
-            fetchIdeas();
+            fetchIdeas("normal", 0);
         }
     }, [typingStatus])
 
@@ -120,7 +139,7 @@ const Explore = () => {
                                     <h3>No sparks here!</h3><span>Try searching something else.</span>
                             </div>
                     }
-                    {isBottom && ideas.length > 0 && Array.from({ length: 3 }).map((_, index) => (
+                    {isBottom && !allFilesFetched && ideas.length > 0 && Array.from({ length: 3 }).map((_, index) => (
                             <IdeasSkeleton key={index} viewType={viewType}/>
                           )) }
                     {/* <span ref={bottomRef} style={{ height: "0px", width: "0px"}}></span> */}

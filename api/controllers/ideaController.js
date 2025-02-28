@@ -11,8 +11,9 @@ const getIdeas = async (req, res) => {
     let sortOptions = {};
     let timePeriodOptions = {};
     let filter = {};
-    // console.log(JSON.stringify(req.query))
-
+    const page = req.query.page || 0;
+    const ideasPerPage = 6;
+    const totalIdeas = await Idea.countDocuments({ status: {$ne: "Draft"}});
     if(JSON.stringify(req.query) != '{}') {
         filterRequest = {
             "category": req.query.category.trim() == 0 ? null : req.query.category,
@@ -48,9 +49,14 @@ const getIdeas = async (req, res) => {
     await Idea
         .find(filter)
         .sort(sortOptions[filterRequest.sortBy])
-        .limit(9)
+        .skip(page * ideasPerPage)
+        .limit(ideasPerPage)
         .then((ideas) => {
-            res.status(200).json(ideas);
+            let allFilesFetched = false;
+            if((page * ideasPerPage) + ideasPerPage >= totalIdeas) {
+                allFilesFetched = true;
+            }
+            res.status(200).json({ideas, allFilesFetched});
         })
         .catch(() => {
             res.status(500).json({error: 'Error fetching ideas'});
