@@ -57,6 +57,8 @@ const Explore = () => {
                     const updatedIdeas = ideas.concat(fetchedIdeas);
                     setIdeas(updatedIdeas);
                 }
+                console.log("fetched");
+                console.log(response.data);
                 setAllFilesFetched(response.data.allFilesFetched);
                 setLoading(false);
             })
@@ -104,10 +106,12 @@ const Explore = () => {
             window.addEventListener("scroll", handleScroll);
         }
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [fetchIdeas, isBottom]);
+    }, [fetchIdeas, isBottom, allFilesFetched]);
     
     useEffect(() => {
         setLoading(true);
+        setAllFilesFetched(false);
+        setPage(0);
         setTimeout(() => {
             fetchIdeas("normal", 0);
         }, 1000)
@@ -116,6 +120,8 @@ const Explore = () => {
     useEffect(() => {
         if(typingStatus == "started") {
             setLoading(true);
+            setAllFilesFetched(false);
+            setPage(0);
         }
         if(typingStatus == "stopped") {
             fetchIdeas("normal", 0);

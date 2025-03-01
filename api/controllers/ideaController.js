@@ -13,7 +13,7 @@ const getIdeas = async (req, res) => {
     let filter = {};
     const page = req.query.page || 0;
     const ideasPerPage = 6;
-    const totalIdeas = await Idea.countDocuments({ status: {$ne: "Draft"}});
+    // console.log(page);
     if(JSON.stringify(req.query) != '{}') {
         filterRequest = {
             "category": req.query.category.trim() == 0 ? null : req.query.category,
@@ -45,6 +45,8 @@ const getIdeas = async (req, res) => {
             filter.postedOn = timePeriodOptions[filterRequest.timePeriod];
         }
     }
+
+    const totalIdeas = await Idea.countDocuments(filter);
 
     await Idea
         .find(filter)
