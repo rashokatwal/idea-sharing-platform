@@ -79,9 +79,9 @@ const userSchema = new Schema({
         default: '',
     },
     socialLinks: {
-        type: Object,
-        default: {    
-        }
+        type: Map,
+        of: String,
+        default: {}
     },
     works: {
         type: [worksSchema],
@@ -98,6 +98,10 @@ const userSchema = new Schema({
         default: []
     },
     savedIdeas: {
+        type: Array,
+        default: []
+    },
+    postedIdeas: {
         type: Array,
         default: []
     }

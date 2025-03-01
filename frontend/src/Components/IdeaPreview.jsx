@@ -288,7 +288,7 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
                         }
                     </div>
                     <div className="input-comment">
-                        <img src={user?.profileImage} alt="Profile" height="35px" width="35px" />
+                        <img src={user?.profileImage || "../src/Assets/default_user.png"} alt="Profile" style={{height: "35px", minWidth: "35px"}} />
                         <input
                             type="text"
                             value={comment}

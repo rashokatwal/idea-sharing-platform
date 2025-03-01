@@ -6,12 +6,13 @@ import { AuthContext } from '../Contexts/AuthContext';
 // import { LoadingBarContext } from '../Contexts/LoadingBarContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import { useAuthContext } from '../Hooks/useAuthContext';
-import api from '../Helpers/api';
+// import api from '../Helpers/api';
 import axios from 'axios';
 import { useSignout } from '../Hooks/useSignout';
 import CompletionMessage from '../Components/CompletionMessage';
 import ConfettiEffect from '../Components/ConfettiEffect';
 import { useImageUpload } from '../Hooks/useImageUpload';
+import authUserRequest from '../Helpers/authRequestHandler';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -102,7 +103,6 @@ const CompleteProfile = () => {
 const StepOne = ({ setStep, sessionUserDetails }) => {
     const userStatus = useAuthContext();
     const userDetails = userStatus.user;
-    // console.log(userDetails);
     const loadingBarRef = useLoadingBar();
     const {uploadImage} = useImageUpload()
     const imageInputRef = useRef(null);
@@ -202,7 +202,6 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     }
 
     const handleStepOneSubmission = async() => {
-        console.log("clidked");
         const isFullnameValid = fullname.value.trim().length > 0;
         const isUsernameValid = (username.value.trim().length > 0);
         // const isBioValid = bio.value.trim().length > 0;
@@ -218,7 +217,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
         // console.log("saved")
         loadingBarRef.current.continuousStart();
         if(checkForChanges()) {
-            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+            await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 {profileImage: image, fullname: fullname.value, username: username.value, bio: bio.value }
             )
             .then((response) => {
@@ -355,7 +354,7 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
     const handleStepTwoSubmission = async () => {
         loadingBarRef.current.continuousStart();
         if(checkForChanges()) {
-            await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+            await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 userFormData
             )
             .then((response) => {
@@ -467,7 +466,7 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
 
     const handleStepThreeSubmission = async () => {
         loadingBarRef.current.continuousStart();
-        await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+        await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
             {socialLinks: socialLinks, profileCompleted: true}
         )
         .then((response) => {
@@ -489,7 +488,7 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
     }
 
     const handleSkip = async () => {
-        await api.patch(`/auth/updateUserDetails/${userDetails._id}`,
+        await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
             {profileCompleted: true}
         )
         .then(() => {
