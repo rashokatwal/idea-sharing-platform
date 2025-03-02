@@ -82,6 +82,19 @@ const getUserDetails = async (req, res) => {
     }
 }
 
+const getUserPosts = async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const user = await User.findOne(req.params.userId).populate("postedIdeas");
+
+        res.status(200).json(user.postedIdeas);
+    }
+    catch(error) {
+        res.status(400).json(error.message);
+    }
+}
+
 const getUserLikedPosts = async (req, res) => {
     const username = req.params.username;
 
@@ -108,4 +121,4 @@ const getUserSavedPosts = async (req, res) => {
     }
 }
 
-module.exports = { signinUser, signupUser, updateUserDetails, getUserDetails, getUserLikedPosts, getUserSavedPosts }
+module.exports = { signinUser, signupUser, updateUserDetails, getUserDetails, getUserLikedPosts, getUserSavedPosts, getUserPosts }

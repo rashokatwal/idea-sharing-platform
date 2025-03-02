@@ -115,6 +115,15 @@ const Profile = () => {
         loadingBarRef.current.complete();
     }
 
+    const getUserPosts = async () => {
+        await authUserRequest
+         .get(`/posts/${user.username}`)
+         .then((response) => {
+            console.log(response.data);
+         })
+         .catch((error) => console.log(error));
+    }
+
     return (
         <div className="profile-section-outer">
             <div className="profile-section-inner">
