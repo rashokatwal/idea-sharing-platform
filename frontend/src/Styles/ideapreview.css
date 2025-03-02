@@ -84,11 +84,16 @@
 
 .idea-preview .extra-features .liked-button-animation {
     color: red;
-    animation: liked ease-out;
+    animation: pop ease-out;
     animation-duration: 0.2s;
 }
 
-@keyframes liked {
+.idea-preview .extra-features .save-button-animation {
+    animation: pop ease-out;
+    animation-duration: 0.2s;
+}
+
+@keyframes pop {
     50%  {transform: scale(1.5)}
     100% {transform: scale(1)}
 }

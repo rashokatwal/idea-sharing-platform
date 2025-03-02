@@ -6,6 +6,7 @@ import IdeaPreview from "./IdeaPreview";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
 import api from "../Helpers/api";
+import authUserRequest from "../Helpers/authRequestHandler";
 
 const PageThree = ({ changePages }) => {
     // const navigate = useNavigate();
@@ -21,7 +22,7 @@ const PageThree = ({ changePages }) => {
 
     const postIdea = async() => {
         loadingBarRef.current.continuousStart();
-        await api.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
+        await authUserRequest.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
             {"status": "Completed"}
         )
         .then((response) => {

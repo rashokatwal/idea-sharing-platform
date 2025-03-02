@@ -188,4 +188,33 @@ const likeIdea = async (req, res) => {
     }
 }
 
-module.exports = { getIdeas, getIdea, postIdea, updateIdea, deleteIdea, likeIdea };
+const saveIdea = async (req, res) => {
+    // const db = getDb();
+    const {userId, ideaId} = req.body;
+    // console.log(req.query);
+    if (mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(ideaId)) {
+        const user = await User.findOne({ _id: userId });
+        if(user) {
+            const alreadySaved = user.savedIdeas.includes(ideaId);
+            await User.updateOne(
+                { _id: userId },
+                alreadySaved
+                ? { $pull: { savedIdeas: ideaId } } 
+                : { $addToSet: { savedIdeas: ideaId } } 
+            ).then(async (result) => {
+                res.status(200).json({message: 'Idea Saved successfully'});
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).json({error: 'Error Saving Idea'});
+            })
+        }
+        else {
+            res.status(404).json({error: 'User not found'});
+        }
+    }
+    else {
+        res.status(500).json({error: 'Invalid ID'});
+    }
+}
+
+module.exports = { getIdeas, getIdea, postIdea, updateIdea, deleteIdea, likeIdea, saveIdea };

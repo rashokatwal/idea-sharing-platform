@@ -10,10 +10,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler';
 import Skeleton from 'react-loading-skeleton'
-const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) => {
+const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setIdeaDetails }) => {
     const {user} = useAuthContext();
     const [ isLiked, setIsLiked ] = useState(null);
-    const [ isSaved, setIsSaved ] = useState(false);
+    const [ isSaved, setIsSaved ] = useState(null);
     const lastUpdatedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.updatedAt) : null;
     const postedDateTime = ideaDetails ? dateTimeConverter(ideaDetails.postedOn) : null;
     const navigate = useNavigate();
@@ -22,11 +22,12 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
         if(previewType == "user") {
             updateReads();
             setIsLiked(isIdeaLiked);
+            setIsSaved(isIdeaSaved);
         }
     }, [])
 
     const handleLike = async () => {
-        user ? await api
+        user ? await authUserRequest
             .patch(`/likeIdea`,
                 { "userId": user?._id, "ideaId": ideaDetails._id },
             )
@@ -41,8 +42,24 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
             : navigate('/signin');
     }
 
+    const handleSave = async () => {
+        console.log('Saved');
+        user ? await authUserRequest
+            .patch(`/saveIdea`,
+                { "userId": user?._id, "ideaId": ideaDetails._id },
+            )
+            .then((response) => {
+                console.log(response);
+                setIsSaved(!isSaved);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            : navigate('/signin');
+    }
+
     const updateReads = async () => {
-        await api
+        await authUserRequest
            .patch(`/idea/${ideaDetails._id}`,
                 { "reads" : ideaDetails.reads + 1 },
             )
@@ -51,9 +68,9 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
            .catch((error) => console.log(error));
     }
 
-    const handleSave = () => {
-        setIsSaved(!isSaved);
-    }
+    // const handleSave = () => {
+    //     setIsSaved(!isSaved);
+    // }
 
     return (
         <div className="idea-preview">
@@ -93,7 +110,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, setIdeaDetails }) 
                 </div>
                 <div className="collab-save">
                     <span className="collaborate" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-handshake" /> Collab</span>
-                    <span className="save" style={{cursor: "pointer", marginLeft: "15px"}} onClick={() => previewType == "user" ? handleSave : null}><FontAwesomeIcon icon={(isSaved ? "fa-solid" : "fa-regular") + " fa-bookmark"} /> {isSaved ? "Unsave" : "Save"}</span>
+                    <div className="save" style={{cursor: "pointer", marginLeft: "15px", color: isSaved ? "var(--accent-color)" : null, transition: "0.2s"}} onClick={() => previewType == "user" ? handleSave() : null}><FontAwesomeIcon icon={(isSaved ? "fa-solid" : "fa-regular") + " fa-bookmark"} className={isSaved ? "save-button-animation" : ""} /> {isSaved ? "Saved" : "Save"}</div>
                 </div>
             </div>
         </div>

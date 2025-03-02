@@ -95,4 +95,17 @@ const getUserLikedPosts = async (req, res) => {
     }
 }
 
-module.exports = { signinUser, signupUser, updateUserDetails, getUserDetails, getUserLikedPosts }
+const getUserSavedPosts = async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const user = await User.getDetails(username);
+
+        res.status(200).json(user.savedIdeas);
+    }
+    catch(error) {
+        res.status(400).json(error.message);
+    }
+}
+
+module.exports = { signinUser, signupUser, updateUserDetails, getUserDetails, getUserLikedPosts, getUserSavedPosts }

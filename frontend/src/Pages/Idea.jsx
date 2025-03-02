@@ -6,6 +6,7 @@ import "../Styles/idea.css";
 import IdeaPreviewSkeleton from '../Components/IdeaPreviewSkeleton';
 import api from '../Helpers/api';
 import { useAuthContext } from '../Hooks/useAuthContext';
+import authUserRequest from '../Helpers/authRequestHandler';
 
 const Idea = () => {
     const location = useLocation();
@@ -15,6 +16,7 @@ const Idea = () => {
     const [ ideaDetails, setIdeaDetails ] = useState({});
     const [ loading, setLoading ] = useState(true);
     const [ isLiked, setIsLiked ] = useState(null);
+    const [ isSaved, setIsSaved ] = useState(null);
 
     const fetchIdea = async () => {
         console.log("fetching")
@@ -30,10 +32,21 @@ const Idea = () => {
     }
 
     const checkIsLiked = async () => {
-        await api
+        await authUserRequest
          .get(`/likedPosts/${user.username}`)
          .then((response) => {
             setIsLiked(response.data.includes(ideaId));
+         })
+         .catch((error) => console.log(error));
+    }
+
+    const checkIsSaved = async () => {
+        await authUserRequest
+         .get(`/savedPosts/${user.username}`)
+         .then((response) => {
+            console.log(response.data);
+            setIsSaved(response.data.includes(ideaId));
+            console.log(response.data.includes(ideaId))
          })
          .catch((error) => console.log(error));
     }
@@ -54,6 +67,7 @@ const Idea = () => {
             if (!user) return; // Ensure user is available
     
             await checkIsLiked();
+            await checkIsSaved();
             setLoading(false);
         };
     
@@ -90,7 +104,7 @@ const Idea = () => {
     return (
         <div className="idea-outer">
             <div className="idea-inner">
-                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} previewType={"user"} isIdeaLiked={isLiked}/>}
+                {loading ? <IdeaPreviewSkeleton /> : <IdeaPreview ideaDetails={ideaDetails} setIdeaDetails={setIdeaDetails} previewType={"user"} isIdeaLiked={isLiked} isIdeaSaved={isSaved}/>}
             </div>
         </div>
     )

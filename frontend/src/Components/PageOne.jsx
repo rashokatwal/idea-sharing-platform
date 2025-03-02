@@ -7,6 +7,7 @@ import { useLoadingBar } from '../Hooks/useLoadingBar';
 // import { useNavigate } from 'react-router-dom';
 import api from "../Helpers/api";
 import { useAuthContext } from "../Hooks/useAuthContext";
+import authUserRequest from "../Helpers/authRequestHandler";
 
 const PageOne = ({ changePages }) => {
     const {user} = useAuthContext();
@@ -92,7 +93,7 @@ const PageOne = ({ changePages }) => {
     const saveData = async() => {
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null) {
-            await api.post('/idea',
+            await authUserRequest.post('/idea',
                 { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: {fullName: user?.fullname, username: user?.username, profileImage: user?.profileImage} }
             )
             .then((response) => {
@@ -109,7 +110,7 @@ const PageOne = ({ changePages }) => {
         } 
         else {
             if(checkForChanges()) {
-                await api.patch(`/idea/${sessionIdea._id}`,
+                await authUserRequest.patch(`/idea/${sessionIdea._id}`,
                     { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value }
                 )
                 .then((response) => {

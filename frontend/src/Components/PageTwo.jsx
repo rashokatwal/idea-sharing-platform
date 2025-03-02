@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import api from "../Helpers/api";
+import { authReducer } from "../Contexts/AuthContext";
+import authUserRequest from "../Helpers/authRequestHandler";
 
 const PageTwo = ({ changePages }) => {
     const loadingBarRef = useLoadingBar();
@@ -71,7 +73,7 @@ const PageTwo = ({ changePages }) => {
         // console.log('updateData called')
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null || checkForChanges()) {
-            await api.patch(`/idea/${sessionIdea._id}`,
+            await authUserRequest.patch(`/idea/${sessionIdea._id}`,
                 {"summary": summaryChars.value, "tags": tags}
             )
             .then((response) => {
