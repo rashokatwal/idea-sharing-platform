@@ -79,8 +79,7 @@ const userSchema = new Schema({
         default: '',
     },
     socialLinks: {
-        type: Map,
-        of: String,
+        type: Object,
         default: {}
     },
     works: {
@@ -200,6 +199,7 @@ userSchema.statics.getDetails = async function (username) {
     const user = await this.findOne({username});
     const updatedUserDetails = user.toObject();
     delete updatedUserDetails.password;
+    // console.log(updatedUserDetails);
 
     return updatedUserDetails;
 }

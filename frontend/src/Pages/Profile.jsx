@@ -37,6 +37,7 @@ const Profile = () => {
          .get(`/user/${username}`)
          .then((response) => {
             setUser(response.data);
+            console.log(response.data);
          })
          .catch((error) => console.log(error));
     }
@@ -49,6 +50,7 @@ const Profile = () => {
             }
             else {
                 fetchUserDetails();
+                getUserPosts();
                 setEditable(false);
             }
         // }
@@ -118,7 +120,7 @@ const Profile = () => {
 
     const getUserPosts = async () => {
         await authUserRequest
-         .get(`/posts/${user.username}`)
+         .get(`/posts/${username}`)
          .then((response) => {
             console.log(response.data);
          })

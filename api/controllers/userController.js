@@ -74,7 +74,6 @@ const getUserDetails = async (req, res) => {
 
     try {
         const user = await User.getDetails(username);
-
         res.status(200).json(user);
     }
     catch(error) {
@@ -86,7 +85,7 @@ const getUserPosts = async (req, res) => {
     const username = req.params.username;
 
     try {
-        const user = await User.findOne(req.params.userId).populate("postedIdeas");
+        const user = await User.getDetails(username);
 
         res.status(200).json(user.postedIdeas);
     }
