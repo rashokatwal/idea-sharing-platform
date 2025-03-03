@@ -94,7 +94,7 @@ const PageOne = ({ changePages }) => {
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null) {
             await authUserRequest.post('/idea',
-                { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: {fullName: user?.fullname, username: user?.username, profileImage: user?.profileImage} }
+                { title: titleChars.value, category: categoryChars.value, description: descriptionChars.value, author: {id: user?._id, fullName: user?.fullname, username: user?.username, profileImage: user?.profileImage} }
             )
             .then((response) => {
                 let ideaDetails = response.data;

@@ -87,8 +87,13 @@ const postIdea = async (req, res) => {
     const idea = req.body;
     await Idea
         .create(idea)
-        .then((result) => {
+        .then(async (result) => {
+            await User.updateOne(
+                { _id: idea.author.id },
+                {$addToSet: { postedIdeas: {ideaId: result._id, title: result.title, description: result.description, createdDate: result.createdAt} }}
+            );
             res.status(201).json(result);
+
         })
         .catch(() => {
             res.status(500).json({error: 'Couldn\'t post the idea'});

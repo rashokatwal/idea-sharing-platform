@@ -267,6 +267,22 @@ const Profile = () => {
                                 <div className="section-header">
                                     <span className="header-text">IDEAS</span>
                                 </div>
+                                <div className="user-ideas-list">
+                                    {
+                                        user?.postedIdeas?.map((idea, index) => {
+                                            return (
+                                                <div key={index} className="idea-card">
+                                                    <h5>{idea.title}</h5>
+                                                    <p>{idea.description}</p>
+                                                    <div className="idea-actions">
+                                                        <button className="primary-button edit-button"><FontAwesomeIcon icon="fa-solid fa-edit" /> Edit</button>
+                                                        <button className="primary-button delete-button"><FontAwesomeIcon icon="fa-solid fa-trash" /> Delete</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         {/* </div> */}
                     </div>
