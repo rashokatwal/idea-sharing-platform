@@ -13,6 +13,7 @@ import { useLoadingBar } from "../Hooks/useLoadingBar";
 import Dropdown from "../Components/Dropdown";
 import { useImageUpload } from "../Hooks/useImageUpload";
 import { useUpdateUser } from "../Hooks/useUpdateUser";
+import { dateTimeConverter } from "../Helpers/dateUtil";
 
 const Profile = () => {
     const location = useLocation();
@@ -272,12 +273,9 @@ const Profile = () => {
                                         user?.postedIdeas?.map((idea, index) => {
                                             return (
                                                 <div key={index} className="idea-card">
-                                                    <h5>{idea.title}</h5>
-                                                    <p>{idea.description}</p>
-                                                    <div className="idea-actions">
-                                                        <button className="primary-button edit-button"><FontAwesomeIcon icon="fa-solid fa-edit" /> Edit</button>
-                                                        <button className="primary-button delete-button"><FontAwesomeIcon icon="fa-solid fa-trash" /> Delete</button>
-                                                    </div>
+                                                    <h5 className="title">{idea.title}</h5>
+                                                    <p className="description">{idea.description}</p>
+                                                    <p className="posted-date">{dateTimeConverter(idea.createdDate).date}</p>
                                                 </div>
                                             )
                                         })

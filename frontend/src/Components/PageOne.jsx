@@ -12,6 +12,7 @@ import authUserRequest from "../Helpers/authRequestHandler";
 const PageOne = ({ changePages }) => {
     const {user} = useAuthContext();
     const loadingBarRef = useLoadingBar();
+    const { dispatch } = useAuthContext();
     // const navigate = useNavigate();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const [ ideaDetails, setIdeaDetails ] = useState(sessionIdea || {title: "", category: "", description: ""});
@@ -102,7 +103,11 @@ const PageOne = ({ changePages }) => {
                 ideaDetails.category = categoryChars.value;
                 ideaDetails.description = descriptionChars.value;
                 sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                // navigate('/ideaeditor/p/2');
+                let updatedPostedIdeas = user.postedIdeas;
+                updatedPostedIdeas.push({ideaId: ideaDetails._id, title: ideaDetails.title, description: ideaDetails.description, createdDate: ideaDetails.createdAt});
+                let updatedUserDetails = {...user, postedIdeas: updatedPostedIdeas};
+                localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+                dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
                 changePages(2);
                 loadingBarRef.current.complete();
             })

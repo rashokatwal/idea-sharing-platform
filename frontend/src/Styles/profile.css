@@ -314,6 +314,36 @@
     color: var(--accent-color);
 }
 
+.profile-tabs .ideas-tab .user-ideas-list {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 10px;
+}
+
+.profile-tabs .ideas-tab .user-ideas-list .idea-card {
+    text-align: left;
+    /* border: solid 1px; */
+    /* padding: 10px; */
+}
+
+.profile-tabs .ideas-tab .user-ideas-list .idea-card .title {
+    margin: 5px 0px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.profile-tabs .ideas-tab .user-ideas-list .idea-card .description {
+    margin: 0;
+    font-size: 13px;
+}
+
+.profile-tabs .ideas-tab .user-ideas-list .idea-card .posted-date {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
 .popup-overlay {
     background: rgba(0, 0, 0, 0.3);
 }
