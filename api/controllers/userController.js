@@ -45,6 +45,8 @@ const signupUser = async (req, res) => {
 
         updatedUserDetails.token = token;
 
+        console.log(updatedUserDetails);
+
         res.status(200).json(updatedUserDetails);
     }
     catch(error) {
@@ -74,6 +76,7 @@ const getUserDetails = async (req, res) => {
 
     try {
         const user = await User.getDetails(username);
+        // console.log(user);
         res.status(200).json(user);
     }
     catch(error) {

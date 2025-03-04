@@ -30,6 +30,16 @@ const skillsSchema = new Schema({
     }
 })
 
+const socialLinksSchema = new Schema({
+    facebook: { type: String, default: "" },
+    instagram: { type: String, default: "" },
+    linkedin: { type: String, default: "" },
+    github: { type: String, default: "" },
+    discord: { type: String, default: "" },
+    youtube: { type: String, default: "" },
+    twitter: { type: String, default: "" }
+})
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -54,8 +64,6 @@ const userSchema = new Schema({
     },
     username: {
         type: String,
-        // required: true,
-        // unique: true,
         default: '',
     },
     bio: {
@@ -79,8 +87,8 @@ const userSchema = new Schema({
         default: '',
     },
     socialLinks: {
-        type: Object,
-        default: {}
+        type: socialLinksSchema,
+        default: () => ({})
     },
     works: {
         type: [worksSchema],
@@ -199,7 +207,7 @@ userSchema.statics.getDetails = async function (username) {
     const user = await this.findOne({username});
     const updatedUserDetails = user.toObject();
     delete updatedUserDetails.password;
-    // console.log(updatedUserDetails);
+    console.log(updatedUserDetails);
 
     return updatedUserDetails;
 }

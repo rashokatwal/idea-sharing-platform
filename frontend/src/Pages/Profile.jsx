@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { socialMediaIcons } from "../Helpers/constants";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import api from "../Helpers/api";
 import { useEffect, useState, useRef } from "react";
 import Popup from 'reactjs-popup';
@@ -50,7 +50,7 @@ const Profile = () => {
             }
             else {
                 fetchUserDetails();
-                getUserPosts();
+                // getUserPosts();
                 setEditable(false);
             }
         // }
@@ -118,14 +118,14 @@ const Profile = () => {
         loadingBarRef.current.complete();
     }
 
-    const getUserPosts = async () => {
-        await authUserRequest
-         .get(`/posts/${username}`)
-         .then((response) => {
-            console.log(response.data);
-         })
-         .catch((error) => console.log(error));
-    }
+    // const getUserPosts = async () => {
+    //     await authUserRequest
+    //      .get(`/posts/${username}`)
+    //      .then((response) => {
+    //         console.log(response.data);
+    //      })
+    //      .catch((error) => console.log(error));
+    // }
 
     return (
         <div className="profile-section-outer">
@@ -267,18 +267,18 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
-                                <div className="section-header">
+                                <div className="section-header" style={{marginBottom: "20px"}}>
                                     <span className="header-text">IDEAS</span>
                                 </div>
                                 <div className="user-ideas-list">
                                     {
                                         user?.postedIdeas?.map((idea, index) => {
                                             return (
-                                                <div key={index} className="idea-card">
+                                                <Link to={`/idea/${idea.ideaId}`} key={index} className="idea-card">
                                                     <h5 className="title">{idea.title}</h5>
                                                     <p className="description">{idea.description}</p>
                                                     <p className="posted-date">{dateTimeConverter(idea.createdDate).date}</p>
-                                                </div>
+                                                </Link>
                                             )
                                         })
                                     }
@@ -534,8 +534,9 @@ const AddSocialLink = ({user}) => {
         }
     }
     const filteredDropdownPlatforms = dropdownPlatfroms.filter((platform) => {
-        if (userSocialLinks[platform.toLowerCase()] == undefined) {
-            return platform
+        console.log(user);
+        if (userSocialLinks[platform.toLowerCase()] == "") {
+            return platform;
         }
     })
 
