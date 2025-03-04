@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
 import axios from "axios";
 import api from "../Helpers/api";
 import authUserRequest from "../Helpers/authRequestHandler";
 
 const PageThree = ({ changePages }) => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
     // const { updatedDate, updatedTime } = ideaDetails;
@@ -28,6 +28,8 @@ const PageThree = ({ changePages }) => {
         .then((response) => {
             // console.log(response.data);
             loadingBarRef.current.complete();
+            sessionStorage.getItem("sessionIdea")
+            navigate('/', {replace: true});
         })
         .catch((error) => console.log(error));
     }
