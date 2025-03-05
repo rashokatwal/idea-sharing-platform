@@ -203,7 +203,7 @@ userSchema.statics.updateDetails = async function (updates, id) {
     return user;
 }
 
-userSchema.statics.getDetails = async function (username) {
+userSchema.statics.getDetails = async function (username, filter) {
     const user = await this.findOne({username});
     const updatedUserDetails = user.toObject();
     delete updatedUserDetails.password;

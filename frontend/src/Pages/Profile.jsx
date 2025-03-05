@@ -23,6 +23,7 @@ const Profile = () => {
     const [ editable, setEditable ] = useState(null);
     const [ activeTab, setActiveTab ] = useState("about");
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
+    const [ userPostedIdeas, setUserPostedIdeas ] = useState([]);
     const loadingBarRef = useLoadingBar();
     const {dispatch} = useAuthContext();
     const {uploadImage} = useImageUpload();
@@ -37,7 +38,17 @@ const Profile = () => {
          .get(`/user/${username}`)
          .then((response) => {
             setUser(response.data);
+            // console.log(response.data);
+         })
+         .catch((error) => console.log(error));
+    }
+
+    const getUserPosts = async (filter) => {
+        await authUserRequest
+         .get(`/posts/${username}?filter=${filter}`)
+         .then((response) => {
             console.log(response.data);
+            setUserPostedIdeas(response.data);
          })
          .catch((error) => console.log(error));
     }
@@ -53,6 +64,8 @@ const Profile = () => {
                 // getUserPosts();
                 setEditable(false);
             }
+
+            getUserPosts("All");
         // }
     }, [userStatus, location.pathname]);
 
@@ -119,17 +132,8 @@ const Profile = () => {
     }
 
     const handleFilterChange = (value) => {
-        console.log(value);
+        getUserPosts(value);
     }
-
-    // const getUserPosts = async () => {
-    //     await authUserRequest
-    //      .get(`/posts/${username}`)
-    //      .then((response) => {
-    //         console.log(response.data);
-    //      })
-    //      .catch((error) => console.log(error));
-    // }
 
     return (
         <div className="profile-section-outer">
@@ -271,23 +275,25 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
-                                <div className="section-header" style={{marginBottom: "20px"}}>
+                                <div className="section-header">
                                     <span className="header-text">IDEAS</span>
                                 </div>
                                 <div className="ideas-filter">
                                     <Dropdown suggestions={["All", "Open for Collaboration", "In Progress", "Completed", "Draft"]} placeholder={"All"} clearButton={false} onChange={handleFilterChange}/>
                                 </div>
-                                <div className="user-ideas-list">
+                                <div className="user-ideas-list" style={{alignItems: userPostedIdeas.length == 0 ? "center" : "start", justifyContent: userPostedIdeas.length == 0 ? "center" : "flex-start"}}>
                                     {
-                                        user?.postedIdeas?.map((idea, index) => {
-                                            return (
-                                                <Link to={`/idea/${idea.ideaId}`} key={index} className="idea-card">
-                                                    <h5 className="title">{idea.title}</h5>
-                                                    <p className="description">{idea.description}</p>
-                                                    <p className="posted-date">{dateTimeConverter(idea.createdDate).date}</p>
-                                                </Link>
-                                            )
-                                        })
+                                        userPostedIdeas.length > 0 ?
+                                            userPostedIdeas.map((idea, index) => {
+                                                return (
+                                                    <Link to={`/idea/${idea.ideaId}`} key={index} className="idea-card">
+                                                        <h5 className="title">{idea.title}</h5>
+                                                        <p className="description">{idea.description}</p>
+                                                        <p className="posted-date">{dateTimeConverter(idea.createdDate).date}</p>
+                                                    </Link>
+                                                )
+                                            })
+                                            : <span className="empty-message">Ideas Not Listed</span>
                                     }
                                 </div>
                             </div>
@@ -541,7 +547,7 @@ const AddSocialLink = ({user}) => {
         }
     }
     const filteredDropdownPlatforms = dropdownPlatfroms.filter((platform) => {
-        console.log(user);
+        // console.log(user);
         if (userSocialLinks[platform.toLowerCase()] == "") {
             return platform;
         }

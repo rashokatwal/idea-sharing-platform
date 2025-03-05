@@ -86,11 +86,13 @@ const getUserDetails = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
     const username = req.params.username;
+    const filter = req.query.filter;
 
     try {
         const user = await User.getDetails(username);
+        const filteredPosts = filter == "All" ? user.postedIdeas : user.postedIdeas.filter((idea) => idea.status === filter);
 
-        res.status(200).json(user.postedIdeas);
+        res.status(200).json(filteredPosts);
     }
     catch(error) {
         res.status(400).json(error.message);

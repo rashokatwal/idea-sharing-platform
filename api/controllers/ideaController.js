@@ -90,7 +90,7 @@ const postIdea = async (req, res) => {
         .then(async (result) => {
             await User.updateOne(
                 { _id: idea.author.id },
-                {$addToSet: { postedIdeas: {ideaId: result._id, title: result.title, description: result.description, createdDate: result.createdAt} }}
+                {$addToSet: { postedIdeas: {ideaId: result._id, title: result.title, description: result.description, status: result.status, createdDate: result.createdAt} }}
             );
             res.status(201).json(result);
 
