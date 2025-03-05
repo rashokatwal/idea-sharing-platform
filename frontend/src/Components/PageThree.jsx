@@ -4,8 +4,8 @@ import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
 import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-import axios from "axios";
-import api from "../Helpers/api";
+// import axios from "axios";
+// import api from "../Helpers/api";
 import authUserRequest from "../Helpers/authRequestHandler";
 
 const PageThree = ({ changePages }) => {

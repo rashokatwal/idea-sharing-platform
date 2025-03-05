@@ -29,7 +29,7 @@ const Dropdown = ({ suggestions, placeholder, onChange, clearButton, listStyle }
     }, []);
     
     return(
-        <div ref={dropdownRef} style={{position: "relative"}}>
+        <div ref={dropdownRef} style={{position: "relative", backgroundColor: "var(--background-color)"}}>
             <div className="dropdown-container" onClick={() => {
                 isDropdownOpen ? setFilteredSuggestions([]) : setFilteredSuggestions(suggestions);
                 setIsDropdownOpen(!isDropdownOpen);

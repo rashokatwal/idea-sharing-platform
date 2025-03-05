@@ -314,10 +314,18 @@
     color: var(--accent-color);
 }
 
+.profile-tabs .ideas-tab .ideas-filter {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
 .profile-tabs .ideas-tab .user-ideas-list {
     height: 400px;
+    max-height: 400px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 
 .profile-tabs .ideas-tab .user-ideas-list .idea-card {

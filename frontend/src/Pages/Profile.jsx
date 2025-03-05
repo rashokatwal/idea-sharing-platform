@@ -118,6 +118,10 @@ const Profile = () => {
         loadingBarRef.current.complete();
     }
 
+    const handleFilterChange = (value) => {
+        console.log(value);
+    }
+
     // const getUserPosts = async () => {
     //     await authUserRequest
     //      .get(`/posts/${username}`)
@@ -256,7 +260,7 @@ const Profile = () => {
                                                     <div key={index} className="social-link">
                                                         {editable && <FontAwesomeIcon icon="fa-solid fa-circle-xmark" className="remove-link-button" style={{color: "rgb(248, 82, 82)", cursor: "pointer"}} onClick={() => handleSocialLinkDelete(platform)}/>}
                                                         <a href={socialLink} target="_blank" style={{cursor: "pointer", color: "var(--accent-color)"}}>
-                                                            <FontAwesomeIcon  className="social-link-icon" icon={`fa-brands ${socialMediaIcons[platform]}`} />
+                                                            <FontAwesomeIcon className="social-link-icon" icon={`fa-brands ${socialMediaIcons[platform]}`} />
                                                         </a>
                                                     </div>
                                             })
@@ -269,6 +273,9 @@ const Profile = () => {
                             <div className="ideas-tab" style={{display: activeTab == "ideas" ? "block" : "none"}}>
                                 <div className="section-header" style={{marginBottom: "20px"}}>
                                     <span className="header-text">IDEAS</span>
+                                </div>
+                                <div className="ideas-filter">
+                                    <Dropdown suggestions={["All", "Open for Collaboration", "In Progress", "Completed", "Draft"]} placeholder={"All"} clearButton={false} onChange={handleFilterChange}/>
                                 </div>
                                 <div className="user-ideas-list">
                                     {
