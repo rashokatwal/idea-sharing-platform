@@ -6,6 +6,7 @@ import Steps from "../Components/Steps";
 const Home = () => {
     return (
         <div className="Home">
+            {sessionStorage.clear('sessionIdea')}
             <Hero />
             <Description />
             <Steps />
