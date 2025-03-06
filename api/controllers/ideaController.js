@@ -120,45 +120,55 @@ const deleteIdea = async (req, res) => {
 }
 
 const updateIdea = async (req, res) => {
-    // const db = getDb();
-    const requestType = req.query.requestType || null;
-    const updates = req.body;
-    const date = new Date();
-    const ideaId = req.params.id;
-    // if (requestType == "updateIdea") {
-    //     updates.lastUpdatedOn = date;
-    // }
-    // console.log(updates);
-    // console.log(req.query.requestType);
+    try {
+        const requestType = req.query.requestType || null;
+        const updates = req.body;
+        const date = new Date();
+        const ideaId = req.params.id;
 
-    if (requestType == "postIdea") {
-        updates.postedOn = date;
-    }
+        if (requestType === "postIdea") {
+            updates.postedOn = date;
+        }
 
-    if (mongoose.Types.ObjectId.isValid(ideaId)) {
+        if (!mongoose.Types.ObjectId.isValid(ideaId)) {
+            return res.status(400).json({ error: "Invalid idea ID" });
+        }
 
-        await Idea
-            .findOneAndUpdate({_id: ideaId}, updates)
-            .then(async (result) => {
-                if(updates.status) {
-                    const user = await User.findOne(
-                        {_id: result.author.id, "postedIdeas.ideaId": new mongoose.Types.ObjectId(ideaId)}
-                    );
-                    console.log(user);
-                }
-                res.status(200).json(result);
-                // db.close();
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json({error: 'Error updating data'});
-                // db.close();
-            })
+        // Update the idea document
+        const result = await Idea.findOneAndUpdate(
+            { _id: ideaId },
+            updates,
+            { new: true } // Returns the updated document
+        );
+
+        if (!result) {
+            return res.status(404).json({ error: "Idea not found" });
+        }
+
+        // If status is updated, update the corresponding entry in postedIdeas
+        if (updates.status && result.author?.id) {
+            const updatedUser = await User.findOneAndUpdate(
+                {
+                    _id: result.author.id,
+                    "postedIdeas.ideaId": new mongoose.Types.ObjectId(ideaId)
+                },
+                { 
+                    $set: { "postedIdeas.$.status": updates.status } 
+                },
+                { new: true } // Returns updated user
+            );
+
+            console.log("Updated User:", updatedUser);
+        }
+
+        res.status(200).json(result);
+
+    } catch (err) {
+        console.error("Error updating idea:", err);
+        res.status(500).json({ error: "Error updating data" });
     }
-    else {
-        res.status(500).json({error: 'Invalid ID'});
-    }
-}
+};
+
 
 const likeIdea = async (req, res) => {
     // const db = getDb();
