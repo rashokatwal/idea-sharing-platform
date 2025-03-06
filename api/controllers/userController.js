@@ -90,7 +90,7 @@ const getUserPosts = async (req, res) => {
 
     try {
         const user = await User.getDetails(username);
-        const filteredPosts = filter == "All" ? user.postedIdeas : user.postedIdeas.filter((idea) => idea.status === filter);
+        const filteredPosts = filter == "All" ? user.postedIdeas.filter((idea) => idea.status !== "Draft") : user.postedIdeas.filter((idea) => idea.status === filter);
 
         res.status(200).json(filteredPosts);
     }

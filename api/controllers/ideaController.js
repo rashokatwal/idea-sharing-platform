@@ -124,6 +124,7 @@ const updateIdea = async (req, res) => {
     const requestType = req.query.requestType || null;
     const updates = req.body;
     const date = new Date();
+    const ideaId = req.params.id;
     // if (requestType == "updateIdea") {
     //     updates.lastUpdatedOn = date;
     // }
@@ -134,11 +135,17 @@ const updateIdea = async (req, res) => {
         updates.postedOn = date;
     }
 
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    if (mongoose.Types.ObjectId.isValid(ideaId)) {
+
         await Idea
-            .findOneAndUpdate({_id: req.params.id}, updates)
-            .then(result => {
-                // console.log(result);
+            .findOneAndUpdate({_id: ideaId}, updates)
+            .then(async (result) => {
+                if(updates.status) {
+                    const user = await User.findOne(
+                        {_id: result.author.id, "postedIdeas.ideaId": new mongoose.Types.ObjectId(ideaId)}
+                    );
+                    console.log(user);
+                }
                 res.status(200).json(result);
                 // db.close();
             })

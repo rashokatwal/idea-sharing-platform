@@ -279,7 +279,7 @@ const Profile = () => {
                                     <span className="header-text">IDEAS</span>
                                 </div>
                                 <div className="ideas-filter">
-                                    <Dropdown suggestions={["All", "Open for Collaboration", "In Progress", "Completed", "Draft"]} placeholder={"All"} clearButton={false} onChange={handleFilterChange}/>
+                                    <Dropdown suggestions={["All", "Open for Collaboration", "In Progress", "Completed"]} placeholder={"All"} clearButton={false} onChange={handleFilterChange}/>
                                 </div>
                                 <div className="user-ideas-list" style={{alignItems: userPostedIdeas.length == 0 ? "center" : "start", justifyContent: userPostedIdeas.length == 0 ? "center" : "flex-start"}}>
                                     {
