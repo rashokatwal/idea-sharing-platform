@@ -111,7 +111,13 @@ const Profile = () => {
             }
         })
 
-        await updateUser("works", updatedUserWorks);
+        try {
+            await updateUser("works", updatedUserWorks);
+            toast.success("Work Removed Successfully");
+        }
+        catch (err) {
+            toast.error("Failed to remove Work");
+        }
         loadingBarRef.current.complete();
     }
 
@@ -124,7 +130,15 @@ const Profile = () => {
             }
         })
 
-        await updateUser("skills", updatedUserSkills);
+        await toast.promise(
+            updateUser("skills", updatedUserSkills),
+            {
+                loading: "Deleting Skill...",
+                success: "Skill Deleted Successfully",
+                error: "Failed to Delete Skill",
+            }
+        );
+
         loadingBarRef.current.complete();
     }
 
@@ -133,18 +147,33 @@ const Profile = () => {
         let userSocialLinks = user?.socialLinks;
         delete userSocialLinks[platform];
 
-        try {
-            await updateUser("socialLinks", userSocialLinks);
-            toast.success("Social Link Removed Successfully");
-        }
-        catch (err) {
-            toast.error("Failed to remove Social Link");
-        }
+        await toast.promise(
+            updateUser("socialLinks", userSocialLinks),
+            {
+                loading: `Deleting ${platform} Link...`,
+                success: `${platform} Link Deleted Successfully`,
+                error: `Failed to Delete Link`,
+            }
+        );
+
+        // try {
+        //     await updateUser("socialLinks", userSocialLinks);
+        //     toast.success("Social Link Removed Successfully");
+        // }
+        // catch (err) {
+        //     toast.error("Failed to remove Social Link");
+        // }
         loadingBarRef.current.complete();
     }
 
     const handleFilterChange = (value) => {
         getUserPosts(value);
+    }
+
+    const handleProfileLinkCopy = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setIsDropdownOpen(false);
+        toast.success("Profile Link Copied");
     }
 
     return (
@@ -210,8 +239,8 @@ const Profile = () => {
                         <div className="dropdown" ref={dropdownRef} style={{display: isDropdownOpen ? 'block' : 'none'}}>
                             <ul className="dropdown-list">
                                 {editable && <EditProfile user={user} loadingBar={loadingBarRef}/>}
-                                <li className="dropdown-item">Copy Profile Link</li>
-                                <li className="dropdown-item report">Report User</li>
+                                <li className="dropdown-item" onClick={() => handleProfileLinkCopy()}><FontAwesomeIcon icon="fa-solid fa-copy" /> Copy Profile URL</li>
+                                <li className="dropdown-item report"><FontAwesomeIcon icon="fa-solid fa-circle-exclamation" /> Report User</li>
                             </ul>
                         </div>
                     </div>
@@ -341,33 +370,42 @@ const EditProfile = ({user, loadingBar}) => {
 
     const updateUserDetails = async (close) => {
         loadingBar.current.continuousStart();
-        await authUserRequest.patch(`/auth/updateUserDetails/${user._id}`,
-                        userDetails
-                    )
-                    .then((response) => {
-                        let updatedUserDetails = {...user, ...response.data.updatedUserDetails}
-                        localStorage.setItem("user", JSON.stringify(updatedUserDetails));
-                        dispatch({type: "UPDATE_USER", payload: updatedUserDetails});
-                        setEmailError("");
-                        setPhoneError("");
-                        loadingBar.current.complete();
-                        toast.success("Profile Updated Successfully");
-                        close();
-                    })
-                    .catch((error) => {
-                        if (error.response.data.includes('email')) {
-                            setEmailError(error.response.data);
-                        }
-                        else if (error.response.data.includes('phone')) {
-                            setPhoneError(error.response.data);
-                        }
-                        toast.success("Couldn't Update Profile");
-                        loadingBar.current.complete();
-                    });
+        const updatePromise = authUserRequest.patch(
+            `/auth/updateUserDetails/${user._id}`,
+            userDetails
+        );
+    
+        toast.promise(updatePromise, {
+            loading: "Updating profile...",
+            success: "Profile updated successfully!",
+            error: "Couldn't update profile",
+        });
+    
+        try {
+            const response = await updatePromise;
+    
+            let updatedUserDetails = { ...user, ...response.data.updatedUserDetails };
+            localStorage.setItem("user", JSON.stringify(updatedUserDetails));
+    
+            dispatch({ type: "UPDATE_USER", payload: updatedUserDetails });
+    
+            setEmailError("");
+            setPhoneError("");
+            loadingBar.current.complete();
+            close();
+        } catch (error) {
+            loadingBar.current.complete();
+    
+            if (error.response?.data.includes("email")) {
+                setEmailError(error.response.data);
+            } else if (error.response?.data.includes("phone")) {
+                setPhoneError(error.response.data);
+            }
+        }
     }
 
     return (
-        <Popup trigger={<li className="dropdown-item" onClick={() => {setEmailError("");setPhoneError("");}}>Edit Profile</li>}
+        <Popup trigger={<li className="dropdown-item" onClick={() => {setEmailError("");setPhoneError("");}}><FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit Profile</li>}
             modal 
             contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
         >

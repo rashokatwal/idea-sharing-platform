@@ -9,7 +9,8 @@ import { useAuthContext } from '../Hooks/useAuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import authUserRequest from '../Helpers/authRequestHandler';
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton';
+import toast from 'react-hot-toast';
 const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setIdeaDetails }) => {
     const {user} = useAuthContext();
     const [ isLiked, setIsLiked ] = useState(null);
@@ -150,22 +151,31 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     }, [user, ideaDetails._id, navigate]);
 
     const handleCommentPost = async (close) => {
+        const addCommentPromise = authUserRequest.post("/comment", {
+            ideaId: ideaDetails._id,
+            comment,
+            username: user?.username,
+            userFullName: user?.fullname,
+            userProfileImage: user?.profileImage,
+        });
+    
+        toast.promise(addCommentPromise, {
+            loading: "Adding comment...",
+            success: "Comment added successfully!",
+            error: "Couldn't add comment",
+        });
+    
         try {
-            const response = await authUserRequest.post("/comment", {
-                ideaId: ideaDetails._id,
-                comment,
-                username: user?.username,
-                userFullName: user?.fullname,
-                userProfileImage: user?.profileImage,
-            });
-
+            const response = await addCommentPromise;
             const addedComment = response.data.comment;
+    
             setComments([...comments, addedComment]);
             setIdeaDetails({ ...ideaDetails, comments: comments.length + 1 });
-            setComment("");
-            close();
+    
+            setComment(""); // Clear input field
+            close(); // Close modal
         } catch (error) {
-            console.log(error);
+            console.error(error); // Log error for debugging
         }
     };
 
