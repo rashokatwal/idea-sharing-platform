@@ -16,7 +16,7 @@ export const useUpdateUser = () => {
         })
         .catch((error) => {
             console.log(error);
-            return error;
+            throw new Error("Couldn't update user");
         })
     }
     return {updateUser};

@@ -19,6 +19,7 @@ import { AuthContextProvider } from './Contexts/AuthContext';
 import { useAuthContext } from './Hooks/useAuthContext';
 import CompleteProfile from './Pages/CompleteProfile';
 import Profile from './Pages/Profile';
+import { Toaster } from "react-hot-toast";
 // import CompletionMessage from './Components/CompletionMessage';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
       <ScrollToTop />
       <AuthContextProvider>
         <LoadingBarProvider>
+          <Toaster position="bottom-center" reverseOrder={false} />
           <AppContent />
         </LoadingBarProvider>
       </AuthContextProvider>

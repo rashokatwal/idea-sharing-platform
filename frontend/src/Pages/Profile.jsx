@@ -14,7 +14,7 @@ import Dropdown from "../Components/Dropdown";
 import { useImageUpload } from "../Hooks/useImageUpload";
 import { useUpdateUser } from "../Hooks/useUpdateUser";
 import { dateTimeConverter } from "../Helpers/dateUtil";
-
+import toast from 'react-hot-toast';
 const Profile = () => {
     const location = useLocation();
     const username = location.pathname.split('/').pop();
@@ -92,7 +92,13 @@ const Profile = () => {
     const handleImageUpload = async (file) => {
         loadingBarRef.current.continuousStart();
         const res = await uploadImage(file, user._id);
-        await updateUser("profileImage", res.data.secure_url);
+        try {
+            await updateUser("profileImage", res.data.secure_url);
+            toast.success("Image Changed Successfully");
+        }
+        catch (error) {
+            toast.error("Failed to change image");
+        }
         loadingBarRef.current.complete();
     }
 
@@ -339,6 +345,7 @@ const EditProfile = ({user, loadingBar}) => {
                         setEmailError("");
                         setPhoneError("");
                         loadingBar.current.complete();
+                        toast.success("Profile Updated Successfully");
                         close();
                     })
                     .catch((error) => {
@@ -348,6 +355,7 @@ const EditProfile = ({user, loadingBar}) => {
                         else if (error.response.data.includes('phone')) {
                             setPhoneError(error.response.data);
                         }
+                        toast.success("Couldn't Update Profile");
                         loadingBar.current.complete();
                     });
     }
@@ -424,8 +432,13 @@ const AddWork = ({user}) => {
 
     const addWork = async (close) => {
         userWorks.push(work);
-        await updateUser("works", userWorks);
-        setWork({title: "", description: "", link: ""});
+        try {
+            await updateUser("works", userWorks);
+            toast.success("Work added successfully");
+            setWork({title: "", description: "", link: ""});
+        } catch (err) {
+            toast.error("Failed to add work");
+        }
         close();
     }
 
@@ -491,8 +504,15 @@ const AddSkill = ({user}) => {
 
     const addSkill = async (close) => {
         userSkills.push(skill);
-        await updateUser("skills", userSkills);
-        setSkill({name: "", experience: ""});
+        try {
+            await updateUser("skills", userSkills);
+            toast.success("Skill added successfully");
+            setSkill({name: "", experience: ""});
+        }
+        catch (err) {
+            toast.error("Failed to add Skill");
+        }
+        
         close();
     }
 
@@ -555,9 +575,15 @@ const AddSocialLink = ({user}) => {
 
     const addSocialLink = async (close) => {
         userSocialLinks = {...userSocialLinks, [socialLink.platform.toLowerCase()]: socialLink.link}
-
-        await updateUser("socialLinks", userSocialLinks);
-        setSocialLink({platform: "", link: ""});
+        
+        try {
+            await updateUser("socialLinks", userSocialLinks)
+            toast.success("Social Link Added");
+            setSocialLink({platform: "", link: ""});
+        }
+        catch(error) {
+            toast.error("Failed to add Social Link");
+        }
         close();
     }
 
@@ -577,6 +603,7 @@ const AddSocialLink = ({user}) => {
                     </div>
                     <div className="bottom-buttons">
                         <button className="primary-button" onClick={() => addSocialLink(close)} disabled={isButtonDisabled}>Add</button>
+                        {/* <Toaster /> */}
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>

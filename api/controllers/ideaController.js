@@ -134,7 +134,7 @@ const updateIdea = async (req, res) => {
             return res.status(400).json({ error: "Invalid idea ID" });
         }
 
-        // Update the idea document
+        // Update the idea document 
         const result = await Idea.findOneAndUpdate(
             { _id: ideaId },
             updates,
