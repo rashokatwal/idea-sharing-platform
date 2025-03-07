@@ -150,8 +150,8 @@ const Profile = () => {
         await toast.promise(
             updateUser("socialLinks", userSocialLinks),
             {
-                loading: `Deleting ${platform} Link...`,
-                success: `${platform} Link Deleted Successfully`,
+                loading: `Deleting ${platform.charAt(0).toUpperCase() + platform.slice(1)} Link...`,
+                success: `${platform.charAt(0).toUpperCase() + platform.slice(1)} Link Deleted Successfully`,
                 error: `Failed to Delete Link`,
             }
         );
@@ -476,13 +476,21 @@ const AddWork = ({user}) => {
 
     const addWork = async (close) => {
         userWorks.push(work);
-        try {
-            await updateUser("works", userWorks);
-            toast.success("Work added successfully");
-            setWork({title: "", description: "", link: ""});
-        } catch (err) {
-            toast.error("Failed to add work");
-        }
+        await toast.promise(
+            updateUser("works", userWorks),
+            {
+                loading: "Adding Work...",
+                success: "Work Added Successfully",
+                error: "Failed to Add Work",
+            }
+        );
+        // try {
+        //     await updateUser("works", userWorks);
+        //     toast.success("Work added successfully");
+        //     setWork({title: "", description: "", link: ""});
+        // } catch (err) {
+        //     toast.error("Failed to add work");
+        // }
         close();
     }
 
@@ -548,14 +556,22 @@ const AddSkill = ({user}) => {
 
     const addSkill = async (close) => {
         userSkills.push(skill);
-        try {
-            await updateUser("skills", userSkills);
-            toast.success("Skill added successfully");
-            setSkill({name: "", experience: ""});
-        }
-        catch (err) {
-            toast.error("Failed to add Skill");
-        }
+        await toast.promise(
+            updateUser("skills", userSkills),
+            {
+                loading: "Adding Skill...",
+                success: "Skill Added Successfully",
+                error: "Failed to Add Skill",
+            }
+        );
+        // try {
+        //     await updateUser("skills", userSkills);
+        //     toast.success("Skill added successfully");
+        //     setSkill({name: "", experience: ""});
+        // }
+        // catch (err) {
+        //     toast.error("Failed to add Skill");
+        // }
         
         close();
     }
@@ -619,15 +635,22 @@ const AddSocialLink = ({user}) => {
 
     const addSocialLink = async (close) => {
         userSocialLinks = {...userSocialLinks, [socialLink.platform.toLowerCase()]: socialLink.link}
-        
-        try {
-            await updateUser("socialLinks", userSocialLinks)
-            toast.success("Social Link Added");
-            setSocialLink({platform: "", link: ""});
-        }
-        catch(error) {
-            toast.error("Failed to add Social Link");
-        }
+        await toast.promise(
+            updateUser("socialLinks", userSocialLinks),
+            {
+                loading: `Adding ${socialLink.platform} Link...`,
+                success: `${socialLink.platform} Link Added Successfully`,
+                error: "Failed to Add Link",
+            }
+        );
+        // try {
+        //     await updateUser("socialLinks", userSocialLinks)
+        //     toast.success("Social Link Added");
+        //     setSocialLink({platform: "", link: ""});
+        // }
+        // catch(error) {
+        //     toast.error("Failed to add Social Link");
+        // }
         close();
     }
 
