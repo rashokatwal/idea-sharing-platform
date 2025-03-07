@@ -133,7 +133,13 @@ const Profile = () => {
         let userSocialLinks = user?.socialLinks;
         delete userSocialLinks[platform];
 
-        await updateUser("socialLinks", userSocialLinks);
+        try {
+            await updateUser("socialLinks", userSocialLinks);
+            toast.success("Social Link Removed Successfully");
+        }
+        catch (err) {
+            toast.error("Failed to remove Social Link");
+        }
         loadingBarRef.current.complete();
     }
 
