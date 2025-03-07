@@ -7,6 +7,8 @@ import { useLoadingBar } from '../Hooks/useLoadingBar';
 // import axios from "axios";
 // import api from "../Helpers/api";
 import authUserRequest from "../Helpers/authRequestHandler";
+import Popup from "reactjs-popup";
+import Dropdown from "./Dropdown";
 
 const PageThree = ({ changePages }) => {
     const navigate = useNavigate();
@@ -57,7 +59,8 @@ const PageThree = ({ changePages }) => {
             </div>
 
             <div className="idea-buttons">
-                <button className="post-button primary-button" onClick={postIdea}><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button>
+                {/* <button className="post-button primary-button" onClick={postIdea}><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button> */}
+                <PostPreview />
                 <button className="save-as-draft-button primary-button"><FontAwesomeIcon icon="fa-solid fa-floppy-disk" style={{marginRight: "10px"}}/>  Save Draft</button>
                 <button className="edit-button primary-button" onClick={editIdea}><FontAwesomeIcon icon="fa-solid fa-pen-to-square" style={{marginRight: "10px"}}/>  Edit Details</button>
                 <button className="delete-button primary-button"><FontAwesomeIcon icon="fa-solid fa-trash" style={{marginRight: "10px"}}/>  Delete</button>
@@ -67,3 +70,29 @@ const PageThree = ({ changePages }) => {
 }
 
 export default PageThree;
+
+const PostPreview = () => {
+    const handleChange = (value) => {
+        console.log(value);
+    }
+    return (
+        <Popup trigger={<button className="post-button primary-button" ><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button>} 
+            modal
+            contentStyle={{ animation: "fadeIn 0.2s ease-in-out" }}
+        >
+            {(close) => (
+                <div>
+                    <h3 className="header">Post As</h3>
+                    <div className="post-as popup-form">
+                        {/* <p>PlatForm</p> */}
+                        <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. Completed" } suggestions={ ["Open for Collaboration", "Completed"] } onChange={handleChange} clearButton={false}/>
+                    </div>
+                    <div className="bottom-buttons">
+                        <button className="primary-button" >Post</button>
+                        <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
+                    </div>
+                </div>
+            )}
+        </Popup>
+    )
+}
