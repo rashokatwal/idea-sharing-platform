@@ -29,7 +29,17 @@ const App = () => {
       <ScrollToTop />
       <AuthContextProvider>
         <LoadingBarProvider>
-          <Toaster position="bottom-center" reverseOrder={false} />
+          <Toaster 
+            position="bottom-center" 
+            reverseOrder={false} 
+            toastOptions={{
+              success: {
+                iconTheme: {
+                  primary: "var(--accent-color)"
+                }
+              }
+            }}
+          />
           <AppContent />
         </LoadingBarProvider>
       </AuthContextProvider>
