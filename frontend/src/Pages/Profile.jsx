@@ -91,14 +91,22 @@ const Profile = () => {
 
     const handleImageUpload = async (file) => {
         loadingBarRef.current.continuousStart();
-        const res = await uploadImage(file, user._id);
-        try {
+        const imageUploadPromise = async () => {
+            const res = await uploadImage(file, user._id);
             await updateUser("profileImage", res.data.secure_url);
-            toast.success("Image Changed Successfully");
         }
-        catch (error) {
-            toast.error("Failed to change image");
-        }
+        await toast.promise(imageUploadPromise, {
+            loading: "Uploading Image...",
+            success: "Image Changed Successfully",
+            error: "Failed to change image",
+        })
+
+        // try {
+        //     await imageUploadPromise();
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
         loadingBarRef.current.complete();
     }
 
@@ -111,13 +119,22 @@ const Profile = () => {
             }
         })
 
-        try {
-            await updateUser("works", updatedUserWorks);
-            toast.success("Work Removed Successfully");
-        }
-        catch (err) {
-            toast.error("Failed to remove Work");
-        }
+        await toast.promise(
+            updateUser("works", updatedUserWorks),
+            {
+                loading: "Deleting Work...",
+                success: "Work Deleted Successfully",
+                error: "Failed to Delete Work",
+            }
+        );
+
+        // try {
+        //     await updateUser("works", updatedUserWorks);
+        //     toast.success("Work Removed Successfully");
+        // }
+        // catch (err) {
+        //     toast.error("Failed to remove Work");
+        // }
         loadingBarRef.current.complete();
     }
 
