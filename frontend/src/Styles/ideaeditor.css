@@ -87,16 +87,35 @@
     margin-top: 50px;
 }
 
+.idea-form .idea-buttons > button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 50px; /* Fully rounded */
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    /* transition: all 0.2s ease-in-out; */
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
 .idea-form .idea-buttons .post-button, .save-as-draft-button, .edit-button{
     margin-right: 10px;
 }
 
+.idea-form .idea-buttons .post-button{
+    background-color: #0099ff;
+}
+
 .idea-form .idea-buttons .save-as-draft-button{
-    background-color: #4c4c4c;
+    background-color: #555;
 }
 
 .idea-form .idea-buttons .edit-button{
-    background-color: #4c4c4c;
+    background-color: #555;
 }
 
 .idea-form .idea-buttons .delete-button{
