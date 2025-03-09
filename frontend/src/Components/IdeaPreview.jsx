@@ -44,19 +44,35 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setId
     }
 
     const handleSave = async () => {
-        console.log('Saved');
-        user ? await authUserRequest
-            .patch(`/saveIdea`,
+        const saveIdeaPromise = authUserRequest.patch(`/saveIdea`,
                 { "userId": user?._id, "ideaId": ideaDetails._id },
             )
-            .then((response) => {
-                console.log(response);
-                setIsSaved(!isSaved);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            : navigate('/signin');
+        toast.promise(saveIdeaPromise, {
+            loading: isSaved ? "Unsaving Idea..." : "Saving Idea...",
+            success: isSaved ? "Idea unsaved successfully!" : "Idea saved successfully!",
+            error: isSaved ? "Couldn't unsave idea" : "Couldn't save idea",
+        });
+        // user ? await authUserRequest
+        //     .patch(`/saveIdea`,
+        //         { "userId": user?._id, "ideaId": ideaDetails._id },
+        //     )
+        //     .then((response) => {
+        //         console.log(response);
+        //         setIsSaved(!isSaved);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     })
+        //     : navigate('/signin');
+
+        try {
+            user ? await saveIdeaPromise : navigate('/signin');
+            // console.log(response);
+            setIsSaved(!isSaved);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     const updateReads = async () => {
@@ -180,10 +196,17 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     };
 
     const updateComment = async (id) => {
+        const editCommentPromise = authUserRequest.patch("/comment", 
+            { commentId: id, comment: editedComment },
+        );
+
+        await toast.promise(editCommentPromise, {
+            loading: "Updating comment...",
+            success: "Comment updated successfully!",
+            error: "Couldn't update comment",
+        })
         try {
-            const response = await authUserRequest.patch("/comment", 
-                { commentId: id, comment: editedComment },
-            );
+            const response = await editCommentPromise;
 
             setComments((prevComments) =>
                 prevComments.map((comment) =>
@@ -199,10 +222,18 @@ const Comments = ({ user, ideaDetails, setIdeaDetails, navigate }) => {
     }
 
     const deleteComment = async (id) => {
+        const deleteCommentPromise = authUserRequest.delete("/comment", {
+            data: { commentId: id, ideaId: ideaDetails._id },
+        });
+
+        toast.promise(deleteCommentPromise, {
+            loading: "Deleting comment...",
+            success: "Comment deleted successfully!",
+            error: "Couldn't delete comment"
+        })
+
         try {
-            await authUserRequest.delete("/comment", {
-                data: { commentId: id, ideaId: ideaDetails._id },
-            });
+            await deleteCommentPromise;
 
             const updatedComments = comments.filter((comment) => comment._id !== id);
             setComments(updatedComments);
