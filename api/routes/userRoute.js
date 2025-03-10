@@ -15,7 +15,7 @@ router.patch('/auth/updateUserDetails/:id', authenticateUser, updateUserDetails)
 
 router.get('/user/:username', getUserDetails);
 
-router.get('/posts/:username', authenticateUser, getUserPosts);
+router.get('/posts/:username', getUserPosts);
 
 router.get('/likedPosts/:username', authenticateUser, getUserLikedPosts);
 

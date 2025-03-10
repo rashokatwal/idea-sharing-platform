@@ -44,7 +44,7 @@ const Profile = () => {
     }
 
     const getUserPosts = async (filter) => {
-        await authUserRequest
+        await api
          .get(`/posts/${username}?filter=${filter}`)
          .then((response) => {
             console.log(response.data);

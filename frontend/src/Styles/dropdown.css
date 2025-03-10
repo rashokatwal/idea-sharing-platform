@@ -48,6 +48,9 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
   .dropdown-item:hover {
