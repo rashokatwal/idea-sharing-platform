@@ -62,7 +62,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setId
         //     })
         //     .catch((error) => {
         //         console.log(error);
-        //     })
+        //     })   
         //     : navigate('/signin');
 
         try {
