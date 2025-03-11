@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '../Styles/navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSignout } from '../Hooks/useSignout';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ const Navbar = () => {
     const { signout } = useSignout();
     const userStatus = useAuthContext();
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
+    const navigate = useNavigate();
 
     const dropdownRef = useRef(null);
 
@@ -16,7 +17,7 @@ const Navbar = () => {
         const toastId = toast.loading("Signing out...");
         signout();
         toast.success('Signout successful', {id: toastId});
-        window.location.href = '/';
+        navigate('/');
     }
 
     useEffect(() => {

@@ -13,6 +13,8 @@ import CompletionMessage from '../Components/CompletionMessage';
 import ConfettiEffect from '../Components/ConfettiEffect';
 import { useImageUpload } from '../Hooks/useImageUpload';
 import authUserRequest from '../Helpers/authRequestHandler';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const CompleteProfile = () => {
     const [ step, setStep ] = useState(1);
@@ -25,6 +27,7 @@ const CompleteProfile = () => {
     const nodeRef = references[step - 1];
     const [ isProfileCompleted, setIsProfileCompleted ] = useState(false);
     const {signout} = useSignout();
+    const navigate = useNavigate();
     // let email = useContext(AuthContext).user.email;
     // const [ userDetails, setUserDetails ] = useState({
     //     profilePhoto: '',
@@ -58,8 +61,10 @@ const CompleteProfile = () => {
     // };
 
     const handleSignout = async () => {
+        const toastId = toast.loading("Signing out...");
         signout();
-        window.location.href = '/';
+        toast.success('Signout successful', {id: toastId});
+        navigate('/');
     }
 
     return (
