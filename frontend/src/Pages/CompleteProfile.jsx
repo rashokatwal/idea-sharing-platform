@@ -181,11 +181,34 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
 
     const handlePictureUpload = async (file) => {
 
-        const res = await uploadImage(file, userDetails._id);
+        // const res = await uploadImage(file, userDetails._id);
         // console.log(res);
         // const img = await res.json();
         // const objectUrl = URL.createObjectURL(img);
-        setImage(res.data.secure_url);
+        // setImage(res.data.secure_url);
+
+        loadingBarRef.current.continuousStart();
+        const imageUploadPromise = async () => {
+            const res = await uploadImage(file, userDetails._id);
+            setImage(res.data.secure_url);
+            sessionUserDetails = {...sessionUserDetails, profileImage: res.data.secure_url};
+            localStorage.setItem("user", JSON.stringify(sessionUserDetails));
+            dispatch({type: "UPDATE_USER", payload: sessionUserDetails});
+        }
+
+        await toast.promise(imageUploadPromise, {
+            loading: "Uploading Image...",
+            success: "Image Uploaded Successfully",
+            error: "Failed to Upload Image",
+        })
+
+        // try {
+        //     await imageUploadPromise();
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
+        loadingBarRef.current.complete();
     }
 
     // const handleDescription = (value) => {
@@ -221,7 +244,9 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     const saveData = async() => {
         // console.log("saved")
         loadingBarRef.current.continuousStart();
+
         if(checkForChanges()) {
+            const toastId = toast.loading("Saving data...");
             await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 {profileImage: image, fullname: fullname.value, username: username.value, bio: bio.value }
             )
@@ -234,10 +259,12 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
                 }, 1000);
+                toast.success("Profile Updated Successfully", {id: toastId});
                 setStep(2);
             })
             .catch((error) => {
                 // console.log(error.response.data);
+                toast.error(error.response.data, {id: toastId});
                 setError(error.response.data);
                 loadingBarRef.current.complete();
             });
@@ -295,7 +322,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
                     <p style={{margin: "20px 0px", fontWeight: '500', fontSize: '15px'}}>Upload Profile Photo</p>
                     <input className='user-fullname' value={fullname.value} type='text' placeholder="John Doe" style={{borderBottom: fullname.outline}} onChange={(e) => handleFullname(e.target.value)}/>
                     <input className='user-username' value={username.value} type='text' placeholder="@johndoe" style={{borderBottom: username.outline}} onChange={(e) => handleUsername(e.target.value)}/>
-                    <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
+                    {/* <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p> */}
                     <textarea className='user-bio' value={bio} placeholder='Bio' style={{width: "100%", outline: bio.outline}} onChange={(e) => handleBio(e.target.value)}/>
                 </div>
             </div>
@@ -359,6 +386,7 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
     const handleStepTwoSubmission = async () => {
         loadingBarRef.current.continuousStart();
         if(checkForChanges()) {
+            const toastId = toast.loading("Saving data...");
             await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
                 userFormData
             )
@@ -369,10 +397,12 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
                 setTimeout(() =>{
                     loadingBarRef.current.complete();
                 }, 1000);
+                toast.success("Profile Updated Successfully", {id: toastId});
                 setStep(3);
             })
             .catch((error) => {
                 // console.log(error);
+                toast.error(error.response.data, {id: toastId});
                 setError(error.response.data);
                 loadingBarRef.current.complete();
             });
@@ -431,7 +461,7 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
                             <input className='user-website' value={userFormData.portfolio} type='text' onChange={(e) => handleFormChange("portfolio", e.target.value)}/>
                         </div>
                     </div>
-                    <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p>
+                    {/* <p className="error" style={{padding: error ? '10px' : '0px'}}>{error}</p> */}
                 </div>
                 </div>
             </div>
