@@ -501,6 +501,7 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
 
     const handleStepThreeSubmission = async () => {
         loadingBarRef.current.continuousStart();
+        const toastId = toast.loading("Saving data...");
         await authUserRequest.patch(`/auth/updateUserDetails/${userDetails._id}`,
             {socialLinks: socialLinks, profileCompleted: true}
         )
@@ -512,11 +513,13 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
             setTimeout(() =>{
                 loadingBarRef.current.complete();
             }, 1000);
+            toast.dismiss();
             setIsProfileCompleted(true);
             // setStep(4);
         })
         .catch((error) => {
             // console.log(error);
+            toast.error("Failed to save data", {id: toastId});
             console.log(error);
             loadingBarRef.current.complete();
         });
