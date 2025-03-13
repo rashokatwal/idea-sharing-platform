@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
@@ -72,9 +72,27 @@ const PageThree = ({ changePages }) => {
 export default PageThree;
 
 const PostPreview = () => {
+
+    const [ selectedIdeaStatus, setSelectedIdeaStatus ] = useState("Completed");
+    const [bgColor, setBgColor] = useState("#4CAF50");
     const handleChange = (value) => {
-        console.log(value);
+        setSelectedIdeaStatus(value);
+        switch (value) {
+            case "Completed":
+                setBgColor("#4CAF50");
+                break;
+            case "In Progress":
+                setBgColor("#0077B6");
+                break;
+            case "Open For Collaboration":
+                setBgColor("#2196F3");
+                break;
+            default:
+                break;
+        }
     }
+
+
     return (
         <Popup trigger={<button className="post-button primary-button" ><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button>} 
             modal
@@ -87,19 +105,19 @@ const PostPreview = () => {
                         {/* <p>PlatForm</p> */}
                         {/* <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. Completed" } suggestions={ ["Open for Collaboration", "Completed"] } onChange={handleChange} clearButton={false}/> */}
                         <div className="idea-status-options">
-                            <div className="option" style={{backgroundColor: "#4CAF50"}}>
+                            <div className={"option " + (selectedIdeaStatus == "Completed" ? "active" : "")} style={{border: "2px solid #4CAF50", background: selectedIdeaStatus == "Completed" ? bgColor : ""}} onClick={() => handleChange("Completed")}>
                                 <FontAwesomeIcon icon="fa-solid fa-flag-checkered" />
-                                <h3>Completed</h3>
+                                <h4>Completed</h4>
                                 <p>This idea has been fully developed and executed. No further changes or collaborations are needed.</p>
                             </div>
-                            <div className="option" style={{backgroundColor: "#FF9800"}}>
+                            <div className={"option " + (selectedIdeaStatus == "In Progress" ? "active" : "")} style={{border: "2px solid #FFC107", background: selectedIdeaStatus == "In Progress" ? bgColor : ""}} onClick={() => handleChange("In Progress")}>
                                 <FontAwesomeIcon icon="fa-solid fa-hourglass-half" />
-                                <h3>In Progress</h3>
+                                <h4>In Progress</h4>
                                 <p>Currently working on this idea. Updates and progress will be shared as it develops.</p>
                             </div>
-                            <div className="option" style={{backgroundColor: "#2196F3"}}>
+                            <div className={"option " + (selectedIdeaStatus == "Open For Collaboration" ? "active" : "")} style={{border: "2px solid #2196F3", background: selectedIdeaStatus == "Open For Collaboration" ? bgColor : ""}} onClick={() => handleChange("Open For Collaboration")}>
                                 <FontAwesomeIcon icon="fa-solid fa-handshake-simple" />
-                                <h3>Open For Collaboration</h3>
+                                <h4>Open For Collaboration</h4>
                                 <p>Looking for teammates, feedback, or contributors to help develop this idea.</p>
                             </div>
                         </div>
