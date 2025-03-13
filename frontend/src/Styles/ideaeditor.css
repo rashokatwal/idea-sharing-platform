@@ -142,3 +142,20 @@
     padding: 50px 30px;
     border-radius: 10px;
 }
+
+.idea-status-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.idea-status-options .option {
+    cursor: pointer;
+    border: solid 1px;
+    flex: 1 1;
+    text-align: center;
+    padding: 10px;
+    color: white;
+}

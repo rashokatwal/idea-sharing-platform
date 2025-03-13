@@ -82,10 +82,27 @@ const PostPreview = () => {
         >
             {(close) => (
                 <div>
-                    <h3 className="header">Post As</h3>
-                    <div className="post-as popup-form">
+                    <h3 className="header">Select Idea Status</h3>
+                    <div className="select-idea-status popup-form">
                         {/* <p>PlatForm</p> */}
-                        <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. Completed" } suggestions={ ["Open for Collaboration", "Completed"] } onChange={handleChange} clearButton={false}/>
+                        {/* <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. Completed" } suggestions={ ["Open for Collaboration", "Completed"] } onChange={handleChange} clearButton={false}/> */}
+                        <div className="idea-status-options">
+                            <div className="option" style={{backgroundColor: "#4CAF50"}}>
+                                <FontAwesomeIcon icon="fa-solid fa-flag-checkered" />
+                                <h3>Completed</h3>
+                                <p>This idea has been fully developed and executed. No further changes or collaborations are needed.</p>
+                            </div>
+                            <div className="option" style={{backgroundColor: "#FF9800"}}>
+                                <FontAwesomeIcon icon="fa-solid fa-hourglass-half" />
+                                <h3>In Progress</h3>
+                                <p>Currently working on this idea. Updates and progress will be shared as it develops.</p>
+                            </div>
+                            <div className="option" style={{backgroundColor: "#2196F3"}}>
+                                <FontAwesomeIcon icon="fa-solid fa-handshake-simple" />
+                                <h3>Open For Collaboration</h3>
+                                <p>Looking for teammates, feedback, or contributors to help develop this idea.</p>
+                            </div>
+                        </div>
                     </div>
                     <div className="bottom-buttons">
                         <button className="primary-button" >Post</button>
