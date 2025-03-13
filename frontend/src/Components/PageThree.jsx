@@ -82,7 +82,7 @@ const PostPreview = () => {
                 setBgColor("#4CAF50");
                 break;
             case "In Progress":
-                setBgColor("#0077B6");
+                setBgColor("#008080");
                 break;
             case "Open For Collaboration":
                 setBgColor("#2196F3");
@@ -110,7 +110,7 @@ const PostPreview = () => {
                                 <h4>Completed</h4>
                                 <p>This idea has been fully developed and executed. No further changes or collaborations are needed.</p>
                             </div>
-                            <div className={"option " + (selectedIdeaStatus == "In Progress" ? "active" : "")} style={{border: "2px solid #FFC107", background: selectedIdeaStatus == "In Progress" ? bgColor : ""}} onClick={() => handleChange("In Progress")}>
+                            <div className={"option " + (selectedIdeaStatus == "In Progress" ? "active" : "")} style={{border: "2px solid #008080 ", background: selectedIdeaStatus == "In Progress" ? bgColor : ""}} onClick={() => handleChange("In Progress")}>
                                 <FontAwesomeIcon icon="fa-solid fa-hourglass-half" />
                                 <h4>In Progress</h4>
                                 <p>Currently working on this idea. Updates and progress will be shared as it develops.</p>

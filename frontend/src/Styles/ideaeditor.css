@@ -148,7 +148,7 @@
     align-items: stretch;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 20px;
+    margin: 20px 0px;
     position: relative;
 }
 
