@@ -91,7 +91,7 @@ const PostPreview = ({postIdea}) => {
             case "In Progress":
                 setBgColor("#008080");
                 break;
-            case "Open For Collaboration":
+            case "Open for Collaboration":
                 setBgColor("#2196F3");
                 break;
             default:
@@ -125,9 +125,9 @@ const PostPreview = ({postIdea}) => {
                                 <h4>In Progress</h4>
                                 <p>Currently working on this idea. Updates and progress will be shared as it develops.</p>
                             </div>
-                            <div className={"option " + (selectedIdeaStatus == "Open For Collaboration" ? "active" : "")} style={{border: "2px solid #2196F3", background: selectedIdeaStatus == "Open For Collaboration" ? bgColor : ""}} onClick={() => handleChange("Open For Collaboration")}>
+                            <div className={"option " + (selectedIdeaStatus == "Open for Collaboration" ? "active" : "")} style={{border: "2px solid #2196F3", background: selectedIdeaStatus == "Open for Collaboration" ? bgColor : ""}} onClick={() => handleChange("Open for Collaboration")}>
                                 <FontAwesomeIcon icon="fa-solid fa-handshake-simple" />
-                                <h4>Open For Collaboration</h4>
+                                <h4>Open for Collaboration</h4>
                                 <p>Looking for teammates, feedback, or contributors to help develop this idea.</p>
                             </div>
                         </div>
