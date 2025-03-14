@@ -9,6 +9,7 @@ import { useLoadingBar } from '../Hooks/useLoadingBar';
 import authUserRequest from "../Helpers/authRequestHandler";
 import Popup from "reactjs-popup";
 import Dropdown from "./Dropdown";
+import toast from "react-hot-toast";
 
 const PageThree = ({ changePages }) => {
     const navigate = useNavigate();
@@ -24,16 +25,22 @@ const PageThree = ({ changePages }) => {
 
     const postIdea = async(ideaStatus) => {
         loadingBarRef.current.continuousStart();
+        const toastId = toast.loading("Posting Your Idea...");
         await authUserRequest.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
             {"status": ideaStatus}
         )
         .then((response) => {
             // console.log(response.data);
             loadingBarRef.current.complete();
-            sessionStorage.getItem("sessionIdea")
-            navigate('/', {replace: true});
+            toast.success("Idea Posted Successfully!", {id: toastId});
+            sessionStorage.removeItem("sessionIdea")
+            navigate(`/idea/${response.data._id}`, {replace: true});
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.error(error);
+            loadingBarRef.current.complete();
+            toast.error("Failed to Post Idea!", {id: toastId});
+        });
     }
 
     const editIdea = () => {
