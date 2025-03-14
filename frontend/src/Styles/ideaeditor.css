@@ -165,4 +165,6 @@
 
 .idea-status-options .active {
     color: white;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+    transform: scale(1.03)
 }

@@ -13,7 +13,7 @@ const IdeaEditor = () => {
     //     page = Number(location.pathname.split('/').pop());
     // })
 
-    const [ page, setPage ] = useState(3);
+    const [ page, setPage ] = useState(1);
 
     // const [ ideaDetails, setIdeaDetails ] = useState({
     //     title: "",

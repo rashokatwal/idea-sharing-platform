@@ -22,10 +22,10 @@ const PageThree = ({ changePages }) => {
     //     }
     // }, [sessionIdea, navigate]);
 
-    const postIdea = async() => {
+    const postIdea = async(ideaStatus) => {
         loadingBarRef.current.continuousStart();
         await authUserRequest.patch(`http://localhost:3000/idea/${sessionIdea._id}?requestType='postIdea'`,
-            {"status": "Completed"}
+            {"status": ideaStatus}
         )
         .then((response) => {
             // console.log(response.data);
@@ -60,7 +60,7 @@ const PageThree = ({ changePages }) => {
 
             <div className="idea-buttons">
                 {/* <button className="post-button primary-button" onClick={postIdea}><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button> */}
-                <PostPreview />
+                <PostPreview postIdea={postIdea}/>
                 <button className="save-as-draft-button primary-button"><FontAwesomeIcon icon="fa-solid fa-floppy-disk" style={{marginRight: "10px"}}/>  Save Draft</button>
                 <button className="edit-button primary-button" onClick={editIdea}><FontAwesomeIcon icon="fa-solid fa-pen-to-square" style={{marginRight: "10px"}}/>  Edit Details</button>
                 <button className="delete-button primary-button"><FontAwesomeIcon icon="fa-solid fa-trash" style={{marginRight: "10px"}}/>  Delete</button>
@@ -71,7 +71,7 @@ const PageThree = ({ changePages }) => {
 
 export default PageThree;
 
-const PostPreview = () => {
+const PostPreview = ({postIdea}) => {
 
     const [ selectedIdeaStatus, setSelectedIdeaStatus ] = useState("Completed");
     const [bgColor, setBgColor] = useState("#4CAF50");
@@ -92,6 +92,9 @@ const PostPreview = () => {
         }
     }
 
+    const handleIdeaPost = () => {
+        postIdea(selectedIdeaStatus);
+    }
 
     return (
         <Popup trigger={<button className="post-button primary-button" ><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button>} 
@@ -123,7 +126,7 @@ const PostPreview = () => {
                         </div>
                     </div>
                     <div className="bottom-buttons">
-                        <button className="primary-button" >Post</button>
+                        <button className="primary-button" onClick={() => handleIdeaPost()} >Post</button>
                         <button className="secondary-button" style={{border: "none"}} onClick={close}>Close</button>
                     </div>
                 </div>
