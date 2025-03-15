@@ -168,6 +168,9 @@ body {
   background-color: var(--background-color);
   padding: 20px 20px;
   display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-direction: row-reverse;
   gap: 10px;
 }
 
