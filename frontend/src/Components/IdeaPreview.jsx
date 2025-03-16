@@ -126,7 +126,7 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setId
                     <span className="share" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-share-from-square" /> </span>
                 </div>
                 <div className="collab-save">
-                    <span className="collaborate" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-handshake" /> Collab</span>
+                    {(ideaDetails.status == "Open for Collaboration" || previewType == "author") && <span className="collaborate" style={{cursor: "pointer"}}><FontAwesomeIcon icon="fa-regular fa-handshake" /> Collab</span>}
                     <div className="save" style={{cursor: "pointer", marginLeft: "15px", color: isSaved ? "var(--accent-color)" : null, transition: "0.2s"}} onClick={() => previewType == "user" ? handleSave() : null}><FontAwesomeIcon icon={(isSaved ? "fa-solid" : "fa-regular") + " fa-bookmark"} className={isSaved ? "save-button-animation" : ""} /> {isSaved ? "Saved" : "Save"}</div>
                 </div>
             </div>
