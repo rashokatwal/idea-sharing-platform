@@ -28,37 +28,9 @@ const CompleteProfile = () => {
     const [ isProfileCompleted, setIsProfileCompleted ] = useState(false);
     const {signout} = useSignout();
     const navigate = useNavigate();
-    // let email = useContext(AuthContext).user.email;
-    // const [ userDetails, setUserDetails ] = useState({
-    //     profilePhoto: '',
-    //     fullname: '',
-    //     username: '',
-    //     bio: '',
-    //     email: email,
-    //     phoneNumber: '',
-    //     dob: '',
-    //     address: '',
-    //     portfolio: '',
-    //     socialLinks: {
-    //         instagram: '',
-    //         twitter: '',
-    //         linkedin: '',
-    //         github: ''
-    //     }
-    // });
     const sessionUserDetails = JSON.parse(localStorage.getItem("user")) || null;
     const steps = [<StepOne setStep={setStep} sessionUserDetails={sessionUserDetails} />, <StepTwo setStep={setStep} sessionUserDetails={sessionUserDetails}/>, <StepThree setStep={setStep} sessionUserDetails={sessionUserDetails} setIsProfileCompleted={setIsProfileCompleted}/>];
-    // const [ slideDirection, setSlideDirection ] = useState("slide");
 
-    // const nextStep = (step) => {
-    //     setSlideDirection("forward");
-    //     setStep(step);
-    // };
-
-    // const prevStep = (step) => {
-    //     setSlideDirection("backward");
-    //     setStep(step);
-    // };
 
     const handleSignout = async () => {
         const toastId = toast.loading("Signing out...");
@@ -124,17 +96,10 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
         valid: userDetails.username.trim().length > 0,
         outline: "solid 2px rgba(0, 0, 0, 0.2)",
     })
-    // const [ bio, setBio ] = useState({
-    //     value: sessionUserDetails ? sessionUserDetails.bio : "",
-    //     valid: sessionUserDetails ? sessionUserDetails.bio.trim().length > 0 : false,
-    //     outline: "none",
-    // })
     const [ bio, setBio ] = useState(userDetails.bio);
     const [ valid, setValid ] = useState(fullname.valid && username.valid);
 
     const handleFullname = (value) => {
-        // const updatedDetails = { ...ideaDetails, title: value };
-        // setIdeaDetails(updatedDetails);
         const isFullnameValid = value.trim().length > 0;
         setFullname({
             value: value,
@@ -147,8 +112,6 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     };
 
     const handleUsername = (value) => {
-        // const updatedDetails = { ...ideaDetails, title: value };
-        // setIdeaDetails(updatedDetails);
         const isUsernameValid = value.trim().length > 0;
         setUsername({
             value: value,
@@ -161,18 +124,7 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     };
 
     const handleBio = (value) => {
-        // const updatedDetails = { ...ideaDetails, title: value };
-        // setIdeaDetails(updatedDetails);
-        // const isBioValid = value.trim().length > 0;
-        // setBio({
-        //     value: value,
-        //     valid: isBioValid,
-        //     outline: isBioValid ? "none" : "red solid 2px",
-        // });
         setBio(value);
-
-        // const isValid = isBioValid && fullname.valid && username.valid;
-        // setValid(isValid);
     };
 
     const handleDivClick = () => {
@@ -180,12 +132,6 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
     }
 
     const handlePictureUpload = async (file) => {
-
-        // const res = await uploadImage(file, userDetails._id);
-        // console.log(res);
-        // const img = await res.json();
-        // const objectUrl = URL.createObjectURL(img);
-        // setImage(res.data.secure_url);
 
         loadingBarRef.current.continuousStart();
         const imageUploadPromise = async () => {
@@ -201,29 +147,8 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
             success: "Image Uploaded Successfully",
             error: "Failed to Upload Image",
         })
-
-        // try {
-        //     await imageUploadPromise();
-        // }
-        // catch (error) {
-        //     console.log(error);
-        // }
         loadingBarRef.current.complete();
     }
-
-    // const handleDescription = (value) => {
-    //     // const updatedDetails = { ...ideaDetails, description: value };
-    //     // setIdeaDetails(updatedDetails);
-    //     const isDescriptionValid = value.trim().length > 0;
-    //     setDescriptionChars({
-    //         value: value,
-    //         valid: isDescriptionValid,
-    //         outline: isDescriptionValid ? "none" : "red solid 2px",
-    //     });
-
-    //     const isValid = fullname.valid && username.valid && isDescriptionValid;
-    //     setValid(isValid);
-    // };
 
     const checkForChanges = () => {
         return image == userDetails.profileImage && fullname.value == userDetails.fullname && username.value == userDetails.username && bio == userDetails.bio ? false : true;
@@ -273,37 +198,9 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
             loadingBarRef.current.complete();
             setStep(2);
         }
-        // else {
-            // if(checkForChanges()) {
-            //     await api.patch(`/auth/updateUserDetails/${userStatus.user.userId}`,
-            //         { fullname: fullname.value, username: username.value, bio: bio.value }
-            //     )
-            //     .then((response) => {
-            //         let ideaDetails = response.data;
-            //         ideaDetails.title = titleChars.value;
-            //         ideaDetails.category = categoryChars.value;
-            //         ideaDetails.description = descriptionChars.value;
-            //         sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-            //         // navigate('/ideaeditor/p/2');
-            //         setStep(2);
-            //         loadingBarRef.current.complete();
-            //     })
-            //     .catch((error) => console.log(error))
-            // }
-            // else{
-                // navigate('/ideaeditor/p/2');
-                // loadingBarRef.current.continuousStart();
-                // setStep(2);
-                // setTimeout(() =>{
-                //     loadingBarRef.current.complete();
-                // }, 500)
-            // }
-        // }
+        
     }
 
-    // const handleStepOneSubmission = () => {
-    //     setStep(2);
-    // }
 
     return (
         <div className="step-one steps">
