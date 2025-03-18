@@ -335,14 +335,8 @@ const StepOne = ({ setStep, sessionUserDetails }) => {
 
 const StepTwo = ({ setStep, sessionUserDetails }) => {
     const userDetails = useAuthContext().user;
-    // const userDetails = userStatus.user;
     const loadingBarRef = useLoadingBar();
     const { dispatch } = useAuthContext();
-    // const [ email, setEmail ] = useState(userDetails.email);
-    // const [ phoneNumber, setPhoneNumber ] = useState(userDetails.phoneNumber);
-    // const [ dob, setDob ] = useState(userDetails.dob);
-    // const [ address, setAddress ] = useState(userDetails.address);
-    // const [ portfolio, setPortfolio ] = useState(userDetails.portfolio);
     const [ error, setError ] = useState("");
     const date = new Date(userDetails.dob);
     const dob = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -356,25 +350,6 @@ const StepTwo = ({ setStep, sessionUserDetails }) => {
     })
 
     const handleFormChange = (field, value) => {
-        // switch (field) {
-        //     case "email":
-        //         setEmail(value);
-        //         break;
-        //     case "phoneNumber":
-        //         setPhoneNumber(value);
-        //         break;
-        //     case "dob":
-        //         setDob(value);
-        //         break;
-        //     case "address":
-        //         setAddress(value);
-        //         break;
-        //     case "portfolio":
-        //         setPortfolio(value);
-        //         break;
-        //     default:
-        //         break;
-        // }
         setUserFormData({...userFormData, [field]: value });
     }
 
@@ -493,11 +468,6 @@ const StepThree = ({ setStep, sessionUserDetails, setIsProfileCompleted }) => {
     const handleSocialLinksChange = (platform, value) => {
         setSocialLinks({...socialLinks, [platform]: value });
     }
-
-    // const checkForChanges = () => {
-    //     // console.log(socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter)
-    //     return socialLinks.instagram == userDetails.socialLinks.instagram && socialLinks.linkedin == userDetails.socialLinks.linkedin && socialLinks.github == userDetails.socialLinks.github && socialLinks.twitter == userDetails.socialLinks.twitter ? false : true;
-    // }
 
     const handleStepThreeSubmission = async () => {
         loadingBarRef.current.continuousStart();

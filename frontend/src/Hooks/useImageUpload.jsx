@@ -14,10 +14,6 @@ export const useImageUpload = () => {
         formData.append("signature", signature);
         formData.append("api_key", "953465259478889");
 
-        // const res = await axios.post(
-        //     `https://api.cloudinary.com/v1_1/${import.meta.env.CLOUD_NAME}/image/upload`,
-        //     data
-        // );
         try {
             const response = await axios.post(
                 `https://api.cloudinary.com/v1_1/dviyjm1af/image/upload`,
@@ -25,7 +21,6 @@ export const useImageUpload = () => {
             );
         
             return response;
-            // console.log("Uploaded Image URL:", data.secure_url);
           } catch (error) {
             console.error("Upload failed", error);
           }

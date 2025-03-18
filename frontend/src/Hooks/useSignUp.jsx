@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../Hooks/useAuthContext';
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-// import axios from 'axios';
 import api from '../Helpers/api';
 import toast from 'react-hot-toast';
 
