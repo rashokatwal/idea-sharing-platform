@@ -68,9 +68,6 @@ const Steps = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className="steps-cycle">
-                    <img src="/src/Assets/steps-cycle.png" style={{height: "500px"}}/>
-                </div> */}
                 <div className="call-to-action-section">
                     <h5>
                         HEARD<br />ENOUGH? <FontAwesomeIcon icon="fa-solid fa-arrow-right" />

@@ -34,8 +34,6 @@ const PageOne = ({ changePages }) => {
     const [ valid, setValid ] = useState(titleChars.valid && categoryChars.valid && descriptionChars.valid);
 
     const handletitle = (value) => {
-        // const updatedDetails = { ...ideaDetails, title: value };
-        // setIdeaDetails(updatedDetails);
         const isTitleValid = value.trim().length > 0;
         setTitleChars({
             value: value,
@@ -48,8 +46,6 @@ const PageOne = ({ changePages }) => {
     };
 
     const handlecategory = (value) => {
-        // const updatedDetails = { ...ideaDetails, category: value };
-        // setIdeaDetails(updatedDetails);
         const isCategoryValid = (value.trim().length > 0) && categories.includes(value);
         setCategoryChars({
             value: value,
@@ -62,8 +58,6 @@ const PageOne = ({ changePages }) => {
     };
 
     const handleDescription = (value) => {
-        // const updatedDetails = { ...ideaDetails, description: value };
-        // setIdeaDetails(updatedDetails);
         const isDescriptionValid = value.trim().length > 0;
         setDescriptionChars({
             value: value,
@@ -131,8 +125,6 @@ const PageOne = ({ changePages }) => {
                 .catch((error) => console.log(error))
             }
             else{
-                // navigate('/ideaeditor/p/2');
-                // loadingBarRef.current.continuousStart();
                 changePages(2);
                 setTimeout(() =>{
                     loadingBarRef.current.complete();

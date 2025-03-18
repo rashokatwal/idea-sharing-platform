@@ -4,8 +4,6 @@ import ScrollToTop from "./ScrollToTop";
 import IdeaPreview from "./IdeaPreview";
 import { useNavigate } from "react-router-dom";
 import { useLoadingBar } from '../Hooks/useLoadingBar';
-// import axios from "axios";
-// import api from "../Helpers/api";
 import authUserRequest from "../Helpers/authRequestHandler";
 import Popup from "reactjs-popup";
 import Dropdown from "./Dropdown";
@@ -15,13 +13,6 @@ const PageThree = ({ changePages }) => {
     const navigate = useNavigate();
     const loadingBarRef = useLoadingBar();
     const sessionIdea = JSON.parse(sessionStorage.getItem("sessionIdea")) || null;
-    // const { updatedDate, updatedTime } = ideaDetails;
-
-    // useEffect(() => {
-    //     if (!sessionIdea) {
-    //         navigate(-1);
-    //     }
-    // }, [sessionIdea, navigate]);
 
     const postIdea = async(ideaStatus) => {
         loadingBarRef.current.continuousStart();
@@ -30,7 +21,6 @@ const PageThree = ({ changePages }) => {
             {"status": ideaStatus}
         )
         .then((response) => {
-            // console.log(response.data);
             loadingBarRef.current.complete();
             toast.success("Idea Posted Successfully!", {id: toastId});
             sessionStorage.removeItem("sessionIdea")
@@ -44,7 +34,6 @@ const PageThree = ({ changePages }) => {
     }
 
     const editIdea = () => {
-        // navigate('/ideaeditor/p/1', {replace: true})
         loadingBarRef.current.continuousStart();
         changePages(1);
         setTimeout(() =>{
@@ -66,7 +55,6 @@ const PageThree = ({ changePages }) => {
             </div>
 
             <div className="idea-buttons">
-                {/* <button className="post-button primary-button" onClick={postIdea}><FontAwesomeIcon icon="fa-solid fa-paper-plane" style={{marginRight: "10px"}}/>  Post Idea</button> */}
                 <PostPreview postIdea={postIdea}/>
                 <button className="save-as-draft-button primary-button"><FontAwesomeIcon icon="fa-solid fa-floppy-disk" style={{marginRight: "10px"}}/>  Save Draft</button>
                 <button className="edit-button primary-button" onClick={editIdea}><FontAwesomeIcon icon="fa-solid fa-pen-to-square" style={{marginRight: "10px"}}/>  Edit Details</button>
@@ -112,8 +100,6 @@ const PostPreview = ({postIdea}) => {
                 <div>
                     <h3 className="header">Select Idea Status</h3>
                     <div className="select-idea-status popup-form">
-                        {/* <p>PlatForm</p> */}
-                        {/* <Dropdown listStyle={{maxHeight: "150px"}} placeholder={ "e.g. Completed" } suggestions={ ["Open for Collaboration", "Completed"] } onChange={handleChange} clearButton={false}/> */}
                         <div className="idea-status-options">
                             <div className={"option " + (selectedIdeaStatus == "Completed" ? "active" : "")} style={{border: "2px solid #4CAF50", background: selectedIdeaStatus == "Completed" ? bgColor : ""}} onClick={() => handleChange("Completed")}>
                                 <FontAwesomeIcon icon="fa-solid fa-flag-checkered" />

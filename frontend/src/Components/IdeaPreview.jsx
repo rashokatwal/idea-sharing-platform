@@ -52,18 +52,6 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setId
             success: isSaved ? "Idea unsaved successfully!" : "Idea saved successfully!",
             error: isSaved ? "Couldn't unsave idea" : "Couldn't save idea",
         });
-        // user ? await authUserRequest
-        //     .patch(`/saveIdea`,
-        //         { "userId": user?._id, "ideaId": ideaDetails._id },
-        //     )
-        //     .then((response) => {
-        //         console.log(response);
-        //         setIsSaved(!isSaved);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     })   
-        //     : navigate('/signin');
 
         try {
             user ? await saveIdeaPromise : navigate('/signin');
@@ -84,10 +72,6 @@ const IdeaPreview = ({ ideaDetails, previewType, isIdeaLiked, isIdeaSaved, setId
             })
            .catch((error) => console.log(error));
     }
-
-    // const handleSave = () => {
-    //     setIsSaved(!isSaved);
-    // }
 
     return (
         <div className="idea-preview">

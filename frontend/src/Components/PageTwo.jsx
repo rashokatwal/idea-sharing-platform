@@ -31,12 +31,9 @@ const PageTwo = ({ changePages }) => {
     };
 
     const handlesummary = (value) => {
-        // const updatedDetails = { ...ideaDetails, summary: value };
-        // setIdeaDetails(updatedDetails);
         const isSummaryValid = value.replace(/<[^>]*>/g, '').trim().length > 0;
         setSummaryChars({
             value: value,
-            // valid: isSummaryValid,
             outline: isSummaryValid ? "none" : "red solid 2px",
         });
     };
@@ -58,19 +55,15 @@ const PageTwo = ({ changePages }) => {
 
     const validate = async () => {
         const isSummaryValid = summaryChars.value.trim().length > 0;
-        // console.log("validated")
         setSummaryChars({...summaryChars, outline: isSummaryValid ? "none" : "red solid 2px" });
-        // setValid(isSummaryValid);
         isSummaryValid ? await updateData() : null;
     }
 
     const checkForChanges = () => {
-        // console.log(tags == sessionIdea.tags);
         return summaryChars.value == sessionIdea.summary && JSON.stringify(tags) == JSON.stringify(sessionIdea.tags) ? false : true;
     }
 
     const updateData = async () => {
-        // console.log('updateData called')
         loadingBarRef.current.continuousStart();
         if(sessionIdea == null || checkForChanges()) {
             await authUserRequest.patch(`/idea/${sessionIdea._id}`,
@@ -81,14 +74,12 @@ const PageTwo = ({ changePages }) => {
                 ideaDetails.summary = summaryChars.value;
                 ideaDetails.tags = tags;
                 sessionStorage.setItem("sessionIdea", JSON.stringify(ideaDetails));
-                // navigate('/ideaeditor/p/3');
                 changePages(3);
                 loadingBarRef.current.complete();
             })
             .catch((error) => console.log(error));
         }
         else {
-            // navigate('/ideaeditor/p/3');
             changePages(3);
             setTimeout(() =>{
                 loadingBarRef.current.complete();
@@ -97,7 +88,6 @@ const PageTwo = ({ changePages }) => {
     }
 
     const prevPage = () => {
-        // navigate(-1);
         loadingBarRef.current.continuousStart();
         changePages(1);
         setTimeout(() =>{
