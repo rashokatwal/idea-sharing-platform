@@ -34,7 +34,7 @@ const Filter = ({ parentCallback }) => {
         const timeout = setTimeout(() => {
             handleStopTyping();
             setTypingTimeout(null); // Reset the timeout after stop typing fires
-        }, 1000); // Adjust delay as needed (e.g., 1000ms = 1 second)
+        }, 1000); // Adjust delay as needed (e.g., 1000ms =  1 second)
     
         setTypingTimeout(timeout);
     }
